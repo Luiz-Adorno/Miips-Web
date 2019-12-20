@@ -8,13 +8,14 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Miips - Marketplace</title>
-  <link rel="icon" href="img/icone-site.png" type="image/x-icon">
+  <title>Miips</title>
+  <!-- <link rel="icon" href="img/icone-site.png" type="image/x-icon"> -->
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
+  <link rel="stylesheet" href="css/owl.carousel.min.css" />
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
@@ -23,30 +24,10 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="css/miips.min.css" rel="stylesheet">
+  <link href="css/miips.css" rel="stylesheet">
 
   <!-- WhatsApp html-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-  <!-- Facebook Pixel Code -->
-  <script>
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ?
-          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-      };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0;
-      t.src = v; s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '2604612223151116');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=2604612223151116&ev=PageView&noscript=1" /></noscript>
-  <!-- End Facebook Pixel Code -->
 
 </head>
 
@@ -56,6 +37,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">Miips</a>
+
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -83,34 +65,76 @@
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="masthead">
+  <!-- Hero Section end -->
+  <section class="hero-section" style="background-color: #e9ecef;  text-align: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;">
     <div class="container">
-      <div class="intro-text">
-        <img class="cont-img" src="/img/mk-logo.png"></img>
-        <div class="intro-lead-in">Marketing Digital</div>
-        <div class="intro-heading text-uppercase"></div>
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#contact">Entre em contato</a>
-        <ul class="list-inline social-buttons" style="margin-top: 20px;">
-          <li class="list-inline-item">
-            <a href="https://www.facebook.com/marktinsdigital">
-              <i class="fab fa-facebook-f"></i>
+      <div class="row">
+        <div class="col-lg-6">
+          <div>
+            <a class="header-text">Anuncie</a>
+            <a class="header-text">Divulgue</a>
+            <a class="header-text">Venda</a>
+          </div>
+          <div>
+            <a class="header-text">Destaque seu produto ou serviço na região e na hora que quiser no nosso aplicativo
+              Miips </a>
+          </div>
+          <div>
+            <img class="img-fluid" src="img/head.png" alt="" style="height: 500px;">
+          </div>
+          <div>
+            <ul class="navbar-nav ml-auto">
+              <li style="color: black; margin-top: 20px;">
+                <a>Selecione as cidades, bairros ou regiões para os seus anuncios</a>
+              </li>
+              <li style="color: black; margin-top: 20px;">
+                <a>Destaque sua loja na sua cidade em nosso aplicativo</a>
+              </li>
+              <li style="color: black; margin-top: 20px;">
+                <a>Anuncie sem pagar nada, impulsione seus anúncios pagando o melhor custo-benefício </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <img class="img-fluid" src="img/logo.jpg" alt="" style="height: 150px; margin-top: 30px;">
+          </div>
+          <div>
+            <a href="#">
+              <img class="img-fluid" src="img/gp.png" alt="" style="height: 50px; margin-top: 30px;">
             </a>
-          <li class="list-inline-item">
-            <a href="https://www.instagram.com/marktinsdigital/">
-              <i class="fab fa-instagram"></i>
+            <!---   for apple store 
+            <a href="#">
+              <img class="img-fluid" src="img/gp.png" alt="" style="height: 50px; margin-top: 30px;">
             </a>
-          </li>
-          <li class="list-inline-item">
-            <a href="https://www.linkedin.com/company/marktins/">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-          </li>
-        </ul>
+             -->
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <form class="hero-form">  
+            <p style="color: black;">Faça login do seu negócio no portal Miips</p> 
+            <input type="text" placeholder="Email" style="color: black;">
+            <input type="password" placeholder="Senha" style="color: black;">
+            <button class="site-btn">Entrar</button>
+            <div>
+              <a href="#" class="site-btn sb-dark" style="margin-top: 10px; color: black;">Esqueceu a senha?</a>
+            </div>
+          </form>
+          <div style="margin-top: 20px;">
+            <p style="color: black;">Não tem conta? Cadastre-se e comece a anunciar seus produto ou serviços na sua cidade</p>
+            <a href="#" class="site-btn" style="background-color: white; color: black;">Cadastrar-se</a>
+          </div>
+          <div>
+            <img class="img-fluid" src="img/head2.png" alt="" style="height: 500px; margin-top: 30px;">
+          </div>
+        </div>
       </div>
-
     </div>
-  </header>
+  </section>
+  <!-- Hero Section end -->
 
   <!-- Services -->
   <section class="page-section" id="services">
@@ -119,55 +143,47 @@
         <div class="col-lg-12 text-center" style="margin-top: 50px;">
 
           <h2 class="section-heading text-uppercase">Quem não é visto, não é lembrado!</h2>
-          <h3 class="section-subheading text-muted">Impulsionamos seu conteúdo/empresa com objetivo de identificar e atrair novos clientes via redes sociais</h3>
-          <h3 class="section-subheading text-muted">Colocamos sua empresa no mapa, se destaque primeiras posições de resultado de pesquisas google
-          </h3>
-          <h3 class="section-subheading text-muted">Aumento no público atingido e no retorno das campanhas Marktins em relação às campanhas normais</h3>
+          <h3 class="section-subheading text-muted">Nossa plataforma reuni tudo que o Marketplace, sistemas de Marketing Digital e lojas de
+            E-commerce oferecem de melhor</h3>
+          <h3 class="section-subheading text-muted">Anuncie, divulgue e venda seus produtos ou serviços na sua cidade no
+            nosso App</h3>
+
+          <h3 class="section-subheading text-muted">3 serviços em 1 plataforma </h3>
           <span class="fa-stack fa-4x">
-              <i class="fas fa-desktop fa-stack-1x fa-inverse" style="color: black;"></i>
-            </span>
-  
-            <h2 class="section-heading text-uppercase">Serviços</h2>
+            <i class="fas fa-desktop fa-stack-1x fa-inverse" style="color: black;"></i>
+          </span>
+
+          <h2 class="section-heading text-uppercase">Serviços</h2>
         </div>
       </div>
 
       <div class="row text-center">
-        <div class="col-md-4">
-          
-          <img class="img-fluid" src="img/.jpg" alt="">
+        <div class="col-md-4" style="margin-top: 50px; background-color: #8cb49c;">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas  fa-pencil-alt fa-stack-1x fa-inverse"></i>
+            <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Mídia de Performance</h4>
-          <p class="text-muted">Utilizamos as ferramentas do Google ads, Facebook ads e conhecimento técnico para
-            promover sua empresa de forma mais otimizada</p>
-          <p class="text-muted">Impulsionamos seu conteúdo/empresa com objetivo de encontrar possíveis clientes</p>
-          <p class="text-muted">Aumento no público atingido e no retorno das campanhas Marktins em relação às campanhas normais</p>
+          <h4 class="service-heading">Marketplace</h4>
+          <img class="img-fluid" src="img/mk1.png" alt="">
+          <p class="text-muted">Reunimos diversas marcas e lojas em um só lugar</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" style="margin-top: 50px; background-color: #addbd0;" >
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
+            <i class="fa fa-buysellads fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Desenvolvimento Web</h4>
-          <p class="text-muted">Implementamos e estruturamos seu modelo de negócio na web com a criação do seu site
-            próprio e com ferramentas de Tracking, Tagueamento e a implementação de SEO</p>
-          <p class="text-muted">Geramos dados de comportamento dos clientes e convertemos em conhecimento para otimizar
-            as ações no seu site</p>
-          <p class="text-muted">Aumento na satisfação e fidelização do cliente</p>
+          <h4 class="service-heading">Marketing Digitial</h4>
+          <img class="img-fluid" src="img/mk1.png" alt="">
+          <p class="text-muted">Divulgamos e impulsionamos os produtos e serviços de nossos clientes no app</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" style="margin-top: 50px; background-color: #e2c579;">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-search fa-stack-1x fa-inverse"></i>
+            <i class="fa fa-truck fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Nutrição de Leads</h4>
-          <p class="text-muted">Consiste em saber qual produto/serviço é o mais adequado para se enviar a determinados
-            clientes em potencial</p>
-          <p class="text-muted">Processo automatizado, rápido e com baixo custo, ótima opção para empresa de qualquer
-            tamanho</p>
-          <p class="text-muted">Aumento no número de vendas direcionados a clientes existentes</p>
+          <h4 class="service-heading">E-commerce</h4>
+          <img class="img-fluid" src="img/mk1.png" alt="">
+          <p class="text-muted">Facilitamos a venda e a procura pelo melhor produto e serviço pelo melhor preço.</p>
         </div>
       </div>
     </div>
@@ -175,7 +191,7 @@
 
 
   <!-- About -->
-  <section class="bg-light page-section" id="about">
+  <section class="bg-light page-section" id="about" style="margin-top: 50px;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -183,73 +199,81 @@
             <i class="fas fa-brain fa-stack-1x fa-inverse" style="color: black;"></i>
           </span>
           <h2 class="section-heading text-uppercase">Sobre nós</h2>
-          <h3 class="section-subheading text-muted">Estamos localizados na cidade de São Carlos, interior de São Paulo, que é conhecida como Vale do Silício brasileiro.</h3>
-          <h3 class="section-subheading text-muted">Nossos profissionais são da área de computação e estatística da Universidade de São Paulo.</h3>
+          <h3 class="section-subheading text-muted">Estamos localizados na cidade de São Carlos, interior de São Paulo,
+            que é conhecida como Vale do Silício brasileiro.</h3>
+          <h3 class="section-subheading text-muted">Nossos profissionais são da área de computação e engenharia da
+            Universidade de São Paulo.</h3>
           <h3 class="section-subheading text-muted">Confira a linha temporal dos nossos objetivos:</h3>
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top: 50px;">
         <div class="col-lg-12">
           <ul class="timeline">
             <li>
               <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="img/about/mbpa.jpg" alt="">
+                <img class="rounded-circle img-fluid" src="img/about/heart.jpg" alt="">
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
                   <h4>Primeiro passo</h4>
-                  <h5 class="subheading">Mídia de Performance</h5>
+                  <h5 class="subheading">Cadastro da loja</h5>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Esse passo é importante para todas as empresas, de qualquer tamanho, desde a
-                    micro até a de grande porte.</p>
-                  <p class="text-muted">É nesse passo que colocamos sua empresa no mapa, identificamos e atraímos novos
-                    clientes via redes sociais </p>
+                  <p class="text-muted">Cadastre sua empresa, contando-nos um pouco de sua história.</p>
+                  <p class="text-muted"></p>
                 </div>
               </div>
             </li>
             <li class="timeline-inverted">
               <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="img/about/web.jpg" alt="">
+                <img class="rounded-circle img-fluid" src="img/about/list.jpg" alt="">
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
                   <h4>Segundo Passo</h4>
-                  <h5>Desenvolvimento web</h5>
-                  <h6 class="subheading">A Empresa cresceu</h5>
+                  <h5>Contrato Online</h5>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Nesse passo é quando sua empresa atinge uma demanda maior de pedidos e
-                    divulgação do catálogo de seus serviços ou produtos.</p>
-                  <p class="text-muted">Aonde a necessidade de um próprio site é exposta, para facilitar e auxiliar nas
-                    vendas</p>
+                  <p class="text-muted">Assine seu contrato online, validando nossa parceria
+                    e tenha autorização para utilizar nossos serviços gratuitos
+                  </p>
                 </div>
               </div>
             </li>
             <li>
               <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="img/about/ld.jpg" alt="">
+                <img class="rounded-circle img-fluid" src="img/about/store.jpg" alt="">
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
                   <h4>Terceiro Passo</h4>
-                  <h4 class="subheading">Nutrição de Leads</h4>
-                  <h6 class="subheading">Nutrindo o seu site</h5>
+                  <h4 class="subheading">Registro</h4>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Após a implementação do seu site, é necessário estudar o comportamento do
-                    cliente dentro dele.</p>
-                  <p class="text-muted">É nesse passo que identificamos, estudamos seus clientes.</p>
-                  <p class="text-muted">Oferecemos a eles produtos, serviços, promoções, com o objetivo de FIDELIZAR o
-                    cliente.</p>
+                  <p class="text-muted">Registre os produtos ou serviços que sua empresa tem a oferecer</p>
                 </div>
               </div>
             </li>
             <li class="timeline-inverted">
               <div class="timeline-image">
-                <h4>Crescimento
-                  <br>Prosperidade
-                  <br>Marktins!</h4>
+                <img class="rounded-circle img-fluid" src="img/about/suit.jpg" alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4>Quarto Passo</h4>
+                  <h5>Econtre seu público alvo</h5>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">Atinja usuários que buscam o que sua empresa tem a
+                    oferecer, impulsionando seus anuncios e aumentando suas vendas com o melhor custo benefício
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="timeline-inverted">
+              <div class="timeline-image">
+                <h4>Miips
+                </h4>
               </div>
             </li>
           </ul>
@@ -303,8 +327,8 @@
       <div class="row" style="margin-top: 50px">
         <div class="col-lg-12 text-center">
           <h3 class="section-heading text-uppercase">Mande uma mensagem</h>
-         
-          <h3 class="section-subheading" style="color: white;">Dúvida? Informações? Pergunta pra gente :)</h3>
+
+            <h3 class="section-subheading" style="color: white;">Dúvida? Informações? Pergunta pra gente :)</h3>
         </div>
       </div>
 
@@ -415,7 +439,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-4">
-          <span class="copyright">Copyright &copy; Miips Marketplace 2020</span>
+          <span class="copyright">Copyright &copy; Miips 2020</span>
         </div>
         <div class="col-md-4">
           <ul class="list-inline social-buttons">
@@ -453,6 +477,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!--====== Javascripts & Jquery ======-->
+  <script src="js/owl.carousel.min.js"></script>
 
   <!-- Plugin JavaScript -->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
