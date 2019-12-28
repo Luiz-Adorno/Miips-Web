@@ -64,72 +64,89 @@ h1, h2, h3, h4, h5, h6 {
   width: 350px;
 }
 
-
 /* ----------------
 Hero section
  ---------------------*/
 
- .hero-section {
-	padding-top: 100px;
+.hero-section {
   position: relative;
 }
 
+.conthead1 {
+  display: flex;
+}
+
+.conthead2 {
+  display: flex;
+  background-color: white;
+}
+
 .hero-section .container {
-	position: relative;
-	z-index: 99;
+  position: relative;
+  z-index: 99;
+}
+
+.hero-section .container-bot {
+  margin-top: 150px;
+  position: relative;
+  z-index: 99;
 }
 
 .img-header-one {
   height: 500px;
 }
 
-.img-header-two{
-  height: 500px; 
+.img-header-two {
+  height: 500px;
   margin-top: 30px;
 }
 
-.logo-app{
-  height: 150px; 
+.img-header-three{
+  height: 500px;
+  margin-top: 30px;
+}
+
+.logo-app {
+  height: 100px;
   margin-top: 30px;
 }
 
 .logo-app-store-play {
   height: 50px;
-   margin-top: 30px;
+  margin-top: 30px;
 }
 
 .hs-text {
-	padding-top: 95px;
-	padding-right: 10px;
+  padding-top: 95px;
+  padding-right: 10px;
 }
 
 .hs-text h2 {
-	font-size: 60px;
-	color: #000;
-	margin-bottom: 30px;    
-	line-height: 1.1;
+  font-size: 60px;
+  color: #000;
+  margin-bottom: 30px;
+  line-height: 1.1;
 }
 
 .hs-text p {
-	color: #fff;
-	margin-bottom: 30px;
+  color: #fff;
+  margin-bottom: 30px;
 }
 
 .hero-form {
-	background-image: url("/img/bg.jpg");
+  background-image: url("/img/bg.jpg");
   padding: 40px 42px 33px;
-  margin-top: 20px;
 }
 
 .hero-form input {
-	width: 100%;
-	height: 49px;
-	padding: 5px 26px;
-	margin-bottom: 20px;
-	border: none;
-	font-size: 14px;
-	color: #838383;
-	font-style: italic;
+  width: 100%;
+  height: 49px;
+  padding: 5px 26px;
+  margin-bottom: 20px;
+  border: none;
+  font-size: 14px;
+  color: #838383;
+  font-style: italic;
 }
 
 /* ---------------- */
@@ -139,53 +156,51 @@ Hero section
 .logo-text {
   font-size: 55px;
   font-weight: 600;
-  border-radius: 50px;
-	text-transform: uppercase;
-  color: black;
+  color: white;
 }
+
 .sublogo-text {
   font-size: 20px;
   font-weight: 400;
-  color: grey;
+  color: white;
 }
 
 .header-text {
   font-size: 16px;
   font-weight: 600;
   border-radius: 50px;
-	text-transform: uppercase;
-  color: black;
+  text-transform: uppercase;
+  color: white;
   margin-right: 30px;
 }
 
 .site-btn {
-	display: inline-block;
-	border: none;
-	font-size: 12px;
-	font-weight: 600;
-	min-width: 140px;
-	padding: 15px 5px;
-	border-radius: 50px;
-	text-transform: uppercase;
-	background: black;
-	color: #fff;
-	line-height: normal;
-	cursor: pointer;
-	text-align: center;
+  display: inline-block;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 140px;
+  padding: 15px 5px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  background: black;
+  color: #fff;
+  line-height: normal;
+  cursor: pointer;
+  text-align: center;
 }
 
 .site-btn:hover {
-	color: #fff;
+  color: #fff;
 }
 
 .site-btn.sb-dark {
-	background: none;
+  background: none;
 }
 
 .site-btn.sb-big {
-	min-width: 257px;
+  min-width: 257px;
 }
-
 
 .page-section h3.section-subheading {
   font-size: 16px;
@@ -197,9 +212,6 @@ Hero section
 }
 
 @media (min-width: 768px) {
-  section {
-    padding: 150px 0;
-  }
   .page-section img.camp-img {
     width: 700px;
   }
@@ -268,7 +280,6 @@ img::-moz-selection {
 
 #mainNav .navbar-brand {
   color: #fff;
-  font-family: 'Kaushan Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 #mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
@@ -327,72 +338,6 @@ img::-moz-selection {
   }
 }
 
-header.masthead {
-  text-align: center;
-  color: white;
-  background-image: url("../img/header2.jpg");
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: center center;
-  background-size: cover;
-}
-
-header.masthead .intro-text {
-  padding-top: 100px;
-  padding-bottom: 50px;
-}
-
-header.masthead .intro-text .cont-img {
-  height: 100px;
-  width: 250px;
-  margin-bottom: 20px;
-}
-
-header.masthead .intro-text .intro-lead-in {
-  font-size: 22px;
-  font-style: italic;
-  line-height: 22px;
-  margin-bottom: 25px;
-  font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-header.masthead .intro-text .intro-heading {
-  font-size: 50px;
-  font-weight: 700;
-  line-height: 50px;
-  margin-bottom: 25px;
-  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-@media (min-width: 768px) {
-  header.masthead .intro-text {
-    padding-top: 150px;
-    padding-bottom: 50px;
-  }
-  header.masthead .intro-text .intro-lead-in {
-    font-size: 40px;
-    font-style: italic;
-    line-height: 40px;
-    margin-bottom: 25px;
-    font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  }
-  header.masthead .intro-text .cont-img {
-    height: 200px;
-    width: 450px;
-    margin-bottom: 50px;
-  }
-  header.masthead .intro-text .intro-heading {
-    font-size: 75px;
-    font-weight: 700;
-    line-height: 75px;
-    margin-bottom: 50px;
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  }
-  header.masthead .intro-text .btn-xl {
-    font-size: 18px;
-    padding: 20px 40px;
-  }
-}
 
 .service-heading {
   margin: 15px 0;
@@ -559,7 +504,7 @@ header.masthead .intro-text .intro-heading {
   top: 0;
   bottom: 0;
   left: 40px;
-  width: 2px;
+  width: 4px;
   margin-left: -1.5px;
   content: '';
   background-color: #e9ecef;
@@ -715,7 +660,6 @@ header.masthead .intro-text .intro-heading {
 @media (min-width: 1200px) {
   .timeline>li {
     min-height: 150px;
-    
   }
   .timeline>li .timeline-panel {
     padding: 0 20px 20px 100px;
@@ -851,139 +795,148 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
   background-color: #fed136;
 }
 
-
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-	.header-section {
-		padding-left: 15px;
-	}
-	.main-menu {
-		padding-right: 0;
-	}
-	.main-menu li a {
-		margin-right: 15px;
-	}
-	.header-right .hr-btn.hr-btn-2 {
-		min-width: auto;
-	}
-	.score-section .hand-img {
-		right: 0;
-	}
-	.hero-slider .owl-dots {
-		max-width: 930px;
-		left: calc(50% - 465px);
-	}
+  .header-section {
+    padding-left: 15px;
+  }
+  .main-menu {
+    padding-right: 0;
+  }
+  .main-menu li a {
+    margin-right: 15px;
+  }
+  .header-right .hr-btn.hr-btn-2 {
+    min-width: auto;
+  }
+  .score-section .hand-img {
+    right: 0;
+  }
+  .hero-slider .owl-dots {
+    max-width: 930px;
+    left: calc(50% - 465px);
+  }
 }
 
 /* Tablet :768px. */
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-	.header-section {
-		padding: 0 25px;
-	}
-	.main-menu {
-		padding-right: 0;
-	}
-	.main-menu li a {
-		margin-right: 0;
-		margin-left: 30px;
-	}
-	.header-right {
-		display: none;
-	}
-	.hero-slider .owl-dots {
-		max-width: 690px;
-		left: calc(50% - 345px);
-	}
-	.hs-text {
-		margin-bottom: 50px;
-		padding-top: 0;
-	}
-	.icon-box-item .ib-icon {
-		float: none;
-		margin-bottom: 20px;
-	}
-	.score-section .hand-img {
-		display: none;
-	}
-	.sidebar {
-		padding-top: 50px;
-	}
+  .header-section {
+    padding: 0 25px;
+  }
+  .main-menu {
+    padding-right: 0;
+  }
+  .main-menu li a {
+    margin-right: 0;
+    margin-left: 30px;
+  }
+  .header-right {
+    display: none;
+  }
+  .hero-slider .owl-dots {
+    max-width: 690px;
+    left: calc(50% - 345px);
+  }
+  .hs-text {
+    margin-bottom: 50px;
+    padding-top: 0;
+  }
+  .icon-box-item .ib-icon {
+    float: none;
+    margin-bottom: 20px;
+  }
+  .score-section .hand-img {
+    display: none;
+  }
+  .sidebar {
+    padding-top: 50px;
+  }
 }
 
 /* Large Mobile :480px. */
 
 @media only screen and (max-width: 767px) {
-	.header-section {
-		overflow: hidden;
-		padding: 0 25px;
-	}
-	.main-menu {
-		display: none;
-	}
-	.slicknav_menu {
-		padding: 0;
-		display: block;
-		background: transparent;
-	}
-	.slicknav_btn {
-		background: #616161;
-		margin-top: 29px;
-	}
-	.slicknav_nav {
-		background: #22242b;
-		margin-bottom: 30px;
-	}
-	.slicknav_nav a {
-		margin: 0;
-		padding: 10px 20px;
-		border-bottom: 1px solid #111;
-	}
-	.slicknav_nav a:hover {
-		color: #f43f00;
-		border-radius: 0;
-		background: #0b0e25;
-	}
-	.slicknav_nav .slicknav_row {
-		padding: 10px 20px;
-		margin: 0;
-	}
-	.slicknav_nav .slicknav_row:hover {
-		border-radius: 0;
-		background: #0b0e25;
-	}
-	.slicknav_parent:hover {
-		background: #22242b;
-		color: #f43f00;
-	}
-	.header-right {
-		display: none;
-	}
-	.hero-slider .owl-dots {
-		left: 0;
-		padding: 0 15px;
-		text-align: center;
-	}
-	.hs-text {
-		margin-bottom: 50px;
-		padding-top: 0;
-	}
-	.score-section h2,
-	.hs-text h2 {
-		font-size: 50px;
-	}
-	.score-section .hand-img {
-		display: none;
-	}
-	.sidebar {
-		padding-top: 50px;
-	}
-	.loans-calculator {
-		padding: 70px 45px;
-	}
+  .header-section {
+    overflow: hidden;
+    padding: 0 25px;
+  }
+  .main-menu {
+    display: none;
+  }
+  .slicknav_menu {
+    padding: 0;
+    display: block;
+    background: transparent;
+  }
+  .slicknav_btn {
+    background: #616161;
+    margin-top: 29px;
+  }
+  .slicknav_nav {
+    background: #22242b;
+    margin-bottom: 30px;
+  }
+  .slicknav_nav a {
+    margin: 0;
+    padding: 10px 20px;
+    border-bottom: 1px solid #111;
+  }
+  .slicknav_nav a:hover {
+    color: #f43f00;
+    border-radius: 0;
+    background: #0b0e25;
+  }
+  .slicknav_nav .slicknav_row {
+    padding: 10px 20px;
+    margin: 0;
+  }
+  .slicknav_nav .slicknav_row:hover {
+    border-radius: 0;
+    background: #0b0e25;
+  }
+  .slicknav_parent:hover {
+    background: #22242b;
+    color: #f43f00;
+  }
+  .header-right {
+    display: none;
+  }
+  .hero-slider .owl-dots {
+    left: 0;
+    padding: 0 15px;
+    text-align: center;
+  }
+  .hs-text {
+    margin-bottom: 50px;
+    padding-top: 0;
+  }
+  .score-section h2, .hs-text h2 {
+    font-size: 50px;
+  }
+  .score-section .hand-img {
+    display: none;
+  }
+  .sidebar {
+    padding-top: 50px;
+  }
+  .loans-calculator {
+    padding: 70px 45px;
+  }
 }
 
+@media only screen and (max-width: 950px) {
+  .conthead1 {
+    display: grid;
+  }
+  .conthead2 {
+    display: grid;
+  }
+  .hero-section .container-bot {
+    margin-top: 0px;
+  }
+}
 
-@media only screen and (max-width: 550px){
+@media only screen and (max-width: 550px) {
   .logo-text {
     font-size: 40px;
     font-weight: 600;
@@ -999,53 +952,53 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
   .img-header-one {
     height: 350px;
   }
-  
-  .img-header-two{
-    height: 350px; 
+  .img-header-two {
+    height: 350px;
     margin-top: 30px;
   }
-  
-  .logo-app{
-    height: 100px; 
+
+  .img-header-three{
+    height: 250px;
     margin-top: 30px;
   }
-  
+
+  .logo-app {
+    height: 80px;
+    margin-top: 30px;
+  }
   .logo-app-store-play {
     height: 50px;
-     margin-top: 30px;
+    margin-top: 30px;
   }
 }
 
 @media only screen and (max-width: 479px) {
-
-	.header-section {
-		padding: 0 15px;
-	}
-	.loans-calculator {
-		padding: 50px 15px;
-	}
-	.loans-calculator p {
-		padding-right: 0;
-	}
-	.score-section h2,
-	.hs-text h2,
-	.cta-section h2 {
-		font-size: 36px;
-	}
-	.hero-form {
-		padding: 40px 20px 50px;
-	}
-	.icon-box-item .ib-icon {
-		float: none;
-		margin-bottom: 20px;
-	}
-	.site-btn.sb-big {
-		min-width: auto;
-	}
-	.info-text ul li {
-		font-size: 16px;
-	}
-	.loans-text ul {
-		padding-left: 0;
-	}
+  .header-section {
+    padding: 0 15px;
+  }
+  .loans-calculator {
+    padding: 50px 15px;
+  }
+  .loans-calculator p {
+    padding-right: 0;
+  }
+  .score-section h2, .hs-text h2, .cta-section h2 {
+    font-size: 36px;
+  }
+  .hero-form {
+    padding: 40px 20px 50px;
+  }
+  .icon-box-item .ib-icon {
+    float: none;
+    margin-bottom: 20px;
+  }
+  .site-btn.sb-big {
+    min-width: auto;
+  }
+  .info-text ul li {
+    font-size: 16px;
+  }
+  .loans-text ul {
+    padding-left: 0;
+  }
 }
