@@ -69,9 +69,9 @@
   <section class="page-section bg-light" id="services">
     <section class="hero-section " style="text-align: center;">
     <div class="conthead1 col-lg-14">
-      <div class="container col-lg-6" style="margin-top: 100px;">
-        <div style="margin-top: 10px;">
-          <a class="header-text">Destaque seu produto ou serviço na região e na hora que quiser no nosso aplicativo
+      <div class="container col-lg-6" style="margin-top: 80px;">
+        <div >
+          <a class="header-text">Anuncie seu produto ou serviço na região e na hora que quiser no nosso aplicativo
             Miips </a>
         </div>
         <div>
@@ -116,15 +116,15 @@
     <div class="conthead2 col-lg-12">
 
       <div class="container col-lg-6">
-        <div style="margin-top: 10px;">
+        <div style="margin-top: 70px;">
           <a class="header-text">Agende online os horários dos seus clientes no nosso app</a>
         </div>
         <img class="img-fluid img-header-three" src="img/appservice.png" alt="">
       </div>
 
       <div class="col-lg-6">
-        <div style="margin-top: 10px;">
-          <a class="header-text">Venda os produtos da sua loja e torne-se referência na sua cidade</a>
+        <div style="margin-top: 70px;">
+          <a class="header-text">Anuncie os produtos da sua loja e torne-se referência na sua cidade</a>
         </div>
         <img class="img-fluid img-header-two" src="img/head.png" alt="">
         
@@ -261,7 +261,7 @@
                   <h4 class="subheading">Registro</h4>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Registre os produtos ou serviços que sua empresa tem a oferecer</p>
+                  <p class="text-muted">Registre os produtos ou serviços que sua empresa tem a oferecer na sua região</p>
                 </div>
               </div>
             </li>
@@ -276,7 +276,7 @@
                 </div>
                 <div class="timeline-body">
                   <p class="text-muted">Atinja usuários que buscam o que sua empresa tem a
-                    oferecer, impulsionando seus anuncios e aumentando suas vendas com o melhor custo benefício
+                    oferecer na sua cidade, impulsionando seus anuncios e aumentando suas vendas com o melhor custo benefício
                   </p>
                 </div>
               </div>
@@ -293,33 +293,6 @@
     </div>
   </section>
 
-  <!-- Clients -->
-  <section class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-sm-6">
-          <a href="">
-            <img class="img-fluid d-block mx-auto" src="img/logos/envato.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <a href="">
-            <img class="img-fluid d-block mx-auto" src="img/logos/designmodo.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <a href="">
-            <img class="img-fluid d-block mx-auto" src="img/logos/themeforest.jpg" alt="">
-          </a>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <a href="">
-            <img class="img-fluid d-block mx-auto" src="img/logos/creative-market.jpg" alt="">
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Contact -->
   <section class="page-section" id="contact">
@@ -514,6 +487,27 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"
     integrity="sha256-dHf/YjH1A4tewEsKUSmNnV05DDbfGN3g7NMq86xgGh8=" crossorigin="anonymous"></script>
   <script src="contact.js"></script>
+
+  
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAj1Hg18SVHhnScbQeFh03qW8tvHkg9yoE",
+    authDomain: "miips-3cdbd.firebaseapp.com",
+    databaseURL: "https://miips-3cdbd.firebaseio.com",
+    projectId: "miips-3cdbd"
+  };
+  firebase.initializeApp(config);
+
+  //make auth and firestore references
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+
+</script>
 
 </body>
 
