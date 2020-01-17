@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <title>Miips - Cadastrar-se</title>
 
     <link rel="icon" href="img/mp-icon.png" type="image/x-icon">
-  
+
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -16,7 +17,9 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
 
     <div class="main">
@@ -24,44 +27,48 @@
 
             <div class="signup-content">
                 <div class="signup-img">
-                    <img src="img/lead.png" alt="">
+                    <img src="img/contract.png" alt="">
                     <div class="signup-img-content">
-                        <h2>Conte-nos sobre você</h2>
-                        <p>Precisamos conhecer</p>
                     </div>
                 </div>
-                
+
                 <div class="signup-form">
                     <div style="text-align: center; padding-top: 30px;">
-                        <a style="font-size: 20px; text-transform: uppercase; font-weight: 900;">Sobre o responsável</a>
+                        <a style="font-size: 20px; text-transform: uppercase; font-weight: 900;">Cadastre sua
+                            empresa</a>
                         <div>
-                            <img class="progress-img" src="img/step_2.jpeg" alt="">
-                          </div>
+                            <img class="progress-img" src="img/step_3.jpeg" alt="">
+                        </div>
                     </div>
-                    
+
                     <form method="POST" class="register-form" id="register-form">
                         <div class="form-row">
                             <div class="form-group">
                                 <div class="form-input">
-                                    <label for="nome_social" class="required">Nome Completo</label>
-                                    <input type="text" name="nome_social" id="nome_social" />
+                                    <label for="nome_social" class="required">Email</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1">
                                 </div>
                                 <div class="form-input">
-                                    <label for="cnpj" class="required">cpf</label>
-                                    <input type="text" class="form-control cep-mask" placeholder="Ex.: 00000-000">
+                                    <label for="nome_social" class="required">Senha</label>
+                                    <input type="password" class="form-control" id="elemento">
                                 </div>
                                 <div class="form-input">
-                                    <label for="ddd" class="required">RG</label>
-                                    <input type="ddd" name="ddd" id="ddd" />
-                                </div>
-                                <div class="form-input">
-                                    <label for="cep" class="required">Orgão Emissor</label>
-                                    <input type="cep" name="cep" id="cep" />
+                                    <label for="nome_social" class="required">Confirmar Senha</label>
+                                    <input type="password" class="form-control" id="elemento">
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="form-radio-group">            
+                            <div class="form-radio-item">
+                                <input type="radio" name="payment" id="cash">
+                                <label for="cash">Aceito os termos de uso e condições</label>
+                                <span class="check"></span>
+                            </div>
+                        </div>
                         <div class="form-submit">
-                            <a href="contract.html" class="submit" id="submit" name="submit" type="submit">Avançar</a>
+                            <a href="painel.html" class="submit" id="submit" name="submit"
+                                type="submit">Avançar</a>
                         </div>
                     </form>
                 </div>
@@ -71,8 +78,11 @@
     </div>
 
     <!-- JS -->
-    <script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="//assets.locaweb.com.br/locastyle/2.0.6/javascripts/locastyle.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>
