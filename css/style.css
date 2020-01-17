@@ -267,7 +267,7 @@ label.required {
     color: #b90000; }
 
 .progress-img {
-  height: 120px;
+  height: 100px;
 }
 
 input {
@@ -566,7 +566,7 @@ input.error {
   
 @media only screen and (max-width: 530px) {
   .progress-img {
-    height: 80px;
+    height: 60px;
   }
 }
 
