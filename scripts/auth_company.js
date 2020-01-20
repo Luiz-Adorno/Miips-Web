@@ -16,6 +16,10 @@ signupFormCompany.addEventListener('submit', (e) => {
     const bairro = signupFormCompany['bairro'].value;
     const nro = signupFormCompany['nro'].value;
     const complemento = signupFormCompany['complemento'].value;
+
+    
+    localStorage.setItem('nome_empresa', nome_empresa);
+  
  
     db.collection('companies').doc(nome_empresa).set({
         nome_social: nome_social,
@@ -31,9 +35,6 @@ signupFormCompany.addEventListener('submit', (e) => {
         complemento: complemento
     }, {merge: true});
 
-   /* db.collection('companies').doc(nome_empresa).collection('products').add({
-        cadeira: "hyperX"
-    })*/
 
     setTimeout(function() {
         window.location.href = '/register-person.html';
