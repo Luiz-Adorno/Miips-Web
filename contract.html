@@ -10,10 +10,12 @@
 
     <link rel="icon" href="img/mp-icon.png" type="image/x-icon">
 
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
 
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.min.css">
@@ -36,7 +38,7 @@
                     <div style="text-align: center; padding-top: 30px;">
                         <a style="font-size: 20px; text-transform: uppercase; font-weight: 900;">Assine o seu contrato</a>
                         <div>
-                            <img class="progress-img" src="img/step_3.jpeg" alt="">
+                            <img class="progress-img" src="img/step_1.jpg" alt="">
                         </div>
                     </div>
 
@@ -44,16 +46,16 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <div class="form-input">
-                                    <label for="nome_social" class="required">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1">
+                                    <label for="nome_social" class="required">Email da empresa</label>
+                                    <input type="email" class="form-control" id="email">
                                 </div>
                                 <div class="form-input">
                                     <label for="nome_social" class="required">Senha</label>
-                                    <input type="password" class="form-control" id="elemento">
+                                    <input type="password" class="form-control" id="password">
                                 </div>
                                 <div class="form-input">
                                     <label for="nome_social" class="required">Confirmar Senha</label>
-                                    <input type="password" class="form-control" id="elemento">
+                                    <input type="password" class="form-control" id="password_f">
                                 </div>
                             </div>
                         </div>
@@ -76,8 +78,7 @@
                             </div>
                         </div>
                         <div class="form-submit">
-                            <a href="painel.html" class="submit" id="submit" name="submit"
-                                type="submit">Cadastrar sua empresa</a>
+                            <button class="submit" id="submit" name="submit" type="submit">Avançar</button>
                         </div>
                     </form>
                 </div>
@@ -86,11 +87,33 @@
 
     </div>
 
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAj1Hg18SVHhnScbQeFh03qW8tvHkg9yoE",
+            authDomain: "miips-3cdbd.firebaseapp.com",
+            databaseURL: "https://miips-3cdbd.firebaseio.com",
+            projectId: "miips-3cdbd",
+            storageBucket: "miips-3cdbd.appspot.com",
+            messagingSenderId: "565416108871",
+            appId: "1:565416108871:web:961f3541b8bbc7c7ad6262"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        //make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+    </script>
+
     <!-- JS -->
     <script async="" src="//www.google-analytics.com/analytics.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="//assets.locaweb.com.br/locastyle/2.0.6/javascripts/locastyle.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <script src="scripts/auth_fb.js"></script>
 
 </body>
 
