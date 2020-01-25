@@ -1,4 +1,4 @@
-auth.onAuthStateChanged(function(user) {
+/*auth.onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
       console.log('logged');
@@ -14,7 +14,7 @@ auth.onAuthStateChanged(function(user) {
 
     document.getElementById("singup-form").style.display = "none";
     document.getElementById("cadastro-mensagem").style.display = "none";
-  });
+  });*/
 
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
