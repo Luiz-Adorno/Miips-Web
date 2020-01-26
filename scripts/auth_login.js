@@ -31,7 +31,11 @@ auth.onAuthStateChanged(function(user) {
 
 });
 
-/* firebase.auth().signOut().then(function() {
+document.getElementById("cadastrar").addEventListener('click', function () {
+  window.location.href = '/contract.html';
+});
+
+/*firebase.auth().signOut().then(function() {
   // Sign-out successful.
 }, function(error) {
   // An error happened.

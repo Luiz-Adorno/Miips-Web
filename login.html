@@ -6,6 +6,20 @@
     <title>Miips - Entrar</title>
     <link rel="icon" href="img/mp-icon.png" type="image/x-icon">
 
+<!--===============================================================================================-->	
+<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor2/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor2/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor2/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -29,7 +43,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-						<input class="input100" type="text" name="email">
+						<input class="input100" type="text" name="email" id="email">
 						<span class="focus-input100" data-placeholder="Email"></span>
 					</div>
 
@@ -37,7 +51,7 @@
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
-						<input class="input100" type="password" name="pass">
+						<input class="input100" type="password" name="pass" id="password">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
@@ -52,10 +66,10 @@
 
 					<div class="text-center p-t-115">
 						<span class="txt1">
-							Não tem uma conta ainda? Faça o
+							Não tem uma conta? Faça o
 						</span>
 
-						<a class="txt2" href="#">
+						<a class="txt2" href="#" id="cadastrar">
 							Cadastro
 						</a>
 					</div>
@@ -87,8 +101,23 @@
         const db = firebase.firestore();
       </script>
       
-      <script src="scripts/auth_login.js"></script>
-	
-
+	  <script src="scripts/auth_login.js"></script>
+	  
+<!--===============================================================================================-->
+<script src="vendor2/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor2/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor2/bootstrap/js/popper.js"></script>
+	<script src="vendor2/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor2/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor2/daterangepicker/moment.min.js"></script>
+	<script src="vendor2/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor2/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="js/main.js"></script>
 </body>
 </html>
