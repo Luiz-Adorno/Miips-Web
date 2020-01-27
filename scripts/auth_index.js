@@ -3,7 +3,7 @@ document.getElementById("btn_painel").addEventListener('click', function () {
     if (user) {
       // User is signed in.
       console.log('logged');
-      window.location.href = '/painel.html';
+      window.location.href = '/painel/index.html';
       // ...
   
     } else {

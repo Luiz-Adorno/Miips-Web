@@ -24,7 +24,7 @@ firebase.auth().onAuthStateChanged((user) => {
         });
     
         setTimeout(function() {
-            window.location.href = '/painel.html';
+            window.location.href = '/painel/index.html';
         }, 2000);
 
     });
