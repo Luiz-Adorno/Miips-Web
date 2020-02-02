@@ -16,3 +16,11 @@ auth.onAuthStateChanged(function (user) {
     }
 
 });
+
+document.getElementById("btn_logout").addEventListener('click', function () {
+    firebase.auth().signOut().then(function () {
+      // Sign-out successful.
+    }, function (error) {
+      // An error happened.
+    });
+  });

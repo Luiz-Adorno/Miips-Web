@@ -10,6 +10,7 @@ singup.addEventListener('submit', (e) => {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
+    alert("Senha incorreta");
     // ...
   });
 
