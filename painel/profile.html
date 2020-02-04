@@ -22,6 +22,9 @@
 
     <link rel="apple-touch-icon" href="apple-icon.png">
 
+    <!-- Filepond stylesheet -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
@@ -99,7 +102,8 @@
                             aria-expanded="false"> <i class="menu-icon fa fa-gears (alias)"></i>Conta</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-shield"></i><a href="page-login.html">Dados da conta</a></li>
-                            <li><i class="menu-icon fa fa-lock"></i><a href="change-password.html">Trocar a senha</a></li>
+                            <li><i class="menu-icon fa fa-lock"></i><a href="change-password.html">Trocar a senha</a>
+                            </li>
                         </ul>
 
                     <li>
@@ -205,7 +209,7 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.png"  id="avatar_small">
+                            <img class="user-avatar rounded-circle" src="images/admin.png" id="avatar_small">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -225,32 +229,34 @@
                         <div class="profile-img">
                             <img src="images/admin.png" alt="User Avatar" id="avatar_big">
                             <div class="file btn btn-lg btn-primary">
-                               Alterar foto
-                                <input type="file" name="file"/>
+                                Alterar foto
+                                <input type="file" name="file" />
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                                    <h5>
-                                        Kshiti Ghelani
-                                    </h5>
-                                    <h6>
-                                        Web Developer and Designer
-                                    </h6>
-                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                            <h5>
+                                Kshiti Ghelani
+                            </h5>
+                            <h6>
+                                Web Developer and Designer
+                            </h6>
+                            <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                        aria-controls="home" aria-selected="true">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                        aria-controls="profile" aria-selected="false">Timeline</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
                     </div>
                 </div>
                 <div class="row">
@@ -260,91 +266,91 @@
                     <div class="col-md-4">
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>123 456 7890</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>User Id</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Kshiti123</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Kshiti Ghelani</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>kshitighelani@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>123 456 7890</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Profession</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Web Developer and Designer</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Experience</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Hourly Rate</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>10$/hr</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Projects</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>230</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>English Level</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Availability</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>6 months</p>
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Experience</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Hourly Rate</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>10$/hr</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Total Projects</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>230</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>English Level</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Availability</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>6 months</p>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Your Bio</label><br/>
+                                        <label>Your Bio</label><br />
                                         <p>Your detail description</p>
                                     </div>
                                 </div>
@@ -352,7 +358,7 @@
                         </div>
                     </div>
                 </div>
-            </form>           
+            </form>
         </div>
 
     </div><!-- /#right-panel -->
@@ -364,10 +370,12 @@
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script>
 
+    <!-- Load FilePond library -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
 
     <script src="vendors/chart.js/dist/Chart.bundle.min.js"></script>
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/widgets.js"></script>
+
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
