@@ -10,6 +10,14 @@ auth.onAuthStateChanged(function (user) {
     docRef.get().then(function (doc) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
+
+        const nome_completo;
+        const cpf;
+        const rg;
+        const orgao_emissor;
+
+
+
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -17,6 +25,8 @@ auth.onAuthStateChanged(function (user) {
     }).catch(function (error) {
       console.log("Error getting document:", error);
     });
+
+
 
     document.getElementById('avatar_big').src = user.photoURL
     document.getElementById('avatar_small').src = user.photoURL
