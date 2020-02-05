@@ -231,8 +231,8 @@
                                 Alterar foto
                                 <input type="file" name="picField" id="picField" accept="image/*" />
                                 <div>
-                                <progress id="uploader" value="0" max="100">0%</progress>
-                            </div>
+                                    <progress id="uploader" value="0" max="100">0%</progress>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -417,6 +417,7 @@
     </script>
 
     <script>
+        //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 document.getElementById("uploader").style.display = "none";
@@ -439,14 +440,20 @@
                         console.log("complete")
                         firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto" + "/" + file.name).getDownloadURL().then(function (url) {
                             console.log(url)
-                            user.updateProfile({
-                                photoURL: url
-                            }).then(function () {
-                                location.reload();
-                                // Update successful.
-                            }).catch(function (error) {
-                                // An error happened.
+                            db.collection('companies').doc(user.uid).set({
+                                url_profile: url
+                            }, { merge: true }).then(function () {
+                                //after add the data in companies go to responsible
+                                user.updateProfile({
+                                    photoURL: url
+                                }).then(function () {
+                                    location.reload();
+                                    // Update successful.
+                                }).catch(function (error) {
+                                    // An error happened.
+                                });
                             });
+
                         }).catch(function (error) {
                             // Handle any errors
                         });
