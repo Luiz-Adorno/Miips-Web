@@ -15,6 +15,13 @@ body{
     width: 70%;
     height: 100%;
 }
+.user-avatar {
+    overflow: hidden;
+    height: 35px;
+    border-radius: 50%;
+}
+
+
 .profile-img .file {
     position: relative;
     overflow: hidden;

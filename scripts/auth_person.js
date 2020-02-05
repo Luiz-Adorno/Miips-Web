@@ -32,12 +32,12 @@ firebase.auth().onAuthStateChanged((user) => {
             //add in companies data the reponsible id
             db.collection('companies').doc(user.uid).set({
               responsible: doc.id
-            }, { merge: true }).then(function() {
+            }, { merge: true }).then(function () {
               //after add the responsible in companies values go to painel
               window.location.href = '/painel/index.html';
-          });
+            });
 
-          }); 
+          });
         });
       });
 

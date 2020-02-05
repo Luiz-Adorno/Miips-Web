@@ -15,15 +15,13 @@
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <link rel="apple-touch-icon" href="apple-icon.png">
-
-    <!-- Filepond stylesheet -->
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
@@ -209,11 +207,11 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.png" id="avatar_small">
+                            <img class="user-avatar" src="images/admin.png" id="avatar_small">
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Perfil</a>
+                            <a class="nav-link" href=""><i class="fa fa-user"></i> Perfil</a>
                         </div>
                     </div>
 
@@ -227,10 +225,14 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="images/admin.png" style="height: 200px; width: 200px;" alt="User Avatar" id="avatar_big">
+                            <img src="images/admin.png" style="height: 200px; width: 200px;" alt="User Avatar"
+                                id="avatar_big">
                             <div class="file btn btn-lg btn-primary">
                                 Alterar foto
-                                <input type="file" name="file" />
+                                <input type="file" name="picField" id="picField" accept="image/*" />
+                                <div>
+                                <progress id="uploader" value="0" max="100">0%</progress>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -387,10 +389,6 @@
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!-- Load FilePond library -->
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-
-
     <script src="vendors/chart.js/dist/Chart.bundle.min.js"></script>
 
 
@@ -412,8 +410,53 @@
         firebase.initializeApp(firebaseConfig);
 
         //make auth and firestore references
+
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const storageRef = firebase.storage().ref();
+    </script>
+
+    <script>
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                document.getElementById("uploader").style.display = "none";
+                console.log(user.uid)
+                var uploader = document.getElementById('uploader');
+                var fileButton = document.getElementById('picField');
+                fileButton.addEventListener('change', function (e) {
+                    document.getElementById("uploader").style.display = "block";
+                    var file = e.target.files[0];
+                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto" + "/" + file.name);
+                    var task = storageRef.put(file);
+                    task.on('state_changed', function progress(snapshot) {
+                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        uploader.value = percentage;
+
+                    }, function error(err) {
+                        console.log("err")
+
+                    }, function complete() {
+                        console.log("complete")
+                        firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto" + "/" + file.name).getDownloadURL().then(function (url) {
+                            console.log(url)
+                            user.updateProfile({
+                                photoURL: url
+                            }).then(function () {
+                                location.reload();
+                                // Update successful.
+                            }).catch(function (error) {
+                                // An error happened.
+                            });
+                        }).catch(function (error) {
+                            // Handle any errors
+                        });
+                    });
+                });
+            } else {
+                // No user is signed in.
+            }
+        });
+
     </script>
 
     <script src="scripts/auth_profile.js"></script>

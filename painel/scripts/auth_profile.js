@@ -25,8 +25,6 @@ auth.onAuthStateChanged(function (user) {
           document.getElementById("orgao_emissor").innerHTML = orgao_emissor;
         });
 
-
-
       });
     });
 
