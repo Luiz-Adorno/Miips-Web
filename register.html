@@ -15,6 +15,9 @@
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
 
+    <!-- mask-->
+
+
 
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.min.css">
@@ -121,15 +124,15 @@
                             <div class="form-group">
                                 <div class="form-input">
                                     <label for="nome_social" class="required">Razão Social</label>
-                                    <input type="text" name="nome_social" id="nome_social" required/>
+                                    <input type="text" name="nome_social" id="nome_social" required />
                                 </div>
                                 <div class="form-input">
                                     <label for="nome_empresa" class="required">Nome da empresa</label>
-                                    <input type="text" name="nome_empresa" id="nome_empresa" required/>
+                                    <input type="text" name="nome_empresa" id="nome_empresa" required />
                                 </div>
                                 <div class="form-input">
                                     <label for="cnpj" class="required">CNPJ</label>
-                                    <input type="text" name="cnpj" id="cnpj" required/>
+                                    <input type="text" name="cnpj" id="cnpj" required />
                                 </div>
                                 <div class="form-input">
                                     <label for="ddd" class="required">(DDD) Telefone</label>
@@ -138,30 +141,29 @@
                                 </div>
 
                                 <!-- Inicio do formulario -->
-                                    <label>Cep:
-                                        <input name="cep" type="text" id="cep" value="" size="10"
-                                            maxlength="9" required /></label><br />
-                                    <label>Cidade:
-                                        <input name="cidade" type="text" id="cidade" size="40" required/></label><br />
-                                    <label>Estado:
-                                        <input name="uf" type="text" id="uf" size="2" required /></label><br />
-                                    <label>Rua:
-                                        <input name="rua" type="text" id="rua" size="60" required /></label><br />
-                                    <label>Bairro:
-                                        <input name="bairro" type="text" id="bairro" size="40" required/></label><br />
+                                <label>Cep:
+                                    <input name="cep" type="text" id="cep" value="" size="10" maxlength="9"
+                                        required /></label><br />
+                                <label>Cidade:
+                                    <input name="cidade" type="text" id="cidade" size="40" required /></label><br />
+                                <label>Estado:
+                                    <input name="uf" type="text" id="uf" size="2" required /></label><br />
+                                <label>Rua:
+                                    <input name="rua" type="text" id="rua" size="60" required /></label><br />
+                                <label>Bairro:
+                                    <input name="bairro" type="text" id="bairro" size="40" required /></label><br />
                                 <div class="form-input">
                                     <label for="nro" class="required">Número do estabelecimento</label>
-                                    <input type="text" name="nro" id="nro" required/>
+                                    <input type="text" name="nro" id="nro" required />
                                 </div>
                                 <div class="form-input">
                                     <label for="complemento" class="required">Complemento</label>
-                                    <input type="text" name="complemento" id="complemento" required/>
+                                    <input type="text" name="complemento" id="complemento" required />
                                 </div>
                             </div>
                         </div>
                         <div class="form-submit">
-                            <button class="submit" id="submit" name="submit"
-                                type="submit">Avançar</button>
+                            <button class="submit" id="submit" name="submit" type="submit">Avançar</button>
                         </div>
                     </form>
                 </div>
@@ -178,6 +180,18 @@
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#cep").mask("99999-999");
+        });
+    </script>
 
     <script>
         // Your web app's Firebase configuration

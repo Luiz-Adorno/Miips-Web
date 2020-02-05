@@ -37,6 +37,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }, {merge: true}).then(function() {
         //after add the data in companies go to responsible
         window.location.href = '/register-person.html';
+       console.log(cep)
     });
     
     });
