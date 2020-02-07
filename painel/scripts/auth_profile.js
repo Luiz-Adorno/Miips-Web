@@ -67,8 +67,10 @@ auth.onAuthStateChanged(function (user) {
 
 
 
-    document.getElementById('avatar_big').src = user.photoURL
-    document.getElementById('avatar_small').src = user.photoURL
+    if (user.photoURL != null) {
+      document.getElementById('avatar_small').src = user.photoURL
+      document.getElementById('avatar_small').src = user.photoURL
+    }
   } else {
     // User is signed out.
     console.log('signed out');

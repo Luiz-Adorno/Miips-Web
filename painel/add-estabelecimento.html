@@ -299,11 +299,12 @@
 
                     <form id="register-form-store">
                         <div style="text-align: center;">
-                            <p class="titleH">Arraste a imagem para o campo cinza abaixo ou clique em Browse para adcionar
+                            <p class="titleH">Arraste a imagem para o campo cinza abaixo ou clique em Browse para
+                                adcionar
                                 imagem de perfil da loja</p>
                             <!-- We'll transform this input into a pond -->
-    
-                            <input type="file"  accept="image/*" required>
+
+                            <input type="file" accept="image/*" required>
                         </div>
                         <div class="form-group">
                             <label>Nome do Estabelecimento</label>
@@ -312,11 +313,11 @@
                         <div class="form-group">
                             <label for="ddd" class="required">(DDD) Telefone</label>
                             <input type="text" class="form-control cel-sp-mask" placeholder="Ex.: (00) 00000-0000"
-                                id="telefone" required>
+                                minlength="15" id="telefone" required>
                         </div>
                         <div class="form-group">
                             <label for="cnpj" class="required">CNPJ</label>
-                            <input type="text" class="form-control" name="cnpj" id="cnpj" required />
+                            <input type="text" class="form-control" name="cnpj" id="cnpj" required minlength="18" />
                         </div>
 
                         <!-- Inicio do ZIP -->
@@ -444,48 +445,76 @@
 
                 signupFormStore.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                    firebase.auth().onAuthStateChanged(function (user) {
-                        if (user) {
-                            console.log("sdadsa")
-                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
-                            var task = storageRef.put(output);
-                            task.on('state_changed', function progress(snapshot) {
-                                console.log("onprogress")
-
-                            }, function error(err) {
-                                console.log("err")
-
-                            }, function complete() {
-                                console.log("complete")
-                                firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name).getDownloadURL().then(function (url) {
-                                    console.log(url)
 
 
-                                    //saving company info
-                                    const nome_estabeleciomento = signupFormStore['nome_esta'].value;
-                                    const cnpj = signupFormStore['cnpj'].value;
-                                    const telefone = signupFormStore['telefone'].value;
-                                    const cep = signupFormStore['cep'].value;
-                                    const cidade = signupFormStore['cidade'].value;
-                                    const uf = signupFormStore['uf'].value;
-                                    const rua = signupFormStore['rua'].value;
-                                    const bairro = signupFormStore['bairro'].value;
-                                    const nro = signupFormStore['nro'].value;
-                                    const complemento = signupFormStore['complemento'].value;
-
-                                    console.log(cidade, nro)
+                    //saving company info
+                    const nome_estabeleciomento = signupFormStore['nome_esta'].value;
+                    const cnpj = signupFormStore['cnpj'].value;
+                    const telefone = signupFormStore['telefone'].value;
+                    const cep = signupFormStore['cep'].value;
+                    const cidade = signupFormStore['cidade'].value;
+                    const uf = signupFormStore['uf'].value;
+                    const rua = signupFormStore['rua'].value;
+                    const bairro = signupFormStore['bairro'].value;
+                    const nro = signupFormStore['nro'].value;
+                    const complemento = signupFormStore['complemento'].value;
 
 
-                                }).catch(function (error) {
-                                    // Handle any errors
-                                    console.log("erreoreo")
+
+
+                    if (cnpj.length < 14) {
+                        alert("\nCnpj deve conter no mínimo 14 caracteres")
+                        return false;
+                    } else if (telefone.length < 8) {
+                        alert("\nTelefone deve conter no mínimo 8 caracteres")
+                    } else {
+
+                        //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                        firebase.auth().onAuthStateChanged(function (user) {
+                            if (user) {
+                                console.log("sdadsa")
+                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
+                                var task = storageRef.put(output);
+                                task.on('state_changed', function progress(snapshot) {
+                                    console.log("onprogress")
+
+                                }, function error(err) {
+                                    console.log("err")
+
+                                }, function complete() {
+                                    console.log("complete")
+                                    storageRef.getDownloadURL().then(function (url) {
+                                        console.log(url)
+
+                                        db.collection('companies').doc(user.uid).set({
+                                            nome_empresa: nome_empresa,
+                                            cnpj: cnpj,
+                                            telefone: telefone,
+                                            cep: cep,
+                                            cidade: cidade,
+                                            estado: uf,
+                                            rua: rua,
+                                            bairro: bairro,
+                                            numero: nro,
+                                            complemento: complemento
+                                        }, { merge: true }).then(function () {
+                                            //after add the data in companies go to responsible
+                                            window.location.href = '/estabelecimentos.html';
+                                            console.log(cep)
+                                        });
+
+
+
+                                    }).catch(function (error) {
+                                        // Handle any errors
+                                        console.log("erreoreo")
+                                    });
                                 });
-                            });
-                        } else {
-                            // No user is signed in.
-                        }
-                    });
+                            } else {
+                                // No user is signed in.
+                            }
+                        });
+                    }
 
                 });
 

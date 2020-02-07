@@ -22,23 +22,30 @@ firebase.auth().onAuthStateChanged((user) => {
       const nro = signupFormCompany['nro'].value;
       const complemento = signupFormCompany['complemento'].value;
 
-      db.collection('companies').doc(user.uid).set({
-        nome_social: nome_social,
-        nome_empresa: nome_empresa,
-        cnpj: cnpj,
-        telefone: telefone,
-        cep: cep,
-        cidade: cidade,
-        estado: uf,
-        rua: rua,
-        bairro: bairro,
-        numero: nro,
-        complemento: complemento
-      }, { merge: true }).then(function () {
-        //after add the data in companies go to responsible
-        window.location.href = '/register-person.html';
-        console.log(cep)
-      });
+      if (cnpj.length < 14) {
+        alert("\nCnpj deve conter no mínimo 14 caracteres")
+        return false;
+      } else if (telefone.length < 8) {
+        alert("\nTelefone deve conter no mínimo 8 caracteres")
+      } else {
+        db.collection('companies').doc(user.uid).set({
+          nome_social: nome_social,
+          nome_empresa: nome_empresa,
+          cnpj: cnpj,
+          telefone: telefone,
+          cep: cep,
+          cidade: cidade,
+          estado: uf,
+          rua: rua,
+          bairro: bairro,
+          numero: nro,
+          complemento: complemento
+        }, { merge: true }).then(function () {
+          //after add the data in companies go to responsible
+          window.location.href = '/register-person.html';
+          console.log(cep)
+        });
+      }
 
     });
 

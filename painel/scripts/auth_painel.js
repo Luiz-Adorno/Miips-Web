@@ -2,7 +2,9 @@ auth.onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in.
     console.log('logged');
-    document.getElementById('avatar_small').src = user.photoURL
+    if (user.photoURL != null) {
+      document.getElementById('avatar_small').src = user.photoURL
+    }
     // ...
 
 
