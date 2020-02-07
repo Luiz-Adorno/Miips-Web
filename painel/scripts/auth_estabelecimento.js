@@ -11,12 +11,12 @@ auth.onAuthStateChanged(function (user) {
 
     if(string === "Ativado"){
       document.getElementById("on/off").style.color = 'green';
-      document.getElementById("on/off").style.width = '23%';
+      document.getElementById("on/off").style.width = '35%';
       console.log("ta ativado")
     }else{
       document.getElementById("btn_on/off").classList.add('btn-outline-danger');
       document.getElementById("on/off").style.color = 'red';
-      document.getElementById("on/off").style.width = '30%';
+      document.getElementById("on/off").style.width = '45%';
     }
 
     // ...

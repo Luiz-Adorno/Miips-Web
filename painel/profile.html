@@ -25,9 +25,6 @@
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="vendors/selectFX/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="vendors/jqvmap/dist/jqvmap.min.css">
 
 
     <link rel="stylesheet" href="assets/css/style.css">
@@ -419,10 +416,13 @@
         //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
+
                 document.getElementById("uploader").style.display = "none";
                 console.log(user.uid)
                 var uploader = document.getElementById('uploader');
                 var fileButton = document.getElementById('picField');
+
+
                 fileButton.addEventListener('change', function (e) {
                     document.getElementById("uploader").style.display = "block";
                     var file = e.target.files[0];

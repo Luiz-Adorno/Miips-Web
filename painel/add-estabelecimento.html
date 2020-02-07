@@ -15,15 +15,20 @@
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
+
+    <!-- Filepond stylesheet -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet">
+
 
     <link rel="apple-touch-icon" href="apple-icon.png">
 
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="vendors/selectFX/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="vendors/jqvmap/dist/jqvmap.min.css">
+
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
@@ -33,7 +38,74 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="assets/css/estabelecimentos.css">
+    <!-- Adicionando Javascript -->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+            }
+
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function () {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
 
 </head>
 
@@ -220,11 +292,71 @@
 
         </header><!-- /header -->
         <!-- Header-->
-      
+        <div class="container">
+            <div class="form">
+
+                <div class="form-content">
+
+                    <form id="register-form-store">
+                        <div style="text-align: center;">
+                            <p class="titleH">Arraste a imagem para o campo cinza abaixo ou clique em Browse para adcionar
+                                imagem de perfil da loja</p>
+                            <!-- We'll transform this input into a pond -->
+    
+                            <input type="file"  accept="image/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nome do Estabelecimento</label>
+                            <input type="text" class="form-control" id="nome_esta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ddd" class="required">(DDD) Telefone</label>
+                            <input type="text" class="form-control cel-sp-mask" placeholder="Ex.: (00) 00000-0000"
+                                id="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cnpj" class="required">CNPJ</label>
+                            <input type="text" class="form-control" name="cnpj" id="cnpj" required />
+                        </div>
+
+                        <!-- Inicio do ZIP -->
+                        <label>Cep:
+                            <input name="cep" type="text" id="cep" value="" size="10" class="form-control" maxlength="9"
+                                required /></label><br />
+                        <label>Cidade:
+                            <input name="cidade" class="form-control" type="text" id="cidade" size="40"
+                                disabled="disabled" /></label><br />
+                        <label>Estado:
+                            <input name="uf" class="form-control" type="text" id="uf" size="2"
+                                disabled="disabled" /></label><br />
+                        <label>Rua:
+                            <input name="rua" class="form-control" type="text" id="rua" size="60"
+                                disabled="disabled" /></label><br />
+                        <label>Bairro:
+                            <input name="bairro" class="form-control" type="text" id="bairro" size="40"
+                                disabled="disabled" /></label><br />
+                        <div class="form-input">
+                            <label for="nro" class="required">Número do estabelecimento</label>
+                            <input type="text" class="form-control" name="nro" id="nro" required />
+                        </div>
+                        <div class="form-input">
+                            <label for="complemento" class="required">Complemento</label>
+                            <input type="text" class="form-control" name="complemento" id="complemento" required />
+                        </div>
+
+                        <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div> <!-- .content -->
 
     <!-- Right Panel -->
+
+    <script type="text/javascript" src="//assets.locaweb.com.br/locastyle/2.0.6/javascripts/locastyle.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
 
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
@@ -233,12 +365,27 @@
 
     <script src="https://use.fontawesome.com/c560c025cf.js"></script>
 
-    <script src="vendors/jqvmap/dist/jquery.vmap.min.js"></script>
-    <script src="vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <script src="vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#telefone").mask("(99) 99999-9999");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#cep").mask("99999-999");
+        });
+    </script>
 
     <script>
         // Your web app's Firebase configuration
@@ -257,6 +404,96 @@
         //make auth and firestore references
         const auth = firebase.auth();
         const db = firebase.firestore();
+    </script>
+    <!-- Load FilePond library -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+
+
+    <script>
+
+        const signupFormStore = document.querySelector('#register-form-store');
+
+        //initialize the plugins
+
+        FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform);
+
+
+        const inputElement = document.querySelector('input[type="file"]');
+        const pond = FilePond.create(inputElement, {
+            imageResizeTargetWidth: 256,
+
+
+            //callback when te image is added
+            onaddfile: (err, fileItem) => {
+                console.log(err, fileItem.getMetadata('resize'))
+            },
+
+            //callback for displaying the image on the screen
+            onpreparefile: (fileItem, output) => {
+                //creating a image object
+                const img = new Image();
+                URL.createObjectURL(output);
+
+                console.log("out só" + output);
+
+                signupFormStore.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            console.log("sdadsa")
+                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
+                            var task = storageRef.put(output);
+                            task.on('state_changed', function progress(snapshot) {
+                                console.log("onprogress")
+
+                            }, function error(err) {
+                                console.log("err")
+
+                            }, function complete() {
+                                console.log("complete")
+                                firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name).getDownloadURL().then(function (url) {
+                                    console.log(url)
+
+
+                                    //saving company info
+                                    const nome_estabeleciomento = signupFormStore['nome_esta'].value;
+                                    const cnpj = signupFormStore['cnpj'].value;
+                                    const telefone = signupFormStore['telefone'].value;
+                                    const cep = signupFormStore['cep'].value;
+                                    const cidade = signupFormStore['cidade'].value;
+                                    const uf = signupFormStore['uf'].value;
+                                    const rua = signupFormStore['rua'].value;
+                                    const bairro = signupFormStore['bairro'].value;
+                                    const nro = signupFormStore['nro'].value;
+                                    const complemento = signupFormStore['complemento'].value;
+
+                                    console.log(cidade, nro)
+
+
+                                }).catch(function (error) {
+                                    // Handle any errors
+                                    console.log("erreoreo")
+                                });
+                            });
+                        } else {
+                            // No user is signed in.
+                        }
+                    });
+
+                });
+
+
+            }
+        });
+
+
     </script>
 
     <script src="scripts/auth_add_esta.js"></script>
