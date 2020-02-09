@@ -48,6 +48,7 @@ auth.onAuthStateChanged(function (user) {
         //set the company data from firestore
         document.getElementById("nome-empresa").innerHTML = nome_empresa;
         document.getElementById("nome-social").innerHTML = nome_social;
+        document.getElementById("email").innerHTML = user.email;
         document.getElementById("cnpj").innerHTML = cnpj;
         document.getElementById("telefone").innerHTML = telefone;
         document.getElementById("cep").innerHTML = cep;
@@ -69,7 +70,7 @@ auth.onAuthStateChanged(function (user) {
 
     if (user.photoURL != null) {
       document.getElementById('avatar_small').src = user.photoURL
-      document.getElementById('avatar_small').src = user.photoURL
+      document.getElementById('avatar_big').src = user.photoURL
     }
   } else {
     // User is signed out.

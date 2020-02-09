@@ -298,13 +298,14 @@
                 <div class="form-content">
 
                     <form id="register-form-store">
+                        <p style="color: black;">Imagem de Perfil</p>
                         <div style="text-align: center;">
                             <p class="titleH">Arraste a imagem para o campo cinza abaixo ou clique em Browse para
                                 adcionar
                                 imagem de perfil da loja</p>
                             <!-- We'll transform this input into a pond -->
 
-                            <input type="file" accept="image/*" required>
+                            <input class="form-content" type="file" accept="image/*" required>
                         </div>
                         <div class="form-group">
                             <label>Nome do Estabelecimento</label>
@@ -448,8 +449,8 @@
 
 
                     //saving company info
-                    const nome_estabeleciomento = signupFormStore['nome_esta'].value;
-                    const cnpj = signupFormStore['cnpj'].value;
+                    const nome_esta = signupFormStore['nome_esta'].value;
+                    var cnpj = signupFormStore['cnpj'].value;
                     const telefone = signupFormStore['telefone'].value;
                     const cep = signupFormStore['cep'].value;
                     const cidade = signupFormStore['cidade'].value;
@@ -459,7 +460,8 @@
                     const nro = signupFormStore['nro'].value;
                     const complemento = signupFormStore['complemento'].value;
 
-
+                    //firebasefirestore doens't accept "/"
+                    cnpj_new = cnpj.replace("/", "-");
 
 
                     if (cnpj.length < 14) {
@@ -468,48 +470,67 @@
                     } else if (telefone.length < 8) {
                         alert("\nTelefone deve conter no mínimo 8 caracteres")
                     } else {
-
-                        //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
-                                console.log("sdadsa")
-                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
-                                var task = storageRef.put(output);
-                                task.on('state_changed', function progress(snapshot) {
-                                    console.log("onprogress")
+                                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection(cnpj_new).get().
+                                    then(sub => {
+                                        if (sub.docs.length > 0) {
+                                            //subcollection exist
+                                            console.log("cnpj exist")
+                                            alert("CNPJ já cadastrado, entre em contato com a equipe de suporte.");
+                                        }
+                                        else {
+                                            //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
+                                            var task = storageRef.put(output);
+                                            task.on('state_changed', function progress(snapshot) {
+                                                console.log("onprogress")
 
-                                }, function error(err) {
-                                    console.log("err")
+                                            }, function error(err) {
+                                                console.log("err: " + err)
 
-                                }, function complete() {
-                                    console.log("complete")
-                                    storageRef.getDownloadURL().then(function (url) {
-                                        console.log(url)
+                                            }, function complete() {
+                                                console.log("complete")
+                                                storageRef.getDownloadURL().then(function (url) {
 
-                                        db.collection('companies').doc(user.uid).set({
-                                            nome_empresa: nome_empresa,
-                                            cnpj: cnpj,
-                                            telefone: telefone,
-                                            cep: cep,
-                                            cidade: cidade,
-                                            estado: uf,
-                                            rua: rua,
-                                            bairro: bairro,
-                                            numero: nro,
-                                            complemento: complemento
-                                        }, { merge: true }).then(function () {
-                                            //after add the data in companies go to responsible
-                                            window.location.href = '/estabelecimentos.html';
-                                            console.log(cep)
-                                        });
+                                                    var docData = {
+                                                        state: true,
+                                                        nome_estabelecimento: nome_esta,
+                                                        cnpj: cnpj,
+                                                        telefone: telefone,
+                                                        cep: cep,
+                                                        cidade: cidade,
+                                                        estado: uf,
+                                                        rua: rua,
+                                                        bairro: bairro,
+                                                        profilePhoto: url,
+                                                        numero: nro,
+                                                        complemento: complemento
+                                                    };
+                                                    console.log(url)
+
+                                                    console.log(cnpj_new)
+
+                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection(cnpj_new).add(docData).then(function () {
+                                                        console.log("first firestore add")
+
+                                                        db.collection('commercialPlaces').doc(cidade + "-" + uf).collection(cnpj_new).add(docData).then(function () {
+                                                            console.log("second firestore add")
+                                                            //after add the data in companies go to responsible
+                                                            window.location.href = 'estabelecimentos.html';
+                                                        });
 
 
+                                                    });
 
-                                    }).catch(function (error) {
-                                        // Handle any errors
-                                        console.log("erreoreo")
+                                                }).catch(function (error) {
+                                                    // Handle any errors
+                                                    console.log(error)
+                                                });
+                                            });
+                                        }
                                     });
-                                });
+
                             } else {
                                 // No user is signed in.
                             }
