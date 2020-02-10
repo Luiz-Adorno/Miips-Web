@@ -472,7 +472,7 @@
                     } else {
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
-                                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection(cnpj_new).get().
+                                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(uf).collection(cidade).doc(nome_esta).collection(cnpj_new).get().
                                     then(sub => {
                                         if (sub.docs.length > 0) {
                                             //subcollection exist
@@ -493,7 +493,11 @@
                                                 console.log("complete")
                                                 storageRef.getDownloadURL().then(function (url) {
 
-                                                    var docData = {
+                                                    console.log(url)
+
+                                                    console.log(cnpj_new)
+
+                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
                                                         state: true,
                                                         nome_estabelecimento: nome_esta,
                                                         cnpj: cnpj,
@@ -506,20 +510,35 @@
                                                         profilePhoto: url,
                                                         numero: nro,
                                                         complemento: complemento
-                                                    };
-                                                    console.log(url)
+                                                    }).then(function () {
 
-                                                    console.log(cnpj_new)
-
-                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection(cnpj_new).add(docData).then(function () {
                                                         console.log("first firestore add")
 
-                                                        db.collection('commercialPlaces').doc(cidade + "-" + uf).collection(cnpj_new).add(docData).then(function () {
-                                                            console.log("second firestore add")
-                                                            //after add the data in companies go to responsible
-                                                            window.location.href = 'estabelecimentos.html';
-                                                        });
-
+                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ description: "Lojas" }).then(function () {
+                                                            console.log("Document successfully updated!");
+                                                            db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                                state: true,
+                                                                nome_estabelecimento: nome_esta,
+                                                                cnpj: cnpj,
+                                                                telefone: telefone,
+                                                                cep: cep,
+                                                                cidade: cidade,
+                                                                estado: uf,
+                                                                rua: rua,
+                                                                bairro: bairro,
+                                                                profilePhoto: url,
+                                                                numero: nro,
+                                                                complemento: complemento
+                                                            }).then(function () {
+                                                                console.log("second firestore add")
+                                                                //after add the data in companies go to responsible
+                                                                window.location.href = 'estabelecimentos.html';
+                                                            });
+                                                        })
+                                                            .catch(function (error) {
+                                                                // The document probably doesn't exist.
+                                                                console.error("Error updating document: ", error);
+                                                            });
 
                                                     });
 
