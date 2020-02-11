@@ -10,8 +10,8 @@ auth.onAuthStateChanged(function (user) {
 
     //get the value from firestore and set
     //document.getElementById("on/off").value = "Johnny Bravo";
-    const string = document.getElementById("on/off").value;
-    
+    // const string = document.getElementById("on/off").value;
+
 
     db.collection("companies").doc(user.uid).collection("commercialPlace").get()
       .then(querySnapshot => {
@@ -20,27 +20,59 @@ auth.onAuthStateChanged(function (user) {
 
           db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc.id).collection("local").get().then(querySnapshot2 => {
             querySnapshot2.forEach(doc2 => {
-              var nome_estabelecimento= doc2.data().nome_estabelecimento;
+              var nome_estabelecimento = doc2.data().nome_estabelecimento;
               var estado = doc2.data().estado;
               var cidade = doc2.data().cidade;
               var rua = doc2.data().rua;
               var url_photo = doc2.data().profilePhoto;
-              var status = doc2.data().status;
-              console.log(doc2.data());
+              var status = doc2.data().state;
+
+              document.querySelector('.card-body').innerHTML += `<div class="row" id="img_div">
+              <div class="col-12 col-sm-12 col-md-2 text-center store">
+                <img src=`+ url_photo + ` alt="prewiew" width="140" height="100">
+              </div>
+              <div id="text_div" class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                <h4 class="product-name"><strong>`+ nome_estabelecimento + `</strong></h4>
+                <h4>
+                  <small>`+ estado + `</small>
+                </h4>
+                <h4>
+                  <small>`+ cidade + `</small>
+                </h4>
+                <h4>
+                  <small>`+ rua + `</small>
+                </h4>
+              </div>
+              <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+              <div class="text-right">
+                  <input type="text" id="on/off" disabled="disabled" class="input" value="" />
+                  <button type="button" class="btn btn-outline-success btn-xs" id="btn_on/off">
+                      <i class="fa fa-power-off" aria-hidden="true"></i>
+                  </button>
+              </div>
+              </div>
+            </div>
+           `
+              console.log(status);
+              if (status == true) {
+                document.getElementById("on/off").style.color = 'green';
+                document.getElementById("on/off").style.width = '35%';
+                document.getElementById("on/off").value = "Ativado"
+                console.log("ta ativado")
+              } else if (status == false) {
+                document.getElementById("btn_on/off").classList.add('btn-outline-danger');
+                document.getElementById("on/off").style.color = 'red';
+                document.getElementById("on/off").style.width = '45%';
+                document.getElementById("on/off").value = "Desativado"
+                console.log("ta desativado")
+              }
+
             });
           });
         });
       });
 
-    if (string === "Ativado") {
-      document.getElementById("on/off").style.color = 'green';
-      document.getElementById("on/off").style.width = '35%';
-      console.log("ta ativado")
-    } else {
-      document.getElementById("btn_on/off").classList.add('btn-outline-danger');
-      document.getElementById("on/off").style.color = 'red';
-      document.getElementById("on/off").style.width = '45%';
-    }
+
 
     // ...
 

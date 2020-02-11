@@ -67,3 +67,21 @@
 .shopping-cart {
     margin-top: 20px;
 }
+
+.store{
+    float:left;
+    margin: 2px;
+  }
+  #img_div{
+    width:100%;
+    margin:5px;
+    border: 1px solid grey;
+    float:left;
+  }
+  h4{
+    margin:0;
+  }
+
+.text-right{
+    align-items: center;
+}
