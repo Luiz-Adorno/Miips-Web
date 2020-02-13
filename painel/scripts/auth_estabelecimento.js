@@ -16,10 +16,10 @@ auth.onAuthStateChanged(function (user) {
     db.collection("companies").doc(user.uid).collection("commercialPlace").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.id);
 
           db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc.id).collection("local").get().then(querySnapshot2 => {
             querySnapshot2.forEach(doc2 => {
+
               var nome_estabelecimento = doc2.data().nome_estabelecimento;
               var estado = doc2.data().estado;
               var cidade = doc2.data().cidade;
@@ -45,25 +45,29 @@ auth.onAuthStateChanged(function (user) {
               </div>
               <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
               <div class="text-right">
-                  <input type="text" id="on/off" disabled="disabled" class="input" value="" />
-                  <button type="button" class="btn btn-outline-success btn-xs" id="btn_on/off">
+                  <input type="text" id="on/off`+doc2.data().cnpj+`" disabled="disabled" class="input" value="" />
+                  <button type="button" class="btn btn-outline-success btn-xs" id="btn_on/off`+doc2.data().cnpj+`">
                       <i class="fa fa-power-off" aria-hidden="true"></i>
                   </button>
               </div>
               </div>
             </div>
            `
+           
+              document.getElementById("btn_on/off"+doc2.data().cnpj).addEventListener('click', function () {
+                console.log("ckilado")
+              });
               console.log(status);
               if (status == true) {
-                document.getElementById("on/off").style.color = 'green';
-                document.getElementById("on/off").style.width = '35%';
-                document.getElementById("on/off").value = "Ativado"
+                document.getElementById("on/off"+doc2.data().cnpj).style.color = 'green';
+                document.getElementById("on/off"+doc2.data().cnpj).style.width = '35%';
+                document.getElementById("on/off"+doc2.data().cnpj).setAttribute('value','Ativado');
                 console.log("ta ativado")
               } else if (status == false) {
-                document.getElementById("btn_on/off").classList.add('btn-outline-danger');
-                document.getElementById("on/off").style.color = 'red';
-                document.getElementById("on/off").style.width = '45%';
-                document.getElementById("on/off").value = "Desativado"
+                document.getElementById("btn_on/off"+doc2.data().cnpj).classList.add('btn-outline-danger');
+                document.getElementById("on/off"+doc2.data().cnpj).style.color = 'red';
+                document.getElementById("on/off"+doc2.data().cnpj).style.width = '45%';
+                document.getElementById("on/off"+doc2.data().cnpj).setAttribute('value','Desativado');
                 console.log("ta desativado")
               }
 
