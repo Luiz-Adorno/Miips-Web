@@ -27,48 +27,46 @@ auth.onAuthStateChanged(function (user) {
               var url_photo = doc2.data().profilePhoto;
               var status = doc2.data().state;
 
-              document.querySelector('.card-body').innerHTML += `<div class="row" id="img_div">
+              document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_div">
               <div class="col-12 col-sm-12 col-md-2 text-center store">
-                <img src=`+ url_photo + ` alt="prewiew" width="140" height="100">
+                <img src=${url_photo} alt="prewiew" width="140" height="100">
               </div>
               <div id="text_div" class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-                <h4 class="product-name"><strong>`+ nome_estabelecimento + `</strong></h4>
+                <h4 class="product-name"><a href="#" id="title`+ doc2.data().cnpj + `">${nome_estabelecimento}</a></h4>
                 <h4>
-                  <small>`+ estado + `</small>
+                  <small>${estado}</small>
                 </h4>
                 <h4>
-                  <small>`+ cidade + `</small>
+                  <small>${cidade}</small>
                 </h4>
                 <h4>
-                  <small>`+ rua + `</small>
+                  <small>${rua}</small>
                 </h4>
               </div>
               <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
               <div class="text-right">
-                  <input type="text" id="on/off`+doc2.data().cnpj+`" disabled="disabled" class="input" value="" />
-                  <button type="button" class="btn btn-outline-success btn-xs" id="btn_on/off`+doc2.data().cnpj+`">
-                      <i class="fa fa-power-off" aria-hidden="true"></i>
-                  </button>
+                  <input type="text" id="on/off`+ doc2.data().cnpj + `" disabled="disabled" class="input" value="" />
               </div>
               </div>
             </div>
-           `
-           
-              document.getElementById("btn_on/off"+doc2.data().cnpj).addEventListener('click', function () {
-                console.log("ckilado")
+           `);
+
+              document.getElementById("title" + doc2.data().cnpj).addEventListener('click', function () {
+                var cnpj = doc2.data().cnpj;
+                var doc_id = doc.id;
+                sessionStorage.setItem("doc.id", doc_id);
+                sessionStorage.setItem("last-cnpj", cnpj);
+                window.location.href = '/painel/esta-painel.html';
               });
-              console.log(status);
+
               if (status == true) {
-                document.getElementById("on/off"+doc2.data().cnpj).style.color = 'green';
-                document.getElementById("on/off"+doc2.data().cnpj).style.width = '35%';
-                document.getElementById("on/off"+doc2.data().cnpj).setAttribute('value','Ativado');
-                console.log("ta ativado")
+                document.getElementById("on/off" + doc2.data().cnpj).style.color = 'green';
+                document.getElementById("on/off" + doc2.data().cnpj).style.width = '35%';
+                document.getElementById("on/off" + doc2.data().cnpj).setAttribute('value', 'Ativado');
               } else if (status == false) {
-                document.getElementById("btn_on/off"+doc2.data().cnpj).classList.add('btn-outline-danger');
-                document.getElementById("on/off"+doc2.data().cnpj).style.color = 'red';
-                document.getElementById("on/off"+doc2.data().cnpj).style.width = '45%';
-                document.getElementById("on/off"+doc2.data().cnpj).setAttribute('value','Desativado');
-                console.log("ta desativado")
+                document.getElementById("on/off" + doc2.data().cnpj).style.color = 'red';
+                document.getElementById("on/off" + doc2.data().cnpj).style.width = '45%';
+                document.getElementById("on/off" + doc2.data().cnpj).setAttribute('value', 'Desativado');
               }
 
             });
