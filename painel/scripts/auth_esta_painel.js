@@ -22,11 +22,32 @@ auth.onAuthStateChanged(function (user) {
         var cidade = doc.data().cidade;
         var rua = doc.data().rua;
         var url_photo = doc.data().profilePhoto;
+        var nro = doc.data().numero;
+        var tel = doc.data().telefone;
+        var cnpj = doc.data().cnpj;
+        var cep = doc.data().cep;
+        var bairro = doc.data().bairro;
         var status = doc.data().state;
 
         console.log(nome_estabelecimento)
-        document.getElementById("title_name_esta").innerHTML = nome_estabelecimento;
+        document.getElementById("title_name").innerHTML = nome_estabelecimento;
         document.getElementById("local-city").innerHTML = " "+ cidade +"-"+ estado;
+        document.getElementById("rua_nro").innerHTML = rua +" - " + nro;
+        document.getElementById("tel").innerHTML =  tel;
+        document.getElementById('avatar').src = url_photo;
+        document.getElementById('cep').innerHTML = cep;
+        document.getElementById('bairro').innerHTML = bairro;
+        document.getElementById('cnpj').innerHTML = cnpj;
+
+        if(status){
+          document.getElementById('state').innerHTML = "Ativado";
+          document.getElementById("state").className = "tags-on";
+        }else{
+          document.getElementById('state').innerHTML = "Desativado";
+          document.getElementById("state").className = "tags-off";
+        }
+
+
 
       } else {
         // doc.data() will be undefined in this case
