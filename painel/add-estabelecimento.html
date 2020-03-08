@@ -22,10 +22,8 @@
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet">
 
-
     <link rel="apple-touch-icon" href="apple-icon.png">
 
-    <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
 
@@ -311,6 +309,7 @@
                             <label>Nome do Estabelecimento</label>
                             <input type="text" class="form-control" id="nome_esta" required>
                         </div>
+
                         <div class="form-group">
                             <label for="ddd" class="required">(DDD) Telefone</label>
                             <input type="text" class="form-control cel-sp-mask" placeholder="Ex.: (00) 00000-0000"
@@ -372,19 +371,19 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function ($) {
             $("#cnpj").mask("99.999.999/9999-99");
         });
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function ($) {
             $("#telefone").mask("(99) 99999-9999");
         });
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function ($) {
             $("#cep").mask("99999-999");
         });
     </script>
@@ -447,7 +446,6 @@
                 signupFormStore.addEventListener('submit', (e) => {
                     e.preventDefault();
 
-
                     //saving company info
                     const nome_esta = signupFormStore['nome_esta'].value;
                     var cnpj = signupFormStore['cnpj'].value;
@@ -459,6 +457,7 @@
                     const bairro = signupFormStore['bairro'].value;
                     const nro = signupFormStore['nro'].value;
                     const complemento = signupFormStore['complemento'].value;
+
 
                     //firebasefirestore doens't accept "/"
                     cnpj_new = cnpj.replace("/", "-");
@@ -492,31 +491,17 @@
                                             }, function complete() {
                                                 console.log("complete")
                                                 storageRef.getDownloadURL().then(function (url) {
+                                                    var refe = db.collection("companies").doc(user.uid);
 
-                                                    console.log(url)
+                                                    refe.get().then(function (doc) {
+                                                        if (doc.exists) {
+                                                            const cate = doc.data().category;
+                                                            console.log(url)
 
-                                                    console.log(cnpj_new)
+                                                            console.log(cnpj_new)
 
-                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
-                                                        state: true,
-                                                        nome_estabelecimento: nome_esta,
-                                                        cnpj: cnpj,
-                                                        telefone: telefone,
-                                                        cep: cep,
-                                                        cidade: cidade,
-                                                        estado: uf,
-                                                        rua: rua,
-                                                        bairro: bairro,
-                                                        profilePhoto: url,
-                                                        numero: nro,
-                                                        complemento: complemento
-                                                    }).then(function () {
-
-                                                        console.log("first firestore add")
-
-                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ description: "Lojas" }).then(function () {
-                                                            console.log("Document successfully updated!");
-                                                            db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                            db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                                category: cate,
                                                                 state: true,
                                                                 nome_estabelecimento: nome_esta,
                                                                 cnpj: cnpj,
@@ -530,17 +515,46 @@
                                                                 numero: nro,
                                                                 complemento: complemento
                                                             }).then(function () {
-                                                                console.log("second firestore add")
-                                                                //after add the data in companies go to responsible
-                                                                window.location.href = 'estabelecimentos.html';
-                                                            });
-                                                        })
-                                                            .catch(function (error) {
-                                                                // The document probably doesn't exist.
-                                                                console.error("Error updating document: ", error);
-                                                            });
 
+                                                                console.log("first firestore add")
+
+                                                                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ description: "Lojas" }).then(function () {
+                                                                    console.log("Document successfully updated!");
+                                                                    db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                                        category: cate,
+                                                                        state: true,
+                                                                        nome_estabelecimento: nome_esta,
+                                                                        cnpj: cnpj,
+                                                                        telefone: telefone,
+                                                                        cep: cep,
+                                                                        cidade: cidade,
+                                                                        estado: uf,
+                                                                        rua: rua,
+                                                                        bairro: bairro,
+                                                                        profilePhoto: url,
+                                                                        numero: nro,
+                                                                        complemento: complemento
+                                                                    }).then(function () {
+                                                                        console.log("second firestore add")
+                                                                        //after add the data in companies go to responsible
+                                                                        window.location.href = 'estabelecimentos.html';
+                                                                    });
+                                                                })
+                                                                    .catch(function (error) {
+                                                                        // The document probably doesn't exist.
+                                                                        console.error("Error updating document: ", error);
+                                                                    });
+
+                                                            });
+                                                        } else {
+                                                            // doc.data() will be undefined in this case
+                                                            console.log("No such document!");
+                                                        }
+                                                    }).catch(function (error) {
+                                                        console.log("Error getting document:", error);
                                                     });
+
+
 
                                                 }).catch(function (error) {
                                                     // Handle any errors
@@ -556,7 +570,10 @@
                         });
                     }
 
+
                 });
+
+
 
 
             }

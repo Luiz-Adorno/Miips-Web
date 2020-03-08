@@ -10,15 +10,19 @@
 
     <link rel="icon" href="img/mp-icon.png" type="image/x-icon">
 
-    
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap-select.css">
+
 
     <!-- Main css -->
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -36,7 +40,8 @@
 
                 <div class="signup-form">
                     <div style="text-align: center; padding-top: 30px;">
-                        <a style="font-size: 20px; text-transform: uppercase; font-weight: 900;">Assine o seu contrato</a>
+                        <a style="font-size: 20px; text-transform: uppercase; font-weight: 900;">Assine o seu
+                            contrato</a>
                         <div>
                             <img class="progress-img" src="img/step_1.jpg" alt="">
                         </div>
@@ -57,22 +62,73 @@
                                     <label for="nome_social" class="required">Confirmar Senha</label>
                                     <input type="password" class="form-control" id="password2" required>
                                 </div>
+                                <div class="form-input">
+                                    <label>Selecione a(s) categorias que sua loja atua:</label>
+                                    <select multiple class="selectpicker form-control" id="number-multiple"
+                                        data-container="body" data-live-search="true" title="Categoria"
+                                        data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"
+                                        onchange="showSelectedOptions(this.options)">
+                                        <option>Vestuário</option>
+                                        <option>Moda</option>
+                                        <option>Acessórios</option>
+                                        <option>Jóias</option>
+                                        <option>Informática</option>
+                                        <option>Jogos</option>
+                                        <option>Papelaria</option>
+                                        <option>Livraria</option>
+                                        <option>Suplementos</option>
+                                        <option>Produtos naturais</option>
+                                        <option>Cosmético</option>
+                                        <option>Farmaceutico</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="textarea">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu ultrices ligula. Curabitur nec massa vel enim ullamcorper mattis. Praesent vitae tortor nunc. Quisque pretium urna massa, ut placerat justo posuere a. Aenean viverra orci orci, eget scelerisque mi cursus sit amet. Fusce porttitor est vel semper tempus. Nam nec sem sed erat sodales sollicitudin. Donec commodo, eros semper commodo blandit, nisl purus lacinia libero, ac hendrerit libero ipsum vitae ante. Fusce pellentesque sem non mi ultrices, sed porttitor metus sodales. Nunc at molestie felis. Cras id scelerisque turpis. Praesent congue rhoncus mi.
 
-                            Maecenas egestas leo vel orci dictum, a mollis tellus sollicitudin. Praesent a ligula ex. Nunc accumsan mollis est ac venenatis. Integer sollicitudin augue eget elementum lobortis. Suspendisse finibus velit risus, eget pellentesque lectus sodales et. Aliquam porta nunc id erat vestibulum tristique. Donec volutpat, ex in ultricies ullamcorper, massa est imperdiet velit, convallis venenatis ante elit at massa. Nulla consequat ornare tempor.
-                            
-                            Quisque nec nisl nulla. Nam commodo pretium elit, a dapibus dolor auctor ultrices. Aenean diam mi, dignissim ut quam ut, varius tempor ante. Morbi eget ultricies orci. Aenean auctor tellus id metus gravida hendrerit. Nam ac dolor eget dolor volutpat volutpat a vitae leo. Integer nec congue purus. Maecenas pulvinar ullamcorper ipsum, ut auctor ipsum vestibulum nec. Maecenas tempor lacinia magna.
-                            
-                            Pellentesque arcu mi, vulputate sed magna dictum, sollicitudin malesuada neque. Praesent egestas lorem eu nunc tristique malesuada. Donec eget enim id eros porta cursus. Nullam et sem nec tellus consequat tempor eget et ligula. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at orci ultrices, laoreet ipsum vitae, suscipit quam. Sed sit amet nunc turpis. Etiam luctus dignissim leo a aliquet. Cras laoreet condimentum arcu at sagittis. Ut ut metus nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean metus orci, efficitur id justo a, malesuada convallis nibh. Fusce posuere tellus eget congue feugiat. Pellentesque laoreet risus laoreet nisi volutpat volutpat.
-                            
-                            Maecenas metus turpis, gravida nec aliquet in, laoreet a lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin a diam euismod, lobortis magna et, commodo quam. Nunc nec ex in lorem eleifend tristique id et elit. Morbi vehicula posuere est vel elementum. Nullam rutrum, ante ut auctor suscipit, dolor neque tincidunt libero, ut luctus sapien orci id dolor. Curabitur vehicula quis augue eu cursus. Duis venenatis purus eros. Morbi vehicula ex quis metus vestibulum, quis vehicula lectus fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce viverra mauris non nunc imperdiet, in posuere nulla dignissim.
+                        <div class="textarea">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eu ultrices ligula.
+                            Curabitur nec massa vel enim ullamcorper mattis. Praesent vitae tortor nunc. Quisque pretium
+                            urna massa, ut placerat justo posuere a. Aenean viverra orci orci, eget scelerisque mi
+                            cursus sit amet. Fusce porttitor est vel semper tempus. Nam nec sem sed erat sodales
+                            sollicitudin. Donec commodo, eros semper commodo blandit, nisl purus lacinia libero, ac
+                            hendrerit libero ipsum vitae ante. Fusce pellentesque sem non mi ultrices, sed porttitor
+                            metus sodales. Nunc at molestie felis. Cras id scelerisque turpis. Praesent congue rhoncus
+                            mi.
+
+                            Maecenas egestas leo vel orci dictum, a mollis tellus sollicitudin. Praesent a ligula ex.
+                            Nunc accumsan mollis est ac venenatis. Integer sollicitudin augue eget elementum lobortis.
+                            Suspendisse finibus velit risus, eget pellentesque lectus sodales et. Aliquam porta nunc id
+                            erat vestibulum tristique. Donec volutpat, ex in ultricies ullamcorper, massa est imperdiet
+                            velit, convallis venenatis ante elit at massa. Nulla consequat ornare tempor.
+
+                            Quisque nec nisl nulla. Nam commodo pretium elit, a dapibus dolor auctor ultrices. Aenean
+                            diam mi, dignissim ut quam ut, varius tempor ante. Morbi eget ultricies orci. Aenean auctor
+                            tellus id metus gravida hendrerit. Nam ac dolor eget dolor volutpat volutpat a vitae leo.
+                            Integer nec congue purus. Maecenas pulvinar ullamcorper ipsum, ut auctor ipsum vestibulum
+                            nec. Maecenas tempor lacinia magna.
+
+                            Pellentesque arcu mi, vulputate sed magna dictum, sollicitudin malesuada neque. Praesent
+                            egestas lorem eu nunc tristique malesuada. Donec eget enim id eros porta cursus. Nullam et
+                            sem nec tellus consequat tempor eget et ligula. In hac habitasse platea dictumst. Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at orci ultrices, laoreet ipsum
+                            vitae, suscipit quam. Sed sit amet nunc turpis. Etiam luctus dignissim leo a aliquet. Cras
+                            laoreet condimentum arcu at sagittis. Ut ut metus nulla. Pellentesque habitant morbi
+                            tristique senectus et netus et malesuada fames ac turpis egestas. Aenean metus orci,
+                            efficitur id justo a, malesuada convallis nibh. Fusce posuere tellus eget congue feugiat.
+                            Pellentesque laoreet risus laoreet nisi volutpat volutpat.
+
+                            Maecenas metus turpis, gravida nec aliquet in, laoreet a lectus. Vestibulum ante ipsum
+                            primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin a diam euismod,
+                            lobortis magna et, commodo quam. Nunc nec ex in lorem eleifend tristique id et elit. Morbi
+                            vehicula posuere est vel elementum. Nullam rutrum, ante ut auctor suscipit, dolor neque
+                            tincidunt libero, ut luctus sapien orci id dolor. Curabitur vehicula quis augue eu cursus.
+                            Duis venenatis purus eros. Morbi vehicula ex quis metus vestibulum, quis vehicula lectus
+                            fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce viverra
+                            mauris non nunc imperdiet, in posuere nulla dignissim.
                         </div>
-                        <div class="form-radio-group">            
+                        <div class="form-radio-group">
                             <div class="form-radio-item">
-                                <input type="radio" name="contract-check" id="cash">
+                                <input type="radio" name="contract-check" id="cash" style="display: none;">
                                 <label for="cash">Aceito os termos de uso e condições</label>
                                 <span class="check"></span>
                             </div>
@@ -81,11 +137,17 @@
                             <button class="submit" id="submit" name="submit" type="submit">Avançar</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
 
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
+
 
     <script>
         // Your web app's Firebase configuration

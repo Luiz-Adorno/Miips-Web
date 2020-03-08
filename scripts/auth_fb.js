@@ -1,13 +1,27 @@
 auth.onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in.
-    window.location.href = '/register.html';
-    // ...
+
+
+     //add the categories data on user db
+     db.collection('companies').doc(user.uid).set({
+      category: arr
+     }, { merge: true }).then(function () {
+       //after add the responsible in companies values go to painel
+       window.location.href = '/register.html';
+     });
+
+
   } else {
     // User is signed out.
     // ...
   }
 });
+let arr = new Array();
+const showSelectedOptions = options =>
+  arr = [...options].filter(o => o.selected).map(o => o.value);
+
+
 
 
 const singupfbauth = document.querySelector('#register-form');
@@ -34,6 +48,10 @@ singupfbauth.addEventListener('submit', (e) => {
       return false;
     }
 
+    else if (arr === undefined || arr.length == 0) {
+      alert("\nPor favor selecione a(s) categorias que sua Empresa atua")
+    }
+
     //if are less than 6 char
     else if (password1.length < 6 || password2.length < 6) {
       alert("\nA senha deve conter no mínimo 6 caracteres")
@@ -49,7 +67,7 @@ singupfbauth.addEventListener('submit', (e) => {
         // ...
       });
     }
-  }else{
+  } else {
     alert("É necessário aceitar os termos de uso e condição")
   }
 

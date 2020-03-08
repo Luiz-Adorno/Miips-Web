@@ -349,7 +349,6 @@ ul li {
 }
 
 ul li:not(.init) {
-  display: none;
   background: #fff;
   color: #222;
   padding: 5px 10px;
