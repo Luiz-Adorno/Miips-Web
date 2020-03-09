@@ -21,6 +21,7 @@ firebase.auth().onAuthStateChanged((user) => {
       } else if (telefone.length < 8) {
         alert("\nTelefone deve conter no mínimo 8 caracteres")
       } else {
+        document.getElementById("preloader").style.display = "block";
         db.collection('companies').doc(user.uid).set({
           nome_social: nome_social,
           nome_empresa: nome_empresa,

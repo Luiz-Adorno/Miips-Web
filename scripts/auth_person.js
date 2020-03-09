@@ -20,15 +20,13 @@ firebase.auth().onAuthStateChanged((user) => {
       } else if (rg.length < 9) {
         alert("\Rg deve conter no mínimo 9 caracteres")
       } else {
-
+        document.getElementById("preloader").style.display = "block";
         var docData = {
           nome: nome_completo,
           cpf: cpf,
           rg: rg,
           orgao_emissor: orgemissor
         };
-
-
 
         db.collection('companies').doc(user.uid).collection('responsible').add(docData).then(function () {
           db.collection("companies").doc(user.uid).collection('responsible').get().then(function (querySnapshot) {

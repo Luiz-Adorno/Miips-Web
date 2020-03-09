@@ -346,6 +346,9 @@
                         </div>
 
                         <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Cadastrar</button>
+                        <div id="preloader" style="display: none;">
+                            <div id="loader"></div>
+                          </div>
                     </form>
                 </div>
             </div>
@@ -469,6 +472,7 @@
                     } else if (telefone.length < 8) {
                         alert("\nTelefone deve conter no mínimo 8 caracteres")
                     } else {
+                        document.getElementById("preloader").style.display = "block";
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
                                 db.collection('companies').doc(user.uid).collection('commercialPlace').doc(uf).collection(cidade).doc(nome_esta).collection(cnpj_new).get().
