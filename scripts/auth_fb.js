@@ -3,13 +3,13 @@ auth.onAuthStateChanged(function (user) {
     // User is signed in.
 
 
-     //add the categories data on user db
-     db.collection('companies').doc(user.uid).set({
+    //add the categories data on user db
+    db.collection('companies').doc(user.uid).set({
       category: arr
-     }, { merge: true }).then(function () {
-       //after add the responsible in companies values go to painel
-       window.location.href = '/register.html';
-     });
+    }, { merge: true }).then(function () {
+      //after add the responsible in companies values go to painel
+      window.location.href = '/register.html';
+    });
 
 
   } else {
@@ -17,12 +17,41 @@ auth.onAuthStateChanged(function (user) {
     // ...
   }
 });
+
+let arr0 = new Array();
+const showSelectedOptionsCategory = options =>{
+  arr0 = [...options].filter(o => o.selected).map(o => o.value);
+  var i;
+  for(i = 0; i< arr0.length; i++){
+    if(arr0[i] === "Produto"){
+      document.getElementById("product-display").style.display = "block";
+    }else if (arr0[i] == "Serviço"){
+      document.getElementById("service-display").style.display = "block";
+    }
+  }
+  if(arr0.length == 1){
+    if(arr0[0] == "Produto"){
+      document.getElementById("service-display").style.display = "none";
+    }else if (arr0[0] == "Serviço"){
+      document.getElementById("product-display").style.display = "none";
+    }
+  }
+  if(arr0.length == 0){
+    document.getElementById("service-display").style.display = "none";
+    document.getElementById("product-display").style.display = "none";
+  }
+
+}
+
 let arr = new Array();
-const showSelectedOptions = options =>
+let arr2 = new Array();
+const showSelectedOptions = options => {
   arr = [...options].filter(o => o.selected).map(o => o.value);
+}
 
-
-
+const showSelectedOptions2 = options =>{
+  arr2 = [...options].filter(o => o.selected).map(o => o.value);
+}
 
 const singupfbauth = document.querySelector('#register-form');
 
@@ -60,6 +89,7 @@ singupfbauth.addEventListener('submit', (e) => {
 
     // If same return True. 
     else {
+      document.getElementById("myDIV").style.display = "block";
       auth.createUserWithEmailAndPassword(email, password1).catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;

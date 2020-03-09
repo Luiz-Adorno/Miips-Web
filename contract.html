@@ -34,8 +34,7 @@
             <div class="signup-content">
                 <div class="signup-img">
                     <img src="img/contract.png" alt="">
-                    <div class="signup-img-content">
-                    </div>
+
                 </div>
 
                 <div class="signup-form">
@@ -63,9 +62,19 @@
                                     <input type="password" class="form-control" id="password2" required>
                                 </div>
                                 <div class="form-input">
-                                    <label>Selecione a(s) categorias que sua loja atua:</label>
+                                    <label>Qual tipo de categoria sua empresa irá trabalhar?</label>
                                     <select multiple class="selectpicker form-control" id="number-multiple"
-                                        data-container="body" data-live-search="true" title="Categoria"
+                                        data-container="body" title="Escolha a(s) opções"
+                                        data-hide-disabled="true"  data-virtual-scroll="false"
+                                        onchange="showSelectedOptionsCategory(this.options)">
+                                        <option>Produto</option>
+                                        <option>Serviço</option>
+                                    </select>
+                                </div>
+                                <div class="form-input" style="display: none;" id="product-display">
+                                    <label>Selecione a(s) categorias de produto que sua loja atua:</label>
+                                    <select multiple class="selectpicker form-control" id="number-multiple"
+                                        data-container="body" data-live-search="true" title="Produto"
                                         data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"
                                         onchange="showSelectedOptions(this.options)">
                                         <option>Vestuário</option>
@@ -80,6 +89,22 @@
                                         <option>Produtos naturais</option>
                                         <option>Cosmético</option>
                                         <option>Farmaceutico</option>
+                                    </select>
+                                </div>
+                                <div class="form-input" style="display: none;" id="service-display">
+                                    <label>Selecione a(s) categorias de serviço que sua loja atua:</label>
+                                    <select multiple class="selectpicker form-control" id="number-multiple"
+                                        data-container="body" data-live-search="true" title="Serviço"
+                                        data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"
+                                        onchange="showSelectedOptions2(this.options)">
+                                        <option>Saúde</option>
+                                        <option>Odontologia</option>
+                                        <option>Estética</option>
+                                        <option>Beleza</option>
+                                        <option>Bem-estar</option>
+                                        <option>Manicure</option>
+                                        <option>Entretenimento</option>
+                                        <option>Serviços especializados</option>
                                     </select>
                                 </div>
                             </div>
@@ -136,6 +161,9 @@
                         <div class="form-submit">
                             <button class="submit" id="submit" name="submit" type="submit">Avançar</button>
                         </div>
+                        <div id="preloader" style="display: none;">
+                            <div id="loader"></div>
+                          </div>
                     </form>
 
                 </div>
