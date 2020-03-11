@@ -124,9 +124,9 @@
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li >
+                    <li>
                         <a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Visão Geral </a>
-                    </li   >
+                    </li>
                     <h3 class="menu-title">Painel de Controle</h3><!-- /.menu-title -->
 
                     <li>
@@ -311,7 +311,16 @@
                             <input type="text" class="form-control cel-sp-mask" placeholder="Ex.: (00) 00000-0000"
                                 minlength="15" id="telefone" required>
                         </div>
-
+                        <div class="form-input">
+                            <label>Qual tipo de categoria sua empresa irá trabalhar?</label>
+                            <select multiple class="selectpicker form-control" id="number-multiple"
+                                data-container="bodye" title="Escolha a(s) opções" data-hide-disabled="true"
+                                data-virtual-scroll="false" onchange="showSelectedOptionsCategory(this.options)"
+                                required>
+                                <option>Produto</option>
+                                <option>Serviço</option>
+                            </select>
+                        </div>
                         <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Salvar</button>
                     </form>
                 </div>
@@ -337,7 +346,7 @@
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-     <script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#cnpj").mask("99.999.999/9999-99");
         });

@@ -77,10 +77,12 @@ let arr = new Array();
 let arr2 = new Array();
 const showSelectedOptions = options => {
   arr = [...options].filter(o => o.selected).map(o => o.value);
+  console.log(arr.length)
 }
 
 const showSelectedOptions2 = options => {
   arr2 = [...options].filter(o => o.selected).map(o => o.value);
+  console.log(arr2.length)
 }
 
 const singupfbauth = document.querySelector('#register-form');
@@ -113,8 +115,13 @@ singupfbauth.addEventListener('submit', (e) => {
       return false;
     }
 
-    else if (arr.length == 0 && arr2.length == 0) {
-      alert("\nPor favor selecione a(s) categorias que sua Empresa atua")
+    else if (arr0.length == 2 && arr.length == 0) {
+      alert("\nPor favor selecione a(s) categorias de Produto")
+      return false;
+    }
+    else if (arr0.length == 2 && arr2.length == 0) {
+      alert("\nPor favor selecione a(s) categorias de Serviço")
+      return false;
     }
 
     else {

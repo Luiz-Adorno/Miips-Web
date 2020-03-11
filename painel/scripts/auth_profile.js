@@ -30,20 +30,12 @@ auth.onAuthStateChanged(function (user) {
 
     docRef.get().then(function (doc) {
       if (doc.exists) {
-        console.log("Document data:", doc.data());
 
+        console.log("Document data:", doc.data());
         const nome_social = doc.data().nome_social;
         const nome_empresa = doc.data().nome_empresa;
         const cnpj = doc.data().cnpj;
         const telefone = doc.data().telefone;
-        const cep = doc.data().cep;
-        const cidade = doc.data().cidade;
-        const uf = doc.data().estado;
-        const rua = doc.data().rua;
-        const bairro = doc.data().bairro;
-        const nro = doc.data().numero;
-        const complemento = doc.data().complemento;
-
 
         //set the company data from firestore
         document.getElementById("nome-empresa").innerHTML = nome_empresa;
@@ -51,13 +43,33 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById("email").innerHTML = user.email;
         document.getElementById("cnpj").innerHTML = cnpj;
         document.getElementById("telefone").innerHTML = telefone;
-        document.getElementById("cep").innerHTML = cep;
-        document.getElementById("cidade").innerHTML = cidade;
-        document.getElementById("uf").innerHTML = uf;
-        document.getElementById("rua").innerHTML = rua;
-        document.getElementById("bairro").innerHTML = bairro;
-        document.getElementById("nro").innerHTML = nro;
-        document.getElementById("complemento").innerHTML = complemento;
+
+        let category = new Array();
+        let categoryP = new Array();
+        let categoryS = new Array();
+
+        category = doc.data().category;
+        document.getElementById("category").innerHTML = category;
+        if(category.length == 2){
+          categoryP = doc.data().product_category;
+          categoryS = doc.data().service_category;
+          document.getElementById("disP").style.display = "block";
+          document.getElementById("disS").style.display = "block";
+
+          document.getElementById("category-product").innerHTML = categoryP;
+          document.getElementById("category-service").innerHTML = categoryS;
+        }else{
+          if(category[0] == "Produto"){
+            categoryP = doc.data().product_category;
+            document.getElementById("disP").style.display = "block";
+            document.getElementById("category-product").innerHTML = categoryP;
+          }else{
+            categoryS = doc.data().service_category;
+            document.getElementById("disS").style.display = "block";
+            document.getElementById("category-service").innerHTML = categoryS;
+          }
+        }
+
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");

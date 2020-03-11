@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Miips - Categorias</title>
+
+    <link rel="icon" href="img/mp-icon.png" type="image/x-icon">
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-select.css">
+
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/style_category.css">
+
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="container">
+
+            <div class="signup-content">
+
+                <div class="signup-form">
+                    <div style="text-align: center; padding-top: 30px;">
+                        <a style="font-size: 20px; text-transform: uppercase; font-weight: 900;">Alteração da categoria</a>
+                    </div>
+
+                    <form method="POST" class="register-form" id="register-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="form-input">
+                                    <label>Opções já Selecionadas:</label>
+                                    <label style="color: blue;" id="catego"></label>
+                                    <select multiple class="selectpicker form-control" id="number-multiple"
+                                        data-container="body" title="Alterar as categorias" data-hide-disabled="true"
+                                        data-virtual-scroll="false" onchange="showSelectedOptionsCategory(this.options)"
+                                        required>
+                                        <option value="Produto">Produto</option>
+                                        <option value="Serviço">Serviço</option>
+                                    </select>
+                                </div>
+                                <div class="form-input" style="display: none;" id="product-display">
+                                    <label>Selecione a(s) categorias de produto que sua loja atua:</label>
+                                    <select multiple class="selectpicker form-control" id="product-name"
+                                        data-container="body" data-live-search="true" title="Produto"
+                                        data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"
+                                        onchange="showSelectedOptions(this.options)">
+                                        <option value="Vestuário">Vestuário</option>
+                                        <option value="Moda">Moda</option>
+                                        <option value="Acessórios">Acessórios</option>
+                                        <option value="Jóias">Jóias</option>
+                                        <option value="Informática">Informática</option>
+                                        <option value="Jogos">Jogos</option>
+                                        <option value="Papelaria">Papelaria</option>
+                                        <option value="Livraria">Livraria</option>
+                                        <option value="Suplementos">Suplementos</option>
+                                        <option value="Produtos">Produtos naturais</option>
+                                        <option value="Cosmético">Cosmético</option>
+                                        <option value="Farmaceutico">Farmaceutico</option>
+                                    </select>
+                                </div>
+                                <div class="form-input" style="display: none;" id="service-display">
+                                    <label>Selecione a(s) categorias de serviço que sua loja atua:</label>
+                                    <select multiple class="selectpicker form-control" id="service-name"
+                                        data-container="body" data-live-search="true" title="Serviço"
+                                        data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"
+                                        onchange="showSelectedOptions2(this.options)">
+                                        <option value="Saúde">Saúde</option>
+                                        <option value="Odontologia">Odontologia</option>
+                                        <option value="Estética">Estética</option>
+                                        <option value="Beleza">Beleza</option>
+                                        <option value="Bem-estar">Bem-estar</option>
+                                        <option value="Manicure">Manicure</option>
+                                        <option value="Entretenimento">Entretenimento</option>
+                                        <option value="Serviços especializados">Serviços especializados</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-submit">
+                            <button class="submit" id="submit" name="submit" type="submit">Salvar</button>
+                        </div>
+                        <div id="preloader">
+                            <div id="loader"></div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap-select.js"></script>
+
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAj1Hg18SVHhnScbQeFh03qW8tvHkg9yoE",
+            authDomain: "miips-3cdbd.firebaseapp.com",
+            databaseURL: "https://miips-3cdbd.firebaseio.com",
+            projectId: "miips-3cdbd",
+            storageBucket: "miips-3cdbd.appspot.com",
+            messagingSenderId: "565416108871",
+            appId: "1:565416108871:web:961f3541b8bbc7c7ad6262"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        //make auth and firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+    </script>
+
+    <!-- JS -->
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="//assets.locaweb.com.br/locastyle/2.0.6/javascripts/locastyle.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <script src="scripts/category.js"></script>
+
+</body>
+
+</html>
