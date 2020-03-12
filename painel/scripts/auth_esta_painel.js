@@ -38,6 +38,7 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById('cep').innerHTML = cep;
         document.getElementById('bairro').innerHTML = bairro;
         document.getElementById('cnpj').innerHTML = cnpj;
+        document.getElementById("preloader").style.display = "none";
 
         if(status){
           document.getElementById('state').innerHTML = "Ativado";
@@ -58,6 +59,31 @@ auth.onAuthStateChanged(function (user) {
     });
 
     // ...
+
+    db.collection("companies").doc(user.uid).get().then(function (doc) {
+      if (doc.exists) {
+        let cate = new Array();
+        cate = doc.data().category;
+        console.log(cate.length)
+        if(cate.length == 2){
+          document.getElementById("prod").style.display = "block";
+          document.getElementById("serv").style.display = "block";
+        }else{
+          if(cate[0] == "Produto"){
+            document.getElementById("prod").style.display = "block";
+          }else{
+            document.getElementById("serv").style.display = "block";
+          }
+        }
+        
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+
 
   } else {
     // User is signed out.
