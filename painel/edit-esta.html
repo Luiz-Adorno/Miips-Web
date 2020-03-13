@@ -319,7 +319,7 @@
                             <input type="text" class="form-control" id="nome_esta" required>
                         </div>
                         <div class="form-group">
-                        <label>Status do Estabelecimento</label>
+                        <label>Status do funcionamento do estabelecimento</label>
                         <select class="form-control" id= "status-id">
                             <option value="true">Ativado</option>
                             <option value="false">Desativado</option>
@@ -359,9 +359,12 @@
                             <label for="complemento" class="required">Complemento</label>
                             <input type="text" class="form-control" name="complemento" id="complemento" required />
                         </div>
-
+                        <div id="preloader" style="display: block;">
+                            <div id="loader"></div>
+                        </div>
                         <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Salvar</button>
                     </form>
+                    
                 </div>
             </div>
         </div>

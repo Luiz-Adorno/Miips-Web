@@ -6,7 +6,7 @@ auth.onAuthStateChanged(function (user) {
       document.getElementById('avatar_small').src = user.photoURL
     }
     // ...
-    
+
     // ...
 
   } else {

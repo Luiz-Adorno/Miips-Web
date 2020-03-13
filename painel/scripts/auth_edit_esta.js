@@ -18,40 +18,40 @@ auth.onAuthStateChanged(function (user) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
 
-        var nome_estabelecimento = doc.data().nome_estabelecimento;
-        var estado = doc.data().estado;
-        var cidade = doc.data().cidade;
-        var rua = doc.data().rua;
+        var nome_estabelecimentoF = doc.data().nome_estabelecimento;
+        var estadoF = doc.data().estado;
+        var cidadeF = doc.data().cidade;
+        var ruaF = doc.data().rua;
         var url_photo = doc.data().profilePhoto;
-        var nro = doc.data().numero;
-        var tel = doc.data().telefone;
-        var cnpj = doc.data().cnpj;
-        var cep = doc.data().cep;
-        var bairro = doc.data().bairro;
-        var status = doc.data().state;
-        var complemento = doc.data().complemento;
-        var status = doc.data().state;
+        var nroF = doc.data().numero;
+        var telF = doc.data().telefone;
+        var cnpjF = doc.data().cnpj;
+        var cepF = doc.data().cep;
+        var bairroF = doc.data().bairro;
+        var statusF = doc.data().state;
+        var complementoF = doc.data().complemento;
+        var statusF = doc.data().state;
 
         document.getElementById("avatar_big").src = url_photo;
 
-        document.getElementById("nome_esta").value = nome_estabelecimento;
-        document.getElementById("telefone").value = tel;
-        document.getElementById("cnpj").value = cnpj;
-        document.getElementById("cep").value = cep;
-        document.getElementById("cidade").value = cidade;
-        document.getElementById("uf").value = estado;
-        document.getElementById("rua").value = rua;
-        document.getElementById("bairro").value = bairro;
-        document.getElementById("nro").value = nro;
-        document.getElementById("cnpj").value = cnpj;
-        document.getElementById("complemento").value = complemento;
-        document.getElementById("status-id").value = status;
+        document.getElementById("nome_esta").value = nome_estabelecimentoF;
+        document.getElementById("telefone").value = telF;
+        document.getElementById("cnpj").value = cnpjF;
+        document.getElementById("cep").value = cepF;
+        document.getElementById("cidade").value = cidadeF;
+        document.getElementById("uf").value = estadoF;
+        document.getElementById("rua").value = ruaF;
+        document.getElementById("bairro").value = bairroF;
+        document.getElementById("nro").value = nroF;
+        document.getElementById("cnpj").value = cnpjF;
+        document.getElementById("complemento").value = complementoF;
+        document.getElementById("status-id").value = statusF;
+        document.getElementById("preloader").style.display = "none";
 
         const signupFormStore = document.querySelector('#register-form-store');
 
         signupFormStore.addEventListener('submit', (e) => {
           e.preventDefault();
-
 
           //saving company info
           const nome_esta = signupFormStore['nome_esta'].value;
@@ -68,9 +68,9 @@ auth.onAuthStateChanged(function (user) {
 
           var stated;
 
-          if(status == "true"){
+          if (status == "true") {
             stated = true;
-          }else{
+          } else {
             stated = false;
           }
 
@@ -84,9 +84,23 @@ auth.onAuthStateChanged(function (user) {
           } else if (telefone.length < 8) {
             alert("\nTelefone deve conter no mínimo 8 caracteres")
           } else {
-            firebase.auth().onAuthStateChanged(function (user) {
-              if (user) {
-                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+            if (cepF == cep) {
+              console.log("mesmo cep")
+              db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                state: stated,
+                nome_estabelecimento: nome_esta,
+                cnpj: cnpj,
+                telefone: telefone,
+                cep: cep,
+                cidade: cidade,
+                estado: uf,
+                rua: rua,
+                bairro: bairro,
+                profilePhoto: url_photo,
+                numero: nro,
+                complemento: complemento
+              }).then(function () {
+                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
                   state: stated,
                   nome_estabelecimento: nome_esta,
                   cnpj: cnpj,
@@ -99,13 +113,79 @@ auth.onAuthStateChanged(function (user) {
                   profilePhoto: url_photo,
                   numero: nro,
                   complemento: complemento
-                }).then(function () {
+                }, { merge: true }).then(function () {
+                  console.log("second firestore add")
+                  //after add the data in companies go to responsible
                   window.location.href = 'esta-painel.html';
                 });
-              } else {
-                // No user is signed in.
-              }
-            });
+
+              });
+            } else {
+              var doc_id = sessionStorage.setItem("doc.id", cidade + "-" + uf);
+              //delete the older's cidade+uf node
+              db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidadeF + "-" + estadoF).collection("local").doc(cnpj_new).delete().then(function () {
+                console.log("Document successfully deleted!");
+
+                //set a field to validate the doc
+                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ description: "Lojas" }).then(function () {
+                  console.log("Document successfully updated!");
+
+                  //them add the newest cidade+uf node
+                  db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                    state: stated,
+                    nome_estabelecimento: nome_esta,
+                    cnpj: cnpj,
+                    telefone: telefone,
+                    cep: cep,
+                    cidade: cidade,
+                    estado: uf,
+                    rua: rua,
+                    bairro: bairro,
+                    profilePhoto: url_photo,
+                    numero: nro,
+                    complemento: complemento
+                  }).then(function () {
+                    //delete the older's cidade+uf from "commercialPlaces" node
+                    db.collection("commercialPlaces").doc(cidadeF + "-" + estadoF).collection("Local").doc(cnpj_new).delete().then(function () {
+                      console.log("Document successfully deleted!");
+
+                       //them add the newest cidade+uf on "commercialPlaces"  node
+                      db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                        state: stated,
+                        nome_estabelecimento: nome_esta,
+                        cnpj: cnpj,
+                        telefone: telefone,
+                        cep: cep,
+                        cidade: cidade,
+                        estado: uf,
+                        rua: rua,
+                        bairro: bairro,
+                        profilePhoto: url_photo,
+                        numero: nro,
+                        complemento: complemento
+                      }, { merge: true }).then(function () {
+                        console.log("second firestore add")
+                        //after add the data in companies go to responsible
+                        window.location.href = 'esta-painel.html';
+                      });
+
+                    }).catch(function (error) {
+                      console.error("Error removing document: ", error);
+                    });
+                  });
+                }).catch(function (error) {
+                  console.error("Error removing document: ", error);
+                });
+
+              })
+                .catch(function (error) {
+                  // The document probably doesn't exist.
+                  console.error("Error updating document: ", error);
+                  document.getElementById("preloader").style.display = "none";
+                });
+
+            }
+
           }
 
         });

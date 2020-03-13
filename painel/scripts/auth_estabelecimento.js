@@ -12,11 +12,11 @@ auth.onAuthStateChanged(function (user) {
     //document.getElementById("on/off").value = "Johnny Bravo";
     // const string = document.getElementById("on/off").value;
 
-
+    document.getElementById("preloader").style.display = "none";
     db.collection("companies").doc(user.uid).collection("commercialPlace").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-
+          
           db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc.id).collection("local").get().then(querySnapshot2 => {
             querySnapshot2.forEach(doc2 => {
 
@@ -70,6 +70,7 @@ auth.onAuthStateChanged(function (user) {
               }
 
             });
+
           });
         });
       });
