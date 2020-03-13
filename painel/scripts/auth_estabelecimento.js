@@ -12,14 +12,13 @@ auth.onAuthStateChanged(function (user) {
     //document.getElementById("on/off").value = "Johnny Bravo";
     // const string = document.getElementById("on/off").value;
 
-    document.getElementById("preloader").style.display = "none";
     db.collection("companies").doc(user.uid).collection("commercialPlace").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           
           db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc.id).collection("local").get().then(querySnapshot2 => {
             querySnapshot2.forEach(doc2 => {
-
+              console.log(doc.id)
               var nome_estabelecimento = doc2.data().nome_estabelecimento;
               var estado = doc2.data().estado;
               var cidade = doc2.data().cidade;
@@ -73,6 +72,7 @@ auth.onAuthStateChanged(function (user) {
 
           });
         });
+        document.getElementById("preloader").style.display = "none";
       });
 
 

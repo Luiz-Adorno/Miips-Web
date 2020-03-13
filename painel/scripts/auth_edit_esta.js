@@ -13,7 +13,6 @@ auth.onAuthStateChanged(function (user) {
     console.log(cnpj_new);
     console.log(doc_id);
 
-
     db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).get().then(function (doc) {
       if (doc.exists) {
         console.log("Document data:", doc.data());
@@ -52,6 +51,7 @@ auth.onAuthStateChanged(function (user) {
 
         signupFormStore.addEventListener('submit', (e) => {
           e.preventDefault();
+          document.getElementById("preloader").style.display = "block";
 
           //saving company info
           const nome_esta = signupFormStore['nome_esta'].value;
@@ -84,7 +84,7 @@ auth.onAuthStateChanged(function (user) {
           } else if (telefone.length < 8) {
             alert("\nTelefone deve conter no mínimo 8 caracteres")
           } else {
-            if (cepF == cep) {
+            if (cepF == cep && cidadeF == cidade && estadoF == uf) {
               console.log("mesmo cep")
               db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
                 state: stated,
@@ -127,8 +127,12 @@ auth.onAuthStateChanged(function (user) {
                 console.log("Document successfully deleted!");
 
                 //set a field to validate the doc
-                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ description: "Lojas" }).then(function () {
+                db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
                   console.log("Document successfully updated!");
+
+                  //decrease the count on both collecitons
+                  db.collection('commercialPlaces').doc(cidadeF + "-" + estadoF).update({ count: firebase.firestore.FieldValue.increment(-1) })
+                  db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidadeF + "-" + estadoF).update({ count: firebase.firestore.FieldValue.increment(-1) })
 
                   //them add the newest cidade+uf node
                   db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
@@ -145,33 +149,44 @@ auth.onAuthStateChanged(function (user) {
                     numero: nro,
                     complemento: complemento
                   }).then(function () {
-                    //delete the older's cidade+uf from "commercialPlaces" node
-                    db.collection("commercialPlaces").doc(cidadeF + "-" + estadoF).collection("Local").doc(cnpj_new).delete().then(function () {
-                      console.log("Document successfully deleted!");
+                    //increment the count on "companies" collection
+                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
 
-                       //them add the newest cidade+uf on "commercialPlaces"  node
-                      db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
-                        state: stated,
-                        nome_estabelecimento: nome_esta,
-                        cnpj: cnpj,
-                        telefone: telefone,
-                        cep: cep,
-                        cidade: cidade,
-                        estado: uf,
-                        rua: rua,
-                        bairro: bairro,
-                        profilePhoto: url_photo,
-                        numero: nro,
-                        complemento: complemento
-                      }, { merge: true }).then(function () {
-                        console.log("second firestore add")
-                        //after add the data in companies go to responsible
-                        window.location.href = 'esta-painel.html';
+                      //delete the older's cidade+uf from "commercialPlaces" node
+                      db.collection("commercialPlaces").doc(cidadeF + "-" + estadoF).collection("Local").doc(cnpj_new).delete().then(function () {
+                        console.log("Document successfully deleted!");
+
+                        //them add the newest cidade+uf on "commercialPlaces" node
+                        db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                          state: stated,
+                          nome_estabelecimento: nome_esta,
+                          cnpj: cnpj,
+                          telefone: telefone,
+                          cep: cep,
+                          cidade: cidade,
+                          estado: uf,
+                          rua: rua,
+                          bairro: bairro,
+                          profilePhoto: url_photo,
+                          numero: nro,
+                          complemento: complemento
+                        }, { merge: true }).then(function () {
+                          console.log("second firestore add")
+                          //after add the data in companies go to responsible
+                          window.location.href = 'esta-painel.html';
+                        });
+
+                      }).catch(function (error) {
+                        console.error("Error removing document: ", error);
                       });
 
-                    }).catch(function (error) {
-                      console.error("Error removing document: ", error);
-                    });
+                    })
+                      .catch(function (error) {
+                        // The document probably doesn't exist.
+                        console.error("Error updating document: ", error);
+                        document.getElementById("preloader").style.display = "none";
+                      });
+
                   });
                 }).catch(function (error) {
                   console.error("Error removing document: ", error);
