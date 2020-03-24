@@ -415,7 +415,6 @@
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
 
-
     <script>
 
         const signupFormStore = document.querySelector('#register-form-store');
@@ -461,276 +460,271 @@
                     const nro = signupFormStore['nro'].value;
                     const complemento = signupFormStore['complemento'].value;
 
-
                     //firebasefirestore doens't accept "/"
                     cnpj_new = cnpj.replace("/", "-");
 
-
-                    if (cnpj.length < 14) {
-                        alert("\nCnpj deve conter no mínimo 14 caracteres")
+                    if (cnpj.length < 18) {
+                        alert("\nCnpj deve conter no mínimo 18 caracteres")
                         return false;
                     } else if (telefone.length < 8) {
                         alert("\nTelefone deve conter no mínimo 8 caracteres")
                     } else {
                         document.getElementById("preloader").style.display = "block";
+
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
+                                db.collection("allCnpjRegistered").doc(cnpj_new).get().then(function (doc) {
+                                    if (doc.exists) {
+                                        //cnpj exist, try another
+                                        // console.log("cnpj already exist")
+                                        alert("CNPJ já cadastrado, entre em contato com a equipe de suporte.");
+                                        document.getElementById("preloader").style.display = "none";
 
-                                db.collection("commercialPlaces").get().then(function (querySnapshot) {
-                                    querySnapshot.forEach(function (doc) {
-                                        // console.log(doc.id)
-                                        db.collection("commercialPlaces").doc(doc.id).collection("Local").where("cnpj", "==", cnpj)
-                                            .get()
-                                            .then(function (querySnapshot) {
-                                                querySnapshot.forEach(function (doc2) {
-                                                    //cpnj is already registred
-                                                    if (doc2.exists) {
-                                                        console.log("cnpj already exist")
-                                                        document.getElementById("preloader").style.display = "none";
-                                                        alert("CNPJ já cadastrado, entre em contato com a equipe de suporte.");
-                                                        location.reload();
-                                                    }
-                                                });
-                                            })
-                                            .catch(function (error) {
-                                                console.log("Error getting documents: ", error);
-                                            });
+                                    } else {
 
-                                    });
-                                });
+                                        db.collection("allCnpjRegistered").doc(cnpj_new).set({
+                                            exist: true
+                                        })
+                                            .then(function () {
+                                                //cpnj doesnt exist, approved!
+                                                //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
+                                                var task = storageRef.put(output);
+                                                task.on('state_changed', function progress(snapshot) {
+                                                    console.log("onprogress")
 
-                                //cpnj doesnt exist, approved!
-                                //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
-                                var task = storageRef.put(output);
-                                task.on('state_changed', function progress(snapshot) {
-                                    console.log("onprogress")
+                                                }, function error(err) {
+                                                    console.log("err: " + err)
 
-                                }, function error(err) {
-                                    console.log("err: " + err)
+                                                }, function complete() {
+                                                    console.log("complete")
+                                                    storageRef.getDownloadURL().then(function (url) {
+                                                        var refe = db.collection("companies").doc(user.uid);
 
-                                }, function complete() {
-                                    console.log("complete")
-                                    storageRef.getDownloadURL().then(function (url) {
-                                        var refe = db.collection("companies").doc(user.uid);
+                                                        refe.get().then(function (doc) {
+                                                            if (doc.exists) {
+                                                                let cate = new Array();
+                                                                let cateP = new Array();
+                                                                let cateS = new Array();
+                                                                cate = doc.data().category;
+                                                                console.log(url)
+                                                                console.log(cate)
 
-                                        refe.get().then(function (doc) {
-                                            if (doc.exists) {
-                                                let cate = new Array();
-                                                let cateP = new Array();
-                                                let cateS = new Array();
-                                                cate = doc.data().category;
-                                                console.log(url)
-                                                console.log(cate)
+                                                                if (cate.length == 2) {
+                                                                    cateP = doc.data().product_category;
+                                                                    cateS = doc.data().service_category;
 
-                                                if (cate.length == 2) {
-                                                    cateP = doc.data().product_category;
-                                                    cateS = doc.data().service_category;
+                                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                                        state: true,
+                                                                        nome_estabelecimento: nome_esta,
+                                                                        cnpj: cnpj,
+                                                                        telefone: telefone,
+                                                                        cep: cep,
+                                                                        cidade: cidade,
+                                                                        estado: uf,
+                                                                        rua: rua,
+                                                                        bairro: bairro,
+                                                                        profilePhoto: url,
+                                                                        numero: nro,
+                                                                        complemento: complemento
+                                                                    }).then(function () {
 
-                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
-                                                        state: true,
-                                                        nome_estabelecimento: nome_esta,
-                                                        cnpj: cnpj,
-                                                        telefone: telefone,
-                                                        cep: cep,
-                                                        cidade: cidade,
-                                                        estado: uf,
-                                                        rua: rua,
-                                                        bairro: bairro,
-                                                        profilePhoto: url,
-                                                        numero: nro,
-                                                        complemento: complemento
-                                                    }).then(function () {
+                                                                        console.log("second firestore added")
 
-                                                        console.log("second firestore added")
+                                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                            console.log("Document successfully updated!");
 
-                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                            console.log("Document successfully updated!");
+                                                                            db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                                                                                state: true,
+                                                                                category: cate,
+                                                                                product_category: cateP,
+                                                                                service_category: cateS,
+                                                                                nome_estabelecimento: nome_esta,
+                                                                                cnpj: cnpj,
+                                                                                telefone: telefone,
+                                                                                cep: cep,
+                                                                                cidade: cidade,
+                                                                                estado: uf,
+                                                                                rua: rua,
+                                                                                bairro: bairro,
+                                                                                profilePhoto: url,
+                                                                                numero: nro,
+                                                                                complemento: complemento
+                                                                            }).then(function () {
+                                                                                //increment the count in commercialPlaces
+                                                                                db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
 
-                                                            db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
-                                                                state: true,
-                                                                category: cate,
-                                                                product_category: cateP,
-                                                                service_category: cateS,
-                                                                nome_estabelecimento: nome_esta,
-                                                                cnpj: cnpj,
-                                                                telefone: telefone,
-                                                                cep: cep,
-                                                                cidade: cidade,
-                                                                estado: uf,
-                                                                rua: rua,
-                                                                bairro: bairro,
-                                                                profilePhoto: url,
-                                                                numero: nro,
-                                                                complemento: complemento
-                                                            }).then(function () {
-                                                                //increment the count in commercialPlaces
-                                                                db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                    //after add the data in companies go to responsible
+                                                                                    window.location.href = 'estabelecimentos.html';
+                                                                                })
+                                                                                    .catch(function (error) {
+                                                                                        // The document probably doesn't exist.
+                                                                                        document.getElementById("preloader").style.display = "none";
+                                                                                        console.error("Error updating document: ", error);
+                                                                                    });
+                                                                            });
+                                                                        })
+                                                                            .catch(function (error) {
+                                                                                // The document probably doesn't exist.
+                                                                                document.getElementById("preloader").style.display = "none";
+                                                                                console.error("Error updating document: ", error);
+                                                                            });
 
-                                                                    //after add the data in companies go to responsible
-                                                                    window.location.href = 'estabelecimentos.html';
-                                                                })
-                                                                    .catch(function (error) {
-                                                                        // The document probably doesn't exist.
-                                                                        document.getElementById("preloader").style.display = "none";
-                                                                        console.error("Error updating document: ", error);
                                                                     });
-                                                            });
-                                                        })
-                                                            .catch(function (error) {
-                                                                // The document probably doesn't exist.
+
+                                                                } else {
+                                                                    if (cate[0] == "Produto") {
+                                                                        cateP = doc.data().product_category;
+
+                                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                                            state: true,
+                                                                            nome_estabelecimento: nome_esta,
+                                                                            cnpj: cnpj,
+                                                                            telefone: telefone,
+                                                                            cep: cep,
+                                                                            cidade: cidade,
+                                                                            estado: uf,
+                                                                            rua: rua,
+                                                                            bairro: bairro,
+                                                                            profilePhoto: url,
+                                                                            numero: nro,
+                                                                            complemento: complemento
+                                                                        }).then(function () {
+
+                                                                            console.log("second firestore add")
+
+                                                                            db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                console.log("Document successfully updated!");
+                                                                                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                                                                                    state: true,
+                                                                                    category: cate,
+                                                                                    product_category: cateP,
+                                                                                    nome_estabelecimento: nome_esta,
+                                                                                    cnpj: cnpj,
+                                                                                    telefone: telefone,
+                                                                                    cep: cep,
+                                                                                    cidade: cidade,
+                                                                                    estado: uf,
+                                                                                    rua: rua,
+                                                                                    bairro: bairro,
+                                                                                    profilePhoto: url,
+                                                                                    numero: nro,
+                                                                                    complemento: complemento
+                                                                                }).then(function () {
+                                                                                    //increment the count in commercialPlaces
+                                                                                    db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+
+                                                                                        //after add the data in companies go to responsible
+                                                                                        window.location.href = 'estabelecimentos.html';
+                                                                                    })
+                                                                                        .catch(function (error) {
+                                                                                            // The document probably doesn't exist.
+                                                                                            document.getElementById("preloader").style.display = "none";
+                                                                                            console.error("Error updating document: ", error);
+                                                                                        });
+                                                                                });
+                                                                            })
+                                                                                .catch(function (error) {
+                                                                                    // The document probably doesn't exist.
+                                                                                    console.error("Error updating document: ", error);
+                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                });
+
+                                                                        });
+                                                                    } else {
+                                                                        cateS = doc.data().service_category;
+
+                                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
+                                                                            state: true,
+                                                                            category: cate,
+                                                                            product_category: cateS,
+                                                                            nome_estabelecimento: nome_esta,
+                                                                            cnpj: cnpj,
+                                                                            telefone: telefone,
+                                                                            cep: cep,
+                                                                            cidade: cidade,
+                                                                            estado: uf,
+                                                                            rua: rua,
+                                                                            bairro: bairro,
+                                                                            profilePhoto: url,
+                                                                            numero: nro,
+                                                                            complemento: complemento
+                                                                        }).then(function () {
+
+                                                                            console.log("second firestore add")
+
+                                                                            db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                console.log("Document successfully updated!");
+                                                                                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                                                                                    state: true,
+                                                                                    category: cate,
+                                                                                    service_category: cateS,
+                                                                                    nome_estabelecimento: nome_esta,
+                                                                                    cnpj: cnpj,
+                                                                                    telefone: telefone,
+                                                                                    cep: cep,
+                                                                                    cidade: cidade,
+                                                                                    estado: uf,
+                                                                                    rua: rua,
+                                                                                    bairro: bairro,
+                                                                                    profilePhoto: url,
+                                                                                    numero: nro,
+                                                                                    complemento: complemento
+                                                                                }).then(function () {
+                                                                                    //increment the count in commercialPlaces
+                                                                                    db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                        //after add the data in allcnpjsregistered go to responsible
+                                                                                        window.location.href = 'estabelecimentos.html';
+                                                                                    })
+                                                                                        .catch(function (error) {
+                                                                                            // The document probably doesn't exist.
+                                                                                            document.getElementById("preloader").style.display = "none";
+                                                                                            console.error("Error updating document: ", error);
+                                                                                        });
+                                                                                });
+                                                                            })
+                                                                                .catch(function (error) {
+                                                                                    // The document probably doesn't exist.
+                                                                                    console.error("Error updating document: ", error);
+                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                });
+
+                                                                        });
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                // doc.data() will be undefined in this case
                                                                 document.getElementById("preloader").style.display = "none";
-                                                                console.error("Error updating document: ", error);
-                                                            });
+                                                                console.log("No such document!");
+                                                            }
+                                                        }).catch(function (error) {
+                                                            console.log("Error getting document:", error);
+                                                            document.getElementById("preloader").style.display = "none";
+                                                        });
+
+
+
+                                                    }).catch(function (error) {
+                                                        document.getElementById("preloader").style.display = "none";
+                                                        console.log(error)
+                                                        // Handle any errors
 
                                                     });
+                                                });
 
-                                                } else {
-                                                    if (cate[0] == "Produto") {
-                                                        cateP = doc.data().product_category;
-
-                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
-                                                            state: true,
-                                                            nome_estabelecimento: nome_esta,
-                                                            cnpj: cnpj,
-                                                            telefone: telefone,
-                                                            cep: cep,
-                                                            cidade: cidade,
-                                                            estado: uf,
-                                                            rua: rua,
-                                                            bairro: bairro,
-                                                            profilePhoto: url,
-                                                            numero: nro,
-                                                            complemento: complemento
-                                                        }).then(function () {
-
-                                                            console.log("second firestore add")
-
-                                                            db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                                console.log("Document successfully updated!");
-                                                                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
-                                                                    state: true,
-                                                                    category: cate,
-                                                                    product_category: cateP,
-                                                                    nome_estabelecimento: nome_esta,
-                                                                    cnpj: cnpj,
-                                                                    telefone: telefone,
-                                                                    cep: cep,
-                                                                    cidade: cidade,
-                                                                    estado: uf,
-                                                                    rua: rua,
-                                                                    bairro: bairro,
-                                                                    profilePhoto: url,
-                                                                    numero: nro,
-                                                                    complemento: complemento
-                                                                }).then(function () {
-                                                                    //increment the count in commercialPlaces
-                                                                    db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-
-                                                                        //after add the data in companies go to responsible
-                                                                        window.location.href = 'estabelecimentos.html';
-                                                                    })
-                                                                        .catch(function (error) {
-                                                                            // The document probably doesn't exist.
-                                                                            document.getElementById("preloader").style.display = "none";
-                                                                            console.error("Error updating document: ", error);
-                                                                        });
-                                                                });
-                                                            })
-                                                                .catch(function (error) {
-                                                                    // The document probably doesn't exist.
-                                                                    console.error("Error updating document: ", error);
-                                                                    document.getElementById("preloader").style.display = "none";
-                                                                });
-
-                                                        });
-                                                    } else {
-                                                        cateS = doc.data().service_category;
-
-                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
-                                                            state: true,
-                                                            category: cate,
-                                                            product_category: cateS,
-                                                            nome_estabelecimento: nome_esta,
-                                                            cnpj: cnpj,
-                                                            telefone: telefone,
-                                                            cep: cep,
-                                                            cidade: cidade,
-                                                            estado: uf,
-                                                            rua: rua,
-                                                            bairro: bairro,
-                                                            profilePhoto: url,
-                                                            numero: nro,
-                                                            complemento: complemento
-                                                        }).then(function () {
-
-                                                            console.log("second firestore add")
-
-                                                            db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                                console.log("Document successfully updated!");
-                                                                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
-                                                                    state: true,
-                                                                    category: cate,
-                                                                    service_category: cateS,
-                                                                    nome_estabelecimento: nome_esta,
-                                                                    cnpj: cnpj,
-                                                                    telefone: telefone,
-                                                                    cep: cep,
-                                                                    cidade: cidade,
-                                                                    estado: uf,
-                                                                    rua: rua,
-                                                                    bairro: bairro,
-                                                                    profilePhoto: url,
-                                                                    numero: nro,
-                                                                    complemento: complemento
-                                                                }).then(function () {
-                                                                    //increment the count in commercialPlaces
-                                                                    db.collection('commercialPlaces').doc(cidade + "-" + uf).set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-
-                                                                        //after add the data in companies go to responsible
-                                                                        window.location.href = 'estabelecimentos.html';
-                                                                    })
-                                                                        .catch(function (error) {
-                                                                            // The document probably doesn't exist.
-                                                                            document.getElementById("preloader").style.display = "none";
-                                                                            console.error("Error updating document: ", error);
-                                                                        });
-                                                                });
-                                                            })
-                                                                .catch(function (error) {
-                                                                    // The document probably doesn't exist.
-                                                                    console.error("Error updating document: ", error);
-                                                                    document.getElementById("preloader").style.display = "none";
-                                                                });
-
-                                                        });
-                                                    }
-                                                }
-                                            } else {
-                                                // doc.data() will be undefined in this case
-                                                document.getElementById("preloader").style.display = "none";
-                                                console.log("No such document!");
-                                            }
-                                        }).catch(function (error) {
-                                            console.log("Error getting document:", error);
-                                            document.getElementById("preloader").style.display = "none";
-                                        });
-
-
-
-                                    }).catch(function (error) {
-                                        document.getElementById("preloader").style.display = "none";
-                                        // Handle any errors
-                                        console.log(error)
-                                    });
+                                            }).catch(function (error) {
+                                                console.error("Error writing document: ", error);
+                                            });
+                                    }
+                                }).catch(function (error) {
+                                    console.log("Error getting document:", error);
                                 });
-
-
 
                             } else {
                                 // No user is signed in.
                             }
                         });
+
                     }
 
 
