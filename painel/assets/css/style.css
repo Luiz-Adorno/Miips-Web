@@ -6463,6 +6463,16 @@ header .form-inline .search-form.close {
   font-size: 30px;
 }
 
+span.textbox {
+  background-color: #FFF;
+  color: #888;
+  line-height:20px;
+  height:20px;
+  padding:3px;
+  border:1px #888 solid;
+  font-size:9pt;
+}
+
 .horizontal {
   position: relative;
 }

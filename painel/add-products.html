@@ -29,12 +29,15 @@
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
 
+    <script src="assets/js/simple-mask-money.js"></script>
+
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/style.css">
+
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -229,6 +232,12 @@
                 <div class="form-content">
 
                     <form id="register-form-store">
+
+                        <div class="form-group">
+                            <label>Data do Cadastro</label>
+                            <input type="text" class="form-control" id="date" disabled="disabled">
+                        </div>
+
                         <p style="color: black;">Imagem do Produto</p>
                         <div style="text-align: center;">
                             <p class="titleH">Arraste a imagem para o campo cinza abaixo ou clique em Browse para
@@ -243,9 +252,20 @@
                             <input type="text" class="form-control" id="nome_esta" required>
                         </div>
                         <div class="form-group">
-                            <label class="required">Preço</label>
-                            <span class="input-group-addon">$</span>
-                            <input type="number" class="form-control" name="price" id="price"/>
+                            <label>Quantidade em estoque</label>
+                            <input class="form-control integerInput" type="text" min="1" id="myInput2" placeholder="0"
+                                required><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Preço Venda</label>
+                            <span class="textbox">
+                                R$
+                            </span>
+                            <input class="form-control" inputmode="numeric" id="myInput" required><br>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" class="form-control" id="descri" required>
                         </div>
 
                         <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Cadastrar</button>
@@ -257,6 +277,56 @@
     </div> <!-- .content -->
 
     <!-- Right Panel -->
+
+    <script>
+        $(function () {
+            $('.integerInput').on('input', function () {
+                this.value = this.value
+                    .replace(/[^\d]/g, '');// numbers and decimals only
+
+            });
+        });
+    </script>
+
+    <script>
+        $("input#myInput").on({
+            keydown: function (e) {
+                if (e.which === 32)
+                    return false;
+            }
+        });
+        let input = SimpleMaskMoney.setMask('#myInput', {
+            prefix: '',
+            suffix: '',
+            fixed: true,
+            fractionDigits: 2,
+            decimalSeparator: ',',
+            thousandsSeparator: '.',
+            emptyOrInvalid: () => {
+                return this.SimpleMaskMoney.args.fixed
+                    ? `0${this.SimpleMaskMoney.args.decimalSeparator}00`
+                    : `_${this.SimpleMaskMoney.args.decimalSeparator}__`;
+            }
+        });
+
+    </script>
+
+    <script>
+        var dNow = new Date;
+        var localdate = dNow.getDate() + '/' + (dNow.getMonth() + 1) + '/' + dNow.getFullYear();
+        console.log(localdate)
+        document.getElementById("date").value = localdate;
+    </script>
+
+
+    <script>
+        $("input#myInput2").on({
+            keydown: function (e) {
+                if (e.which === 32)
+                    return false;
+            }
+        });
+    </script>
 
     <script type="text/javascript" src="//assets.locaweb.com.br/locastyle/2.0.6/javascripts/locastyle.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -273,23 +343,6 @@
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#cnpj").mask("99.999.999/9999-99");
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#telefone").mask("(99) 99999-9999");
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#cep").mask("99999-999");
-        });
-    </script>
 
     <script>
         // Your web app's Firebase configuration
@@ -352,105 +405,26 @@
 
                     //saving company info
                     const nome_esta = signupFormStore['nome_esta'].value;
-                    var cnpj = signupFormStore['cnpj'].value;
-                    const telefone = signupFormStore['telefone'].value;
-                    const cep = signupFormStore['cep'].value;
-                    const cidade = signupFormStore['cidade'].value;
-                    const uf = signupFormStore['uf'].value;
-                    const rua = signupFormStore['rua'].value;
-                    const bairro = signupFormStore['bairro'].value;
-                    const nro = signupFormStore['nro'].value;
-                    const complemento = signupFormStore['complemento'].value;
+                    const qnt = signupFormStore['myInput2'].value
+                    const prize = signupFormStore['myInput'].value
+                    //console.log(prize)
+                    const date = signupFormStore['date'].value
+                    //console.log(date)
+                    qnt_new = qnt.replace(/^0+/, "");
+                    //console.log(qnt_new)
 
                     //firebasefirestore doens't accept "/"
-                    cnpj_new = cnpj.replace("/", "-");
-
-
-                    if (cnpj.length < 14) {
-                        alert("\nCnpj deve conter no mínimo 14 caracteres")
+                    //cnpj_new = cnpj.replace("/", "-");
+                    if (prize == "0,00") {
+                        alert("\nDigite o valor do produto")
                         return false;
-                    } else if (telefone.length < 8) {
-                        alert("\nTelefone deve conter no mínimo 8 caracteres")
-                    } else {
+                    } else if (qnt_new == 0) {
+                        alert("\nDigite a quantidade do produto em estoque")
+                    }
+                    else {
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
-                                db.collection('companies').doc(user.uid).collection('commercialPlace').doc(uf).collection(cidade).doc(nome_esta).collection(cnpj_new).get().
-                                    then(sub => {
-                                        if (sub.docs.length > 0) {
-                                            //subcollection exist
-                                            console.log("cnpj exist")
-                                            alert("CNPJ já cadastrado, entre em contato com a equipe de suporte.");
-                                        }
-                                        else {
-                                            //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
-                                            var task = storageRef.put(output);
-                                            task.on('state_changed', function progress(snapshot) {
-                                                console.log("onprogress")
 
-                                            }, function error(err) {
-                                                console.log("err: " + err)
-
-                                            }, function complete() {
-                                                console.log("complete")
-                                                storageRef.getDownloadURL().then(function (url) {
-
-                                                    console.log(url)
-
-                                                    console.log(cnpj_new)
-
-                                                    db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
-                                                        state: true,
-                                                        nome_estabelecimento: nome_esta,
-                                                        cnpj: cnpj,
-                                                        telefone: telefone,
-                                                        cep: cep,
-                                                        cidade: cidade,
-                                                        estado: uf,
-                                                        rua: rua,
-                                                        bairro: bairro,
-                                                        profilePhoto: url,
-                                                        numero: nro,
-                                                        complemento: complemento
-                                                    }).then(function () {
-
-                                                        console.log("first firestore add")
-
-                                                        db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).set({ description: "Lojas" }).then(function () {
-                                                            console.log("Document successfully updated!");
-                                                            db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
-                                                                state: true,
-                                                                nome_estabelecimento: nome_esta,
-                                                                cnpj: cnpj,
-                                                                telefone: telefone,
-                                                                cep: cep,
-                                                                cidade: cidade,
-                                                                estado: uf,
-                                                                rua: rua,
-                                                                bairro: bairro,
-                                                                profilePhoto: url,
-                                                                numero: nro,
-                                                                complemento: complemento
-                                                            }).then(function () {
-                                                                console.log("second firestore add")
-                                                                //after add the data in companies go to responsible
-                                                                window.location.href = 'estabelecimentos.html';
-                                                            });
-                                                        })
-                                                            .catch(function (error) {
-                                                                // The document probably doesn't exist.
-                                                                console.error("Error updating document: ", error);
-                                                            });
-
-                                                    });
-
-                                                }).catch(function (error) {
-                                                    // Handle any errors
-                                                    console.log(error)
-                                                });
-                                            });
-                                        }
-                                    });
 
                             } else {
                                 // No user is signed in.
@@ -467,7 +441,7 @@
 
     </script>
 
-    <script src="scripts/auth_add_products.js.js"></script>
+    <script src="scripts/auth_add_products.js"></script>
 
 </body>
 
