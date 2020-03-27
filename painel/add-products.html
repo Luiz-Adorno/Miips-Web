@@ -410,8 +410,9 @@
                     //console.log(prize)
                     const date = signupFormStore['date'].value
                     //console.log(date)
+                    //transform 01 in 1, 001 in 1, etc... 
                     qnt_new = qnt.replace(/^0+/, "");
-                    //console.log(qnt_new)
+                    console.log(qnt_new)
 
                     //firebasefirestore doens't accept "/"
                     //cnpj_new = cnpj.replace("/", "-");
