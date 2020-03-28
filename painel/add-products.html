@@ -249,11 +249,16 @@
                         </div>
                         <div class="form-group">
                             <label>Nome do Produto</label>
-                            <input type="text" class="form-control" id="nome_esta" required>
+                            <input type="text" class="form-control" id="name_prod" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Código de Barras</label>
+                            <input class="form-control integerInput" type="text" maxlength="13" id="myInput3"
+                                placeholder="0" required><br>
                         </div>
                         <div class="form-group">
                             <label>Quantidade em estoque</label>
-                            <input class="form-control integerInput" type="text" min="1" id="myInput2" placeholder="0"
+                            <input class="form-control integerInput" type="text" id="myInput2" placeholder="0"
                                 required><br>
                         </div>
                         <div class="form-group">
@@ -267,10 +272,12 @@
                             <label>Descrição</label>
                             <input type="text" class="form-control" id="descri" required>
                         </div>
-
                         <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Cadastrar</button>
                     </form>
                 </div>
+            </div>
+            <div id="preloader" style="display: none;">
+                <div id="loader"></div>
             </div>
         </div>
 
@@ -370,6 +377,12 @@
 
 
     <script>
+        // ...
+        var cnpj = sessionStorage.getItem("last-cnpj");
+        var doc_id = sessionStorage.getItem("doc.id");
+        cnpj_new = cnpj.replace("/", "-");
+        //console.log(cnpj_new);
+        console.log(doc_id);
 
         const signupFormStore = document.querySelector('#register-form-store');
 
@@ -404,28 +417,80 @@
 
 
                     //saving company info
-                    const nome_esta = signupFormStore['nome_esta'].value;
+                    const nameP = signupFormStore['name_prod'].value;
                     const qnt = signupFormStore['myInput2'].value
-                    const prize = signupFormStore['myInput'].value
-                    //console.log(prize)
+                    const price = signupFormStore['myInput'].value
+                    const barcode = signupFormStore['myInput3'].value
+                    //console.log(price)
                     const date = signupFormStore['date'].value
+                    const descrip = signupFormStore['descri'].value
                     //console.log(date)
                     //transform 01 in 1, 001 in 1, etc... 
                     qnt_new = qnt.replace(/^0+/, "");
-                    console.log(qnt_new)
+                    //console.log(qnt_new)
 
                     //firebasefirestore doens't accept "/"
                     //cnpj_new = cnpj.replace("/", "-");
-                    if (prize == "0,00") {
+                    if (price == "0,00") {
                         alert("\nDigite o valor do produto")
                         return false;
                     } else if (qnt_new == 0) {
                         alert("\nDigite a quantidade do produto em estoque")
                     }
                     else {
+                        document.getElementById("preloader").style.display = "block";
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
 
+                                //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
+                                var task = storageRef.put(output);
+                                task.on('state_changed', function progress(snapshot) {
+                                    console.log("onprogress")
+
+                                }, function error(err) {
+                                    console.log("err: " + err)
+                                    document.getElementById("preloader").style.display = "none";
+
+                                }, function complete() {
+                                    console.log("complete")
+                                    storageRef.getDownloadURL().then(function (url) {
+
+                                        var docData = {
+                                            url_product: url,
+                                            nome_produto: nameP,
+                                            state: true,
+                                            quantidade: qnt_new,
+                                            valor: price,
+                                            cod_barras: barcode,
+                                            data_cadastro: date,
+                                            descri: descrip
+                                        };
+
+                                        db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
+                                            { product_count: firebase.firestore.FieldValue.increment(1) }
+                                        ).then(function () {
+                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+                                                .add(docData).then(function () {
+                                                    document.getElementById("preloader").style.display = "none";
+                                                    //after add the  go to responsible
+                                                    window.location.href = 'esta-painel.html';
+                                                }).catch(function (error) {
+                                                    console.log("Error getting document:", error);
+                                                    document.getElementById("preloader").style.display = "none";
+                                                });
+                                        }).catch(function (error) {
+                                            console.log("Error getting document:", error);
+                                            document.getElementById("preloader").style.display = "none";
+                                        });
+
+                                    }).catch(function (error) {
+                                        document.getElementById("preloader").style.display = "none";
+                                        console.log(error)
+                                        // Handle any errors
+
+                                    });
+                                });
 
                             } else {
                                 // No user is signed in.

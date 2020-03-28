@@ -397,7 +397,7 @@
                 fileButton.addEventListener('change', function (e) {
                     document.getElementById("uploader").style.display = "block";
                     var file = e.target.files[0];
-                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto" + "/" + file.name);
+                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto/img");
                     var task = storageRef.put(file);
                     task.on('state_changed', function progress(snapshot) {
                         var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -408,7 +408,7 @@
 
                     }, function complete() {
                         console.log("complete")
-                        firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto" + "/" + file.name).getDownloadURL().then(function (url) {
+                        firebase.storage().ref("companies/" + user.uid + "/images/profilePhoto/img").getDownloadURL().then(function (url) {
                             console.log(url)
                             db.collection('companies').doc(user.uid).set({
                                 url_profile: url

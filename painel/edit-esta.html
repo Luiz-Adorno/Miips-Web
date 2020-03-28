@@ -440,11 +440,10 @@
                 var uploader = document.getElementById('uploader');
                 var fileButton = document.getElementById('picField');
 
-
                 fileButton.addEventListener('change', function (e) {
                     document.getElementById("uploader").style.display = "block";
                     var file = e.target.files[0];
-                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + file.name);
+                    var storageRef = firebase.storage().ref("companies/" + user.uid +  "/images/commercialPlace/profilePhoto/" + cnpj_new + "/" + "photo");
                     var task = storageRef.put(file);
                     task.on('state_changed', function progress(snapshot) {
                         var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

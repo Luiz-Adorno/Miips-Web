@@ -6,6 +6,7 @@ auth.onAuthStateChanged(function (user) {
       document.getElementById('avatar_small').src = user.photoURL
     }
     // ...
+    //console.log(user.uid)
 
   } else {
     // User is signed out.

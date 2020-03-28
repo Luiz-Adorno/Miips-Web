@@ -488,7 +488,7 @@
                                             .then(function () {
                                                 //cpnj doesnt exist, approved!
                                                 //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
+                                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto/" + cnpj_new + "/" + "photo");
                                                 var task = storageRef.put(output);
                                                 task.on('state_changed', function progress(snapshot) {
                                                     console.log("onprogress")
