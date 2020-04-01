@@ -9,6 +9,9 @@ auth.onAuthStateChanged(function (user) {
     // ...
     var cnpj = sessionStorage.getItem("last-cnpj");
     var doc_id = sessionStorage.getItem("doc.id");
+    if (cnpj === null) {
+      window.location.href = 'estabelecimentos.html';
+    }
     cnpj_new = cnpj.replace("/", "-");
     console.log(cnpj_new);
     console.log(doc_id);

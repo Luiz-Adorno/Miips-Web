@@ -226,7 +226,7 @@
             <div class="card shopping-cart">
                 <div class="card-header bg-dark text-light">
                     <i id="title_name_esta"></i>
-                    <i class="fa fa-map-marker pull-right" id="local-city"></i>
+                    <i class="fa fa-barcode pull-right" id="barcode-id"></i>
                     <div class="clearfix"></div>
                 </div>
                 <div class="conteiner">
@@ -234,12 +234,11 @@
                             <div class="col-sm-12">
                                 <div class="col-xs-12 col-sm-8">
                                     <h2 id="title_name"></h2>
-                                    <p id="cnpj"></p>
-                                    <p id="rua_nro"></p>
-                                    <p id="bairro"></p>
-                                    <p id="cep"></p>
-                                    <p id="tel"></p>
-                                    <p><strong>Status de funcionamento: </strong>
+                                    <strong style="font-size: 13px;">Preço: </strong> <p id="price"></p>
+                                    <strong style="font-size: 13px;">Data de cadastro: </strong><p id="date"></p>
+                                    <strong style="font-size: 13px;">Quantidade: </strong> <p id="qnt"></p>
+                                    <strong style="font-size: 13px;">Descrição: </strong><p id="descri"></p>
+                                    <p><strong>Status de exibição: </strong>
                                         <span id="state"></span>
                                     </p>
                                 </div>
@@ -269,21 +268,9 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 divider text-center">
-                                <div class="col-xs-12 col-sm-6 emphasis" id="prod" style="display: none;">
-                                    <h2 id="number_pro"><strong></strong></h2>
-                                    <p><small>Produtos</small></p>
-                                   <a href="products.html"  class="btn btn-success btn-block"><span class="fa fa-plus-circle"> Produtos </span></a>
-                                       
-                                </div>
-                                <div class="col-xs-12 col-sm-6 emphasis" id="serv" style="display: none;">
-                                    <h2 id="number_serv"><strong></strong></h2>
-                                    <p><small>Serviços</small></p>
-                                    <button class="btn btn-info btn-block"><span class="fa fa-plus-circle"></span> Serviços
-                                    </button>
-                                </div>
                                 <div class="btn-group dropup btn-block" style="margin-top: 50px;">
-                                    <a href="edit-esta.html" type="button" class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-gear"></span>
-                                        Editar Estabelecimento </a>
+                                    <a href="edit-product.html" type="button" class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-gear"></span>
+                                        Editar Produto </a>
                                     </button>
                                 </div>
 
@@ -335,7 +322,7 @@
         const db = firebase.firestore();
     </script>
 
-    <script src="scripts/auth_esta_painel.js"></script>
+    <script src="scripts/auth_product_painel.js"></script>
 
 </body>
 

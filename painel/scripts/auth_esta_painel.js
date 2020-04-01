@@ -8,6 +8,9 @@ auth.onAuthStateChanged(function (user) {
     // ...
     var cnpj = sessionStorage.getItem("last-cnpj");
     var doc_id = sessionStorage.getItem("doc.id");
+    if (cnpj === null) {
+      window.location.href = 'estabelecimentos.html';
+    }
     cnpj_new = cnpj.replace("/", "-");
     console.log(cnpj_new);
     console.log(doc_id);
@@ -28,26 +31,69 @@ auth.onAuthStateChanged(function (user) {
         var cep = doc.data().cep;
         var bairro = doc.data().bairro;
         var status = doc.data().state;
+        var nro_pro = doc.data().product_count;
 
         console.log(nome_estabelecimento)
         document.getElementById("title_name").innerHTML = nome_estabelecimento;
-        document.getElementById("local-city").innerHTML = " "+ cidade +"-"+ estado;
-        document.getElementById("rua_nro").innerHTML = rua +" - " + nro;
-        document.getElementById("tel").innerHTML =  tel;
+        document.getElementById("local-city").innerHTML = " " + cidade + "-" + estado;
+        document.getElementById("rua_nro").innerHTML = rua + " - " + nro;
+        document.getElementById("tel").innerHTML = tel;
         document.getElementById('avatar').src = url_photo;
         document.getElementById('cep').innerHTML = cep;
         document.getElementById('bairro').innerHTML = bairro;
         document.getElementById('cnpj').innerHTML = cnpj;
         document.getElementById("preloader").style.display = "none";
 
-        if(status){
+        if (status) {
           document.getElementById('state').innerHTML = "Ativado";
           document.getElementById("state").className = "tags-on";
-        }else{
+        } else {
           document.getElementById('state').innerHTML = "Desativado";
           document.getElementById("state").className = "tags-off";
         }
 
+
+
+        db.collection("companies").doc(user.uid).get().then(function (doc) {
+          if (doc.exists) {
+            let cate = new Array();
+            cate = doc.data().category;
+            console.log(cate.length)
+            if (cate.length == 2) {
+              if(nro_pro == null){
+                nro_pro = 0
+              }
+              if(nro_serv == null){
+                nro_serv = 0
+              }
+              document.getElementById("prod").style.display = "block";
+              document.getElementById("serv").style.display = "block";
+              document.getElementById('number_pro').innerHTML = nro_pro;
+              document.getElementById('number_serv').innerHTML = nro_serv;
+
+            } else {
+              if (cate[0] == "Produto") {
+                if(nro_pro == null){
+                  nro_pro = 0
+                }
+                document.getElementById("prod").style.display = "block";
+                document.getElementById('number_pro').innerHTML = nro_pro;
+              } else {
+                if(nro_serv == null){
+                  nro_serv = 0
+                }
+                document.getElementById("serv").style.display = "block";
+                document.getElementById('number_serv').innerHTML = nro_serv;
+              }
+            }
+
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        }).catch(function (error) {
+          console.log("Error getting document:", error);
+        });
 
 
       } else {
@@ -59,30 +105,6 @@ auth.onAuthStateChanged(function (user) {
     });
 
     // ...
-
-    db.collection("companies").doc(user.uid).get().then(function (doc) {
-      if (doc.exists) {
-        let cate = new Array();
-        cate = doc.data().category;
-        console.log(cate.length)
-        if(cate.length == 2){
-          document.getElementById("prod").style.display = "block";
-          document.getElementById("serv").style.display = "block";
-        }else{
-          if(cate[0] == "Produto"){
-            document.getElementById("prod").style.display = "block";
-          }else{
-            document.getElementById("serv").style.display = "block";
-          }
-        }
-        
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
 
 
   } else {

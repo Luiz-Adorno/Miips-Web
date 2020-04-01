@@ -252,6 +252,13 @@
                             <input type="text" class="form-control" id="name_prod" required>
                         </div>
                         <div class="form-group">
+                            <label class="required">Preço Venda</label>
+                            <span class="textbox">
+                                R$
+                            </span>
+                            <input class="form-control" inputmode="numeric" id="myInput" required><br>
+                        </div>
+                        <div class="form-group">
                             <label>Código de Barras</label>
                             <input class="form-control integerInput" type="text" maxlength="13" id="myInput3"
                                 placeholder="0" required><br>
@@ -262,17 +269,10 @@
                                 required><br>
                         </div>
                         <div class="form-group">
-                            <label class="required">Preço Venda</label>
-                            <span class="textbox">
-                                R$
-                            </span>
-                            <input class="form-control" inputmode="numeric" id="myInput" required><br>
-                        </div>
-                        <div class="form-group">
                             <label>Descrição</label>
                             <input type="text" class="form-control" id="descri" required>
                         </div>
-                        <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Anunciar</button>
                     </form>
                 </div>
             </div>
@@ -296,6 +296,10 @@
     </script>
 
     <script>
+        $(function () {
+            $('input#myInput').blur();
+        });
+
         $("input#myInput").on({
             keydown: function (e) {
                 if (e.which === 32)
@@ -348,7 +352,7 @@
 
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+https://firebase.google.com/docs/web/setup#available-libraries -->
 
 
     <script>
@@ -374,12 +378,18 @@
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+    <script
+        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
 
 
     <script>
+
         // ...
         var cnpj = sessionStorage.getItem("last-cnpj");
         var doc_id = sessionStorage.getItem("doc.id");
+        if (cnpj === null) {
+            window.location.href = 'estabelecimentos.html';
+        }
         cnpj_new = cnpj.replace("/", "-");
         //console.log(cnpj_new);
         console.log(doc_id);
@@ -391,17 +401,16 @@
         FilePond.registerPlugin(
             FilePondPluginImagePreview,
             FilePondPluginImageResize,
+            FilePondPluginImageExifOrientation,
             FilePondPluginImageTransform);
-
 
         const inputElement = document.querySelector('input[type="file"]');
         const pond = FilePond.create(inputElement, {
             imageResizeTargetWidth: 256,
 
-
             //callback when te image is added
             onaddfile: (err, fileItem) => {
-                console.log(err, fileItem.getMetadata('resize'))
+                // console.log(err, fileItem.getMetadata('resize'))
             },
 
             //callback for displaying the image on the screen
@@ -429,8 +438,6 @@
                     qnt_new = qnt.replace(/^0+/, "");
                     //console.log(qnt_new)
 
-                    //firebasefirestore doens't accept "/"
-                    //cnpj_new = cnpj.replace("/", "-");
                     if (price == "0,00") {
                         alert("\nDigite o valor do produto")
                         return false;
@@ -438,68 +445,105 @@
                         alert("\nDigite a quantidade do produto em estoque")
                     }
                     else {
-                        document.getElementById("preloader").style.display = "block";
+
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
+                                const usersRef = db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
+                                    .doc(cnpj_new).collection("Products").doc(barcode);
+                                usersRef.get()
+                                    .then((docSnapshot) => {
+                                        if (docSnapshot.exists) {
+                                            usersRef.onSnapshot((doc) => {
+                                                //barcode already exist
+                                                alert("\nCódigo de barras já cadastrado na loja")
+                                                //console.log(doc)
+                                            });
+                                        } else {
+                                            document.getElementById("preloader").style.display = "block";
+                                            //barcode valid
+                                            //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
+                                            var task = storageRef.put(output);
+                                            task.on('state_changed', function progress(snapshot) {
+                                                console.log("onprogress")
 
-                                //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto" + "/" + output.name);
-                                var task = storageRef.put(output);
-                                task.on('state_changed', function progress(snapshot) {
-                                    console.log("onprogress")
+                                            }, function error(err) {
+                                                console.log("err: " + err)
+                                                document.getElementById("preloader").style.display = "none";
 
-                                }, function error(err) {
-                                    console.log("err: " + err)
-                                    document.getElementById("preloader").style.display = "none";
+                                            }, function complete() {
+                                                console.log("complete")
+                                                storageRef.getDownloadURL().then(function (url) {
 
-                                }, function complete() {
-                                    console.log("complete")
-                                    storageRef.getDownloadURL().then(function (url) {
+                                                    db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
+                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+                                                                .doc(barcode).set({
+                                                                    url_product: url,
+                                                                    nome_produto: nameP,
+                                                                    state: true,
+                                                                    quantidade: qnt_new,
+                                                                    valor: price,
+                                                                    cod_barras: barcode,
+                                                                    data_cadastro: date,
+                                                                    descri: descrip
+                                                                }).then(function () {
+                                                                    db.collection("commercialPlaces").doc(doc_id).set(
+                                                                        { product_count: firebase.firestore.FieldValue.increment(1)}, { merge: true }).then(function () {
+                                                                            db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
+                                                                                cnpj_owner: cnpj,
+                                                                                url_product: url,
+                                                                                nome_produto: nameP,
+                                                                                state: true,
+                                                                                quantidade: qnt_new,
+                                                                                valor: price,
+                                                                                cod_barras: barcode,
+                                                                                data_cadastro: date,
+                                                                                descri: descrip
+                                                                            })
+                                                                                .then(function (docRef) {
+                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                    //after add the  go to responsible
+                                                                                    window.location.href = 'products.html';
+                                                                                })
+                                                                                .catch(function (error) {
+                                                                                    console.error("Error adding document: ", error);
+                                                                                });
+                                                                        }).catch(function (error) {
+                                                                            console.log("Error getting document:", error);
+                                                                            document.getElementById("preloader").style.display = "none";
+                                                                        });
 
-                                        var docData = {
-                                            url_product: url,
-                                            nome_produto: nameP,
-                                            state: true,
-                                            quantidade: qnt_new,
-                                            valor: price,
-                                            cod_barras: barcode,
-                                            data_cadastro: date,
-                                            descri: descrip
-                                        };
+                                                                }).catch(function (error) {
+                                                                    console.log("Error getting document:", error);
+                                                                    document.getElementById("preloader").style.display = "none";
+                                                                });
+                                                        }).catch(function (error) {
+                                                            console.log("Error getting document:", error);
+                                                            document.getElementById("preloader").style.display = "none";
+                                                        });
 
-                                        db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
-                                            { product_count: firebase.firestore.FieldValue.increment(1) }
-                                        ).then(function () {
-                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
-                                                .add(docData).then(function () {
-                                                    document.getElementById("preloader").style.display = "none";
-                                                    //after add the  go to responsible
-                                                    window.location.href = 'esta-painel.html';
                                                 }).catch(function (error) {
-                                                    console.log("Error getting document:", error);
                                                     document.getElementById("preloader").style.display = "none";
+                                                    console.log(error)
+                                                    // Handle any errors
+
                                                 });
-                                        }).catch(function (error) {
-                                            console.log("Error getting document:", error);
-                                            document.getElementById("preloader").style.display = "none";
-                                        });
+                                            });
 
-                                    }).catch(function (error) {
-                                        document.getElementById("preloader").style.display = "none";
-                                        console.log(error)
-                                        // Handle any errors
 
+                                        }
                                     });
-                                });
+
 
                             } else {
                                 // No user is signed in.
                             }
                         });
+
                     }
 
                 });
-
 
             }
         });
