@@ -340,12 +340,16 @@
     </script>
 
     <script>
-        $('input[maxlength],textarea[maxlength]').on('myInput3', function (event) {
-        var $this = $(this);
-        if ($this.val().length >= parseInt($this.attr('maxlength'), 13)) {
-            event.preventDefault();
-        }
-    });
+        var input3 = document.querySelector('#myInput3');
+
+        input3.onkeyup = function (e) {
+            var max = 13; // The maxlength you want
+            
+            if (input3.value.length > max) {
+                input3.value = input3.value.substring(0, max);
+            }
+
+        };
     </script>
 
     <script type="text/javascript" src="//assets.locaweb.com.br/locastyle/2.0.6/javascripts/locastyle.js"></script>
@@ -498,7 +502,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                                                                     descri: descrip
                                                                 }).then(function () {
                                                                     db.collection("commercialPlaces").doc(doc_id).set(
-                                                                        { product_count: firebase.firestore.FieldValue.increment(1)}, { merge: true }).then(function () {
+                                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
                                                                             db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
                                                                                 cnpj_owner: cnpj,
                                                                                 url_product: url,
