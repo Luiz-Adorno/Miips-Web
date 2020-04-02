@@ -32,6 +32,7 @@ auth.onAuthStateChanged(function (user) {
         var bairro = doc.data().bairro;
         var status = doc.data().state;
         var nro_pro = doc.data().product_count;
+       // console.log(nro_pro)
         var nro_serv = doc.data().servi_count;
 
         console.log(nome_estabelecimento)
@@ -59,7 +60,7 @@ auth.onAuthStateChanged(function (user) {
           if (doc.exists) {
             let cate = new Array();
             cate = doc.data().category;
-            console.log(cate.length)
+            //console.log(cate.length)
             if (cate.length == 2) {
               if(nro_pro == null){
                 nro_pro = 0

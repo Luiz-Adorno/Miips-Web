@@ -19,7 +19,6 @@ auth.onAuthStateChanged(function (user) {
         //associa o valor do arr do select para os valores do bd
         arr = cate;
 
-
         var values = cate.toString();
         console.log(values)
         $.each(values.split(","), function (i, e) {

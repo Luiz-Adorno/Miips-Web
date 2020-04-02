@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Miips - Cadastrar Produtos</title>
+    <title>Miips - Cadastrar Serviço</title>
     <link rel="icon" href="images/mp-icon.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
@@ -35,6 +35,9 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <meta charset="utf-8">
 
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -238,35 +241,40 @@
                             <input type="text" class="form-control" id="date" disabled="disabled">
                         </div>
 
-                        <p style="color: black;">Imagem do Produto</p>
+                        <p style="color: black;">Imagem do Serviço</p>
                         <div style="text-align: center;">
                             <p class="titleH">Arraste a imagem para o campo cinza abaixo ou clique em Browse para
                                 adcionar
-                                imagem do produto que deseja cadastrar</p>
+                                imagem de exposição do serviço que deseja cadastrar</p>
                             <!-- We'll transform this input into a pond -->
 
                             <input class="form-content" type="file" accept="image/*" required>
                         </div>
                         <div class="form-group">
-                            <label>Nome do Produto</label>
-                            <input type="text" class="form-control" id="name_prod" required>
+                            <label>Nome do Serviço</label>
+                            <input type="text" class="form-control" id="name_serv" required>
                         </div>
                         <div class="form-group">
-                            <label class="required">Preço Venda</label>
+                            <label class="required">Valor cobrado</label>
                             <span class="textbox">
                                 R$
                             </span>
                             <input class="form-control" inputmode="numeric" id="myInput" required><br>
                         </div>
                         <div class="form-group">
-                            <label>Código de Barras</label>
-                            <input class="form-control integerInput" type="text" maxlength="13" id="myInput3"
+                            <label>Código Interno do Serviço</label>
+                            <p>O Código Interno do Serviço é um número de identificação único do serviço na sua empresa,
+                                com ele é possível escontrar mais rapidamente o serviço na hora de localizar ele para
+                                alteração de algum dado. ex: 123
+                            </p>
+                            <input class="form-control integerInput" type="text" maxlength="5" id="myInput3"
                                 placeholder="0" required><br>
                         </div>
                         <div class="form-group">
-                            <label>Quantidade em estoque</label>
-                            <input class="form-control integerInput" type="text" id="myInput2" placeholder="0"
-                                required><br>
+                            <label>Tempo de duração</label>
+                            <p>Tempo médio de duração do serviço, é com esse tempo que calculamos os horários
+                                disponíveis que os clientes poderão marcar horário</p>
+                            <input type="time" id="time" class="form-control" value="00:00" min="00:30" required>
                         </div>
                         <div class="form-group">
                             <label>Descrição</label>
@@ -329,21 +337,11 @@
         document.getElementById("date").value = localdate;
     </script>
 
-
-    <script>
-        $("input#myInput2").on({
-            keydown: function (e) {
-                if (e.which === 32)
-                    return false;
-            }
-        });
-    </script>
-
     <script>
         //Force maxlength input on android
         var input3 = document.querySelector('#myInput3');
         input3.onkeyup = function (e) {
-            var max = 13; // The maxlength you want
+            var max = 5; // The maxlength you want
             if (input3.value.length > max) {
                 input3.value = input3.value.substring(0, max);
             }
@@ -436,45 +434,41 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                 signupFormStore.addEventListener('submit', (e) => {
                     e.preventDefault();
 
-                    let cateP = new Array();
                     //saving company info
-                    const nameP = signupFormStore['name_prod'].value;
-                    const qnt = signupFormStore['myInput2'].value
+                    const nameS = signupFormStore['name_serv'].value;
+                    const time = signupFormStore['time'].value
+
+                    //console.log(time)
                     const price = signupFormStore['myInput'].value
-                    const barcode = signupFormStore['myInput3'].value
+                    const idcode = signupFormStore['myInput3'].value
                     //console.log(price)
                     const date = signupFormStore['date'].value
                     const descrip = signupFormStore['descri'].value
                     //console.log(date)
-                    //transform 01 in 1, 001 in 1, etc... 
-                    qnt_new = qnt.replace(/^0+/, "");
-                    //console.log(qnt_new)
 
                     if (price == "0,00") {
                         alert("\nDigite o valor do produto")
                         return false;
-                    } else if (qnt_new == 0) {
-                        alert("\nDigite a quantidade do produto em estoque")
                     }
                     else {
 
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
                                 const usersRef = db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
-                                    .doc(cnpj_new).collection("Products").doc(barcode);
+                                    .doc(cnpj_new).collection("Services").doc(idcode);
                                 usersRef.get()
                                     .then((docSnapshot) => {
                                         if (docSnapshot.exists) {
                                             usersRef.onSnapshot((doc) => {
-                                                //barcode already exist
-                                                alert("\nCódigo de barras já cadastrado na loja")
+                                                //idcode already exist
+                                                alert("\nCódigo Interno do serviço já cadastrado na loja")
                                                 //console.log(doc)
                                             });
                                         } else {
                                             document.getElementById("preloader").style.display = "block";
-                                            //barcode valid
+                                            //idcode valid
                                             //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
+                                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/servicePhoto/" + idcode + "/img");
                                             var task = storageRef.put(output);
                                             task.on('state_changed', function progress(snapshot) {
                                                 console.log("onprogress")
@@ -486,41 +480,40 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                                             }, function complete() {
                                                 console.log("complete")
                                                 storageRef.getDownloadURL().then(function (url) {
-
                                                     db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
-                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
-                                                                .doc(barcode).set({
-                                                                    url_product: url,
-                                                                    nome_produto: nameP,
+                                                        { service_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Services")
+                                                                .doc(idcode).set({
+                                                                    url_service: url,
+                                                                    nome_produto: nameS,
+                                                                    time: time,
                                                                     state: true,
-                                                                    quantidade: qnt_new,
                                                                     valor: price,
-                                                                    cod_barras: barcode,
+                                                                    id_cod: idcode,
                                                                     data_cadastro: date,
                                                                     descri: descrip
                                                                 }).then(function () {
                                                                     db.collection("companies").doc(user.uid).get().then(function (doc) {
-                                                                        cateP = doc.data().product_category;
+                                                                        cateP = doc.data().service_category;
                                                                     }).then(function () {
                                                                         db.collection("commercialPlaces").doc(doc_id).set(
-                                                                            { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                                                db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
-                                                                                    product_category: cateP,
+                                                                            { service_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                db.collection("commercialPlaces").doc(doc_id).collection("Service").add({
+                                                                                    service_category: cateP,
                                                                                     cnpj_owner: cnpj,
-                                                                                    url_product: url,
-                                                                                    nome_produto: nameP,
+                                                                                    url_service: url,
+                                                                                    nome_produto: nameS,
+                                                                                    time: time,
                                                                                     state: true,
-                                                                                    quantidade: qnt_new,
                                                                                     valor: price,
-                                                                                    cod_barras: barcode,
+                                                                                    id_cod: idcode,
                                                                                     data_cadastro: date,
                                                                                     descri: descrip
                                                                                 })
                                                                                     .then(function (docRef) {
                                                                                         document.getElementById("preloader").style.display = "none";
                                                                                         //after add the  go to responsible
-                                                                                        window.location.href = 'products.html';
+                                                                                        window.location.href = 'services.html';
                                                                                     })
                                                                                     .catch(function (error) {
                                                                                         console.error("Error adding document: ", error);
@@ -571,7 +564,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
     </script>
 
-    <script src="scripts/auth_add_products.js"></script>
+    <script src="scripts/auth_add_services.js"></script>
 
 </body>
 
