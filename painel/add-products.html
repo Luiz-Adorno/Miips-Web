@@ -212,7 +212,7 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.png" alt="User Avatar"
+                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png" alt="User Avatar"
                                 id="avatar_small">
                         </a>
 
@@ -340,11 +340,10 @@
     </script>
 
     <script>
+        //Force maxlength input on android
         var input3 = document.querySelector('#myInput3');
-
         input3.onkeyup = function (e) {
             var max = 13; // The maxlength you want
-            
             if (input3.value.length > max) {
                 input3.value = input3.value.substring(0, max);
             }

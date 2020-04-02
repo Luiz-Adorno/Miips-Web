@@ -27,10 +27,11 @@ auth.onAuthStateChanged(function (user) {
           var url_photo = doc.data().url_product;
 
           document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_div">
-            <div class="col-12 col-sm-12 col-md-2 text-center store">
-              <img src=${url_photo} alt="prewiew" width="70" height="120">
+            <div class="col-12 col-sm-12 col-md-3 text-center store">
+            <img src=${url_photo} alt="prewiew" width="140" height="140">
             </div>
             <div id="text_div" class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+            <input type="text" id="on/off`+ doc.data().cod_barras + `" disabled="disabled" class="input" value="" />
               <h4 class="product-name"><a href="#" id="title`+ doc.data().cod_barras + `">${name_prod}</a></h4>
               <h4>
               <strong style="font-size: 13px;">Código de barras: </strong> <small>${codebar}</small>
@@ -41,11 +42,6 @@ auth.onAuthStateChanged(function (user) {
               <h4>
               <strong style="font-size: 13px;">Quantidade: </strong><small>${qnt}</small>
               </h4>
-            </div>
-            <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-            <div class="text-right">
-                <input type="text" id="on/off`+ doc.data().cod_barras + `" disabled="disabled" class="input" value="" />
-            </div>
             </div>
           </div>
          `);
