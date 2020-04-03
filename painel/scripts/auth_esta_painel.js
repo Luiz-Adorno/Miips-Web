@@ -33,7 +33,7 @@ auth.onAuthStateChanged(function (user) {
         var status = doc.data().state;
         var nro_pro = doc.data().product_count;
        // console.log(nro_pro)
-        var nro_serv = doc.data().servi_count;
+        var nro_serv = doc.data().service_count;
 
         console.log(nome_estabelecimento)
         document.getElementById("title_name").innerHTML = nome_estabelecimento;

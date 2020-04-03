@@ -212,8 +212,8 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png" alt="User Avatar"
-                                id="avatar_small">
+                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png"
+                                alt="User Avatar" id="avatar_small">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -257,11 +257,11 @@
                         </div>
                         <div class="form-group">
                             <label>Status de exibição do produto</label>
-                            <select class="form-control" id= "status-id">
+                            <select class="form-control" id="status-id">
                                 <option value="true">Ativado</option>
                                 <option value="false">Desativado</option>
-                              </select>
-                            </div>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label>Nome do Produto</label>
                             <input type="text" class="form-control" id="name_prod" required>
@@ -408,6 +408,7 @@
                 var fileButton = document.getElementById('picField');
 
                 fileButton.addEventListener('change', function (e) {
+                    document.getElementById("preloader").style.display = "block";
                     document.getElementById("uploader").style.display = "block";
                     var file = e.target.files[0];
                     var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
@@ -429,8 +430,29 @@
                                 .doc(cnpj_new).collection("Products").doc(barcode).set({
                                     url_product: url
                                 }, { merge: true }).then(function () {
-                                    //after add the data in companies go to responsible
-                                    location.reload();
+                                    db.collection("commercialPlaces").doc(doc_id).collection("Product").where("cod_barras", "==", barcode)
+                                        .get()
+                                        .then(function (querySnapshot) {
+                                            querySnapshot.forEach(function (doc) {
+                                                // doc.data() is never undefined for query doc snapshots
+                                                if (doc.data().cnpj_owner == cnpj) {
+                                                    //console.log(doc.id, " => ", doc.data());
+                                                    db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
+                                                        url_product: url
+                                                    }, { merge: true }).then(function () {
+                                                        //after add the data in companies go to responsible
+                                                        location.reload();
+                                                    }).catch(function (error) {
+                                                        console.log("Error getting document:", error);
+                                                        document.getElementById("preloader").style.display = "none";
+                                                    });
+                                                }
+                                            });
+
+                                        })
+                                        .catch(function (error) {
+                                            console.log("Error getting documents: ", error);
+                                        });
                                 });
 
                         }).catch(function (error) {

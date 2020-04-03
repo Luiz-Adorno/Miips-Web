@@ -24,7 +24,7 @@ auth.onAuthStateChanged(function (user) {
 
         console.log("Document data:", doc.data());
         var url_photo = doc.data().url_service;
-        var nameS = doc.data().nome_produto;
+        var nameS = doc.data().nome_serviço;
         var time = doc.data().time;
         var status = doc.data().state;
         var price = doc.data().valor;
