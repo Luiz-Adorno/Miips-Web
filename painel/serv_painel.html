@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Miips - Serviços</title>
+    <title>Miips - Estabelecimentos</title>
     <link rel="icon" href="images/mp-icon.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
@@ -17,6 +17,8 @@
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
 
     <link rel="apple-touch-icon" href="apple-icon.png">
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
@@ -32,6 +34,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="assets/css/estabelecimentos.css">
+    <link rel="stylesheet" href="assets/css/esta.css">
 
 </head>
 
@@ -204,8 +207,8 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png"
-                                alt="User Avatar" id="avatar_small">
+                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png" alt="User Avatar"
+                                id="avatar_small">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -222,21 +225,64 @@
         <div class="container">
             <div class="card shopping-cart">
                 <div class="card-header bg-dark text-light">
-                    <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                    Serviços cadastrados
-                    <a href="add-services.html" class="btn btn-primary btn-sm pull-right">Adcionar
-                        Serviço</a>
+                    <i id="title_name_esta"></i>
+                    <i class="fa fa-barcode pull-right" id="barcode-id"></i>
                     <div class="clearfix"></div>
                 </div>
-                <div class="card-body">
+                <div class="conteiner">
+                        <div class="well profile">
+                            <div class="col-sm-12">
+                                <div class="col-xs-12 col-sm-8">
+                                    <h2 id="title_name"></h2>
+                                    <strong style="font-size: 13px;">Valor: </strong> <p id="price"></p>
+                                    <strong style="font-size: 13px;">Data de cadastro: </strong><p id="date"></p>
+                                    <strong style="font-size: 13px;">Tempo de duração: </strong> <p id="time"></p>
+                                    <strong style="font-size: 13px;">Descrição: </strong><p id="descri"></p>
+                                    <p><strong>Status de exibição: </strong>
+                                        <span id="state"></span>
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 text-center">
+                                    <figure>
+                                        <img alt="" id="avatar" class="img-thumbnail img-esta">
+                                        <figcaption class="ratings">
+                                            <p>Avaliação
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star"></span>
+                                                </a>
+                                                <a href="#">
+                                                    <span class="fa fa-star-o"></span>
+                                                </a>
+                                            </p>
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 divider text-center">
+                                <div class="btn-group dropup btn-block" style="margin-top: 50px;">
+                                    <a href="edit-product.html" type="button" class="btn btn-primary btn-sm" style="color: white;"><span class="fa fa-gear"></span>
+                                        Editar Produto </a>
+                                    </button>
+                                </div>
 
+                            </div>
+                        </div>
                 </div>
                 <!-- END PRODUCT -->
             </div>
         </div>
-        <div id="preloader" style="display: none;">
-            <div id="loader"></div>
-        </div>
+    </div>
+    <div id="preloader" style="display: block;">
+        <div id="loader"></div>
     </div>
 
     </div> <!-- .content -->
@@ -276,7 +322,7 @@
         const db = firebase.firestore();
     </script>
 
-    <script src="scripts/auth_services.js"></script>
+    <script src="scripts/auth_service_painel.js"></script>
 
 </body>
 

@@ -15,50 +15,52 @@ auth.onAuthStateChanged(function (user) {
 
 
     db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
-      .doc(cnpj_new).collection("Products").get()
+      .doc(cnpj_new).collection("Services").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           console.log(doc.id);
-          var name_prod = doc.data().nome_produto;
-          var codebar = doc.data().cod_barras;
+          var url_photo = doc.data().url_service;
+          var nameS = doc.data().nome_produto;
+          var time = doc.data().time;
           var status = doc.data().state;
-          var price = doc.data().valor;
-          var qnt = doc.data().quantidade;
-          var url_photo = doc.data().url_product;
+          var valor = doc.data().valor;
+          var idCod = doc.data().id_cod;
+          var data = doc.data().data_cadastro;
+          var descri = doc.data().descri;
 
           document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_div">
             <div class="col-12 col-sm-12 col-md-3 text-center store">
             <img src=${url_photo} alt="prewiew" width="140" height="140">
             </div>
             <div id="text_div" class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-            <input type="text" id="on/off`+ doc.data().cod_barras + `" disabled="disabled" class="input" value="" />
-              <h4 class="product-name"><a href="#" id="title`+ doc.data().cod_barras + `">${name_prod}</a></h4>
+            <input type="text" id="on/off`+ doc.data().id_cod + `" disabled="disabled" class="input" value="" />
+              <h4 class="product-name"><a href="#" id="title`+ idCod + `">${nameS}</a></h4>
               <h4>
-              <strong style="font-size: 13px;">Código de barras: </strong> <small>${codebar}</small>
+              <strong style="font-size: 13px;">Código Interno do Serviço: </strong> <small>${idCod}</small>
               </h4>
               <h4>
-              <strong style="font-size: 13px;">Preço: </strong><small>${price} R$</small>
+              <strong style="font-size: 13px;">Valor cobrado: </strong><small>${valor} R$</small>
               </h4>
               <h4>
-              <strong style="font-size: 13px;">Quantidade: </strong><small>${qnt}</small>
+              <strong style="font-size: 13px;">Tempo de duração: </strong><small>${time}</small>
               </h4>
             </div>
           </div>
          `);
 
-         document.getElementById("title" + doc.data().cod_barras).addEventListener('click', function () {
-          sessionStorage.setItem("codebar", codebar);
-          window.location.href = '/painel/produ_painel.html';
+         document.getElementById("title" + idCod).addEventListener('click', function () {
+          sessionStorage.setItem("id_cod", idCod);
+          window.location.href = '/painel/serv_painel.html';
         });
 
           if (status == true) {
-            document.getElementById("on/off" + doc.data().cod_barras).style.color = 'green';
-            document.getElementById("on/off" + doc.data().cod_barras).style.width = '35%';
-            document.getElementById("on/off" + doc.data().cod_barras).setAttribute('value', 'Ativado');
+            document.getElementById("on/off" + doc.data().id_cod).style.color = 'green';
+            document.getElementById("on/off" + doc.data().id_cod).style.width = '35%';
+            document.getElementById("on/off" + doc.data().id_cod).setAttribute('value', 'Ativado');
           } else if (status == false) {
-            document.getElementById("on/off" + doc.data().cod_barras).style.color = 'red';
-            document.getElementById("on/off" + doc.data().cod_barras).style.width = '45%';
-            document.getElementById("on/off" + doc.data().cod_barras).setAttribute('value', 'Desativado');
+            document.getElementById("on/off" + doc.data().id_cod).style.color = 'red';
+            document.getElementById("on/off" + doc.data().id_cod).style.width = '45%';
+            document.getElementById("on/off" + doc.data().id_cod).setAttribute('value', 'Desativado');
           }
 
         });
