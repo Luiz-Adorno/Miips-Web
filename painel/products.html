@@ -204,8 +204,8 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png" alt="User Avatar"
-                                id="avatar_small">
+                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png"
+                                alt="User Avatar" id="avatar_small">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -222,13 +222,17 @@
         <div class="container">
             <div class="card shopping-cart">
                 <div class="card-header bg-dark text-light">
-                    <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                    Produtos cadastrados
+                    <i class="fa fa-product-hunt" aria-hidden="true">
+                        Produtos cadastrados</i>
                     <a href="add-products.html" class="btn btn-primary btn-sm pull-right">Adcionar
                         Produtos</a>
-                    <div class="clearfix"></div>
                 </div>
-                <div class="card-body">
+                <form class="form-inline d-flex justify-content-center md-form form-sm mt-0">
+                    <i class="fa fa-search" aria-hidden="true" style="margin-top: 20px;"></i>
+                    <input class="form-control form-control-sm ml-3 w-75" id="anythingSearch" type="text"
+                        placeholder="Encontrar Produto por nome ou código de barras" aria-label="Search" style="margin-top: 20px;">
+                </form>
+                <div class="card-body" id="container_cards">
 
                 </div>
                 <!-- END PRODUCT -->
@@ -253,6 +257,22 @@
     <script src="vendors/jqvmap/dist/jquery.vmap.min.js"></script>
     <script src="vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
     <script src="vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+
+    <script>
+        // FIlter anything
+        $(document).ready(function () {
+            $("#anythingSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                let sizee = new Array();
+                sizee = value
+                if(sizee.length == 0){
+                    document.getElementById("container_cards").style.display = "block";
+                }else{
+                    document.getElementById("container_cards").style.display = "none";
+                }
+            });
+        });
+    </script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->

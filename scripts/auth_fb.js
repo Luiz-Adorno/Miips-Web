@@ -77,12 +77,12 @@ let arr = new Array();
 let arr2 = new Array();
 const showSelectedOptions = options => {
   arr = [...options].filter(o => o.selected).map(o => o.value);
-  console.log(arr.length)
+  //console.log(arr.length)
 }
 
 const showSelectedOptions2 = options => {
   arr2 = [...options].filter(o => o.selected).map(o => o.value);
-  console.log(arr2.length)
+ // console.log(arr2.length)
 }
 
 const singupfbauth = document.querySelector('#register-form');

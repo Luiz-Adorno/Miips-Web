@@ -27,8 +27,8 @@ auth.onAuthStateChanged(function (user) {
           var url_photo = doc.data().url_product;
 
           document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_div">
-            <div class="col-12 col-sm-12 col-md-3 text-center store">
-            <img src=${url_photo} alt="prewiew" width="140" height="140">
+            <div class="col-12 col-sm-12 col-md-2 text-center store">
+            <img src=${url_photo} alt="prewiew" width="100" height="114">
             </div>
             <div id="text_div" class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
             <input type="text" id="on/off`+ doc.data().cod_barras + `" disabled="disabled" class="input" value="" />

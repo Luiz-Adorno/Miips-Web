@@ -26,7 +26,7 @@ auth.onAuthStateChanged(function (user) {
               var url_photo = doc2.data().profilePhoto;
               var status = doc2.data().state;
 
-              document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_div">
+              document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_esta">
               <div class="col-12 col-sm-12 col-md-4 text-center store">
                 <img src=${url_photo} alt="prewiew" width="140" height="140">
               </div>

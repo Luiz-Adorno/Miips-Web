@@ -1,87 +1,127 @@
 .quantity {
-    float: left;
-    margin-right: 15px;
-    background-color: #eee;
-    position: relative;
-    width: 80px;
-    overflow: hidden
+  float: left;
+  margin-right: 15px;
+  background-color: #eee;
+  position: relative;
+  width: 80px;
+  overflow: hidden
 }
+
 .input {
-    width: 40%;
-    background-color: white;
-  }
+  width: 40%;
+  background-color: white;
+}
 
 .quantity input {
-    margin: 0;
-    text-align: center;
-    width: 15px;
-    height: 15px;
-    padding: 0;
-    float: right;
-    color: #000;
-    font-size: 20px;
-    border: 0;
-    outline: 0;
-    background-color: #F6F6F6
+  margin: 0;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  float: right;
+  color: #000;
+  font-size: 20px;
+  border: 0;
+  outline: 0;
+  background-color: #F6F6F6
 }
 
 .quantity input.qty {
-    position: relative;
-    border: 0;
-    width: 100%;
-    height: 40px;
-    padding: 10px 25px 10px 10px;
-    text-align: center;
-    font-weight: 400;
-    font-size: 15px;
-    border-radius: 0;
-    background-clip: padding-box
+  position: relative;
+  border: 0;
+  width: 100%;
+  height: 40px;
+  padding: 10px 25px 10px 10px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 15px;
+  border-radius: 0;
+  background-clip: padding-box
 }
 
 .quantity .minus, .quantity .plus {
-    line-height: 0;
-    background-clip: padding-box;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    -webkit-background-size: 6px 30px;
-    -moz-background-size: 6px 30px;
-    color: #bbb;
-    font-size: 20px;
-    position: absolute;
-    height: 50%;
-    border: 0;
-    right: 0;
-    padding: 0;
-    width: 25px;
-    z-index: 3
+  line-height: 0;
+  background-clip: padding-box;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-background-size: 6px 30px;
+  -moz-background-size: 6px 30px;
+  color: #bbb;
+  font-size: 20px;
+  position: absolute;
+  height: 50%;
+  border: 0;
+  right: 0;
+  padding: 0;
+  width: 25px;
+  z-index: 3
 }
 
 .quantity .minus:hover, .quantity .plus:hover {
-    background-color: #dad8da
+  background-color: #dad8da
 }
 
 .quantity .minus {
-    bottom: 0
+  bottom: 0
 }
+
 .shopping-cart {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-.store{
-    float:left;
-    margin: 2px;
-  }
-  #img_div{
-    width:100%;
-    margin:5px;
-    border: 1px solid grey;
-    float:left;
-  }
-  h4{
-    margin:0;
-  }
+.store {
+  float: left;
+  margin: 2px;
+}
 
-.text-right{
-    align-items: center;
+#img_div {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  float: left;
+}
+
+#img_esta {
+  width: 100%;
+  margin: 5px;
+  border: 1px solid grey;
+  float: left;
+}
+
+h4 {
+  margin: 0;
+}
+
+.text-right {
+  align-items: center;
+}
+
+.active-pink-4 input[type=text]:focus:not([readonly]) {
+  border: 1px solid #f48fb1;
+  box-shadow: 0 0 0 1px #f48fb1;
+}
+
+.active-pink-3 input[type=text] {
+  border: 1px solid #f48fb1;
+  box-shadow: 0 0 0 1px #f48fb1;
+}
+
+.active-purple-4 input[type=text]:focus:not([readonly]) {
+  border: 1px solid #ce93d8;
+  box-shadow: 0 0 0 1px #ce93d8;
+}
+
+.active-purple-3 input[type=text] {
+  border: 1px solid #ce93d8;
+  box-shadow: 0 0 0 1px #ce93d8;
+}
+
+.active-cyan-4 input[type=text]:focus:not([readonly]) {
+  border: 1px solid #4dd0e1;
+  box-shadow: 0 0 0 1px #4dd0e1;
+}
+
+.active-cyan-3 input[type=text] {
+  border: 1px solid #4dd0e1;
+  box-shadow: 0 0 0 1px #4dd0e1;
 }
