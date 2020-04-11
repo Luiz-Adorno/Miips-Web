@@ -32,7 +32,7 @@ auth.onAuthStateChanged(function (user) {
         var bairro = doc.data().bairro;
         var status = doc.data().state;
         var nro_pro = doc.data().product_count;
-       // console.log(nro_pro)
+        console.log(nro_pro)
         var nro_serv = doc.data().service_count;
 
         console.log(nome_estabelecimento)

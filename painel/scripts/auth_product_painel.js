@@ -31,7 +31,9 @@ auth.onAuthStateChanged(function (user) {
         var url_photo = doc.data().url_product;
         var date = doc.data().data_cadastro;
         var descri = doc.data().descri;
+        var gender = doc.data().gender;
 
+        document.getElementById("gender").innerHTML = gender;
         document.getElementById("title_name").innerHTML = name_prod;
         document.getElementById("barcode-id").innerHTML = " "+codebar;
         document.getElementById("price").innerHTML = price + "R$";

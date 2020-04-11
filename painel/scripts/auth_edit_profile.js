@@ -29,13 +29,6 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById("nome-empresa").value = nome_empresa;
         document.getElementById("cnpj").value = cnpj;
         document.getElementById("telefone").value = telefone;
-        document.getElementById("cep").value = cep;
-        document.getElementById("cidade").value = cidade;
-        document.getElementById("uf").value = uf;
-        document.getElementById("rua").value = rua;
-        document.getElementById("bairro").value = bairro;
-        document.getElementById("nro").value = nro;
-        document.getElementById("complemento").value = complemento;
 
         const signupFormStore = document.querySelector('#register-form-edit');
 
@@ -47,13 +40,6 @@ auth.onAuthStateChanged(function (user) {
           const nome_e = signupFormStore['nome-empresa'].value;
           const cnpj = signupFormStore['cnpj'].value;
           const telefone = signupFormStore['telefone'].value;
-          const cep = signupFormStore['cep'].value;
-          const cidade = signupFormStore['cidade'].value;
-          const uf = signupFormStore['uf'].value;
-          const rua = signupFormStore['rua'].value;
-          const bairro = signupFormStore['bairro'].value;
-          const nro = signupFormStore['nro'].value;
-          const complemento = signupFormStore['complemento'].value;
 
           //firebasefirestore doens't accept "/"
           cnpj_new = cnpj.replace("/", "-");
@@ -71,15 +57,7 @@ auth.onAuthStateChanged(function (user) {
                   nome_social: razao_s,
                   nome_empresa: nome_e,
                   cnpj: cnpj,
-                  telefone: telefone,
-                  cep: cep,
-                  cidade: cidade,
-                  estado: uf,
-                  rua: rua,
-                  bairro: bairro,
-                  profilePhoto: user.photoURL,
-                  numero: nro,
-                  complemento: complemento
+                  telefone: telefone
                 }).then(function () {
                   window.location.href = 'profile.html';
                 });

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Miips - Entrar</title>
+	<title>Miips - Esqueci minha senha</title>
 	<link rel="icon" href="img/mp-icon.png" type="image/x-icon">
 
 	<!--===============================================================================================-->
@@ -44,50 +44,25 @@
 					</span>
 
 					<span class="login100-form-title p-b-26">
-						Entre na sua conta empresarial
-					</span>
+						Resetar senha da conta Miips
+                    </span>
+                    
+                    <h6 style="font-size: 13px; color: grey; margin-bottom: 15px;">Enviaremos um link para o seu email aonde será possível resetar a senha da sua conta Miips</h3>
 
 					<div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
 						<input class="input100" type="text" name="email" id="email" required>
 						<span class="focus-input100" data-placeholder="Email"></span>
-					</div>
+                    </div>
 
-					<div class="wrap-input101 validate-input" data-validate="Enter password">
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
-						<input class="input100" type="password" name="pass" id="password" required>
-						<span class="focus-input100" data-placeholder="Password"></span>
-					</div>
-
-					<div class="text-left">
-						<span class="txt3">
-							Esqueci minha
-						</span>
-
-						<a class="txt4" href="#" id="resetPas">
-							Senha
-						</a>
-					</div>
-
-					<div class="container-login100-form-btn">
+                    <div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn">
-								Entrar
+								Enviar
 							</button>
 						</div>
 					</div>
-
-					<div class="text-center" style="margin-top: 10px;">
-						<span class="txt1">
-							Não tem uma conta? Faça o
-						</span>
-
-						<a class="txt2" href="#" id="cadastrar">
-							Cadastro
-						</a>
-					</div>
+                    
 				</form>
 			</div>
 		</div>
@@ -116,7 +91,7 @@
 		const db = firebase.firestore();
 	</script>
 
-	<script src="scripts/auth_login.js"></script>
+	<script src="scripts/auth_reset.js"></script>
 
 	<!--===============================================================================================-->
 	<script src="vendor2/jquery/jquery-3.2.1.min.js"></script>

@@ -7,6 +7,9 @@ auth.onAuthStateChanged(function (user) {
     }
     // ...
     var cnpj = sessionStorage.getItem("last-cnpj");
+    if (cnpj === null) {
+      window.location.href = 'estabelecimentos.html';
+    }
     var doc_id = sessionStorage.getItem("doc.id");
     var barcode = sessionStorage.getItem("codebar");
     cnpj_new = cnpj.replace("/", "-");
@@ -24,7 +27,9 @@ auth.onAuthStateChanged(function (user) {
           var url_photo = doc.data().url_product;
           var date = doc.data().data_cadastro;
           var descri = doc.data().descri;
+          var gender = doc.data().gender;
 
+          document.getElementById("selectpicker").value = gender;
           document.getElementById("status-id").value = status;
           document.getElementById("avatar_big").src = url_photo;
           document.getElementById("date").value = date;
@@ -54,6 +59,7 @@ auth.onAuthStateChanged(function (user) {
       const priceF = signupFormStore['myInput'].value;
       const descriF = signupFormStore['descri'].value;
       const qntF = signupFormStore['myInput2'].value;
+      const genderF = signupFormStore['selectpicker'].value;
       //transform 01 in 1, 001 in 1, etc... 
       qnt_new = qntF.replace(/^0+/, "");
 
@@ -77,6 +83,7 @@ auth.onAuthStateChanged(function (user) {
 
         db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
           .doc(barcode).set({
+            gender: genderF,
             nome_produto: name_prodF,
             state: stated,
             quantidade: qnt_new,
@@ -91,6 +98,7 @@ auth.onAuthStateChanged(function (user) {
                   if (doc.data().cnpj_owner == cnpj) {
                     //console.log(doc.id, " => ", doc.data());
                     db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
+                      gender: genderF,
                       nome_produto: name_prodF,
                       state: stated,
                       quantidade: qnt_new,

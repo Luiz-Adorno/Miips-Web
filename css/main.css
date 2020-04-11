@@ -118,10 +118,23 @@ iframe {
   color: #666666;
   line-height: 1.5;
 }
+.txt3 {
+  font-family: Poppins-Regular;
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.5;
+}
 
 .txt2 {
   font-family: Poppins-Regular;
   font-size: 18px;
+  color: #333333;
+  line-height: 1.5;
+}
+
+.txt4 {
+  font-family: Poppins-Regular;
+  font-size: 15px;
   color: #333333;
   line-height: 1.5;
 }
@@ -185,6 +198,13 @@ iframe {
 
 /*------------------------------------------------------------------
 [ Input ]*/
+
+.wrap-input101 {
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid #adadad;
+  margin-bottom: 10px;
+}
 
 .wrap-input100 {
   width: 100%;

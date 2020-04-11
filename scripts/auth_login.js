@@ -35,3 +35,7 @@ auth.onAuthStateChanged(function(user) {
 document.getElementById("cadastrar").addEventListener('click', function () {
   window.location.href = '/contract.html';
 });
+
+document.getElementById("resetPas").addEventListener('click', function () {
+  window.location.href = '/reset_pass.html';
+});

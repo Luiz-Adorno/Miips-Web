@@ -15,7 +15,7 @@ auth.onAuthStateChanged(function (user) {
     db.collection("companies").doc(user.uid).collection("commercialPlace").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          
+
           db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc.id).collection("local").get().then(querySnapshot2 => {
             querySnapshot2.forEach(doc2 => {
               console.log(doc.id)
@@ -28,7 +28,7 @@ auth.onAuthStateChanged(function (user) {
 
               document.querySelector('.card-body').insertAdjacentHTML('beforeend', `<div class="row" id="img_esta">
               <div class="col-12 col-sm-12 col-md-4 text-center store">
-                <img src=${url_photo} alt="prewiew" width="140" height="140">
+                <img src=${url_photo} alt="prewiew" width="140" height="140"  id="img` + doc2.data().cnpj + `">
               </div>
               <div id="text_div" class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
               <input type="text" id="on/off`+ doc2.data().cnpj + `" disabled="disabled" class="input" value="" />
@@ -45,6 +45,14 @@ auth.onAuthStateChanged(function (user) {
               </div>
             </div>
            `);
+
+              document.getElementById("img" + doc2.data().cnpj).addEventListener('click', function () {
+                var cnpj = doc2.data().cnpj;
+                var doc_id = doc.id;
+                sessionStorage.setItem("doc.id", doc_id);
+                sessionStorage.setItem("last-cnpj", cnpj);
+                window.location.href = '/painel/esta-painel.html';
+              });
 
               document.getElementById("title" + doc2.data().cnpj).addEventListener('click', function () {
                 var cnpj = doc2.data().cnpj;
