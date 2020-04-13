@@ -32,7 +32,9 @@ auth.onAuthStateChanged(function (user) {
         var date = doc.data().data_cadastro;
         var descri = doc.data().descri;
         var gender = doc.data().gender;
+        var cate = doc.data().product_category;
 
+        document.getElementById("cate").innerHTML = cate;
         document.getElementById("gender").innerHTML = gender;
         document.getElementById("title_name").innerHTML = name_prod;
         document.getElementById("barcode-id").innerHTML = " "+codebar;

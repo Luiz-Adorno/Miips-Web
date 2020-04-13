@@ -28,7 +28,9 @@ auth.onAuthStateChanged(function (user) {
           var date = doc.data().data_cadastro;
           var descri = doc.data().descri;
           var gender = doc.data().gender;
+          var cate = doc.data().product_category;
 
+          document.getElementById("selectCat").value = cate;
           document.getElementById("selectpicker").value = gender;
           document.getElementById("status-id").value = status;
           document.getElementById("avatar_big").src = url_photo;
@@ -60,6 +62,7 @@ auth.onAuthStateChanged(function (user) {
       const descriF = signupFormStore['descri'].value;
       const qntF = signupFormStore['myInput2'].value;
       const genderF = signupFormStore['selectpicker'].value;
+      const cateF = signupFormStore['selectCat'].value;
       //transform 01 in 1, 001 in 1, etc... 
       qnt_new = qntF.replace(/^0+/, "");
 
@@ -83,6 +86,7 @@ auth.onAuthStateChanged(function (user) {
 
         db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
           .doc(barcode).set({
+            product_category: cateF,
             gender: genderF,
             nome_produto: name_prodF,
             state: stated,
@@ -98,6 +102,7 @@ auth.onAuthStateChanged(function (user) {
                   if (doc.data().cnpj_owner == cnpj) {
                     //console.log(doc.id, " => ", doc.data());
                     db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
+                      product_category: cateF,
                       gender: genderF,
                       nome_produto: name_prodF,
                       state: stated,

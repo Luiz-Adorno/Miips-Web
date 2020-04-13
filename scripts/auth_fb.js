@@ -77,7 +77,7 @@ let arr = new Array();
 let arr2 = new Array();
 const showSelectedOptions = options => {
   arr = [...options].filter(o => o.selected).map(o => o.value);
-  //console.log(arr.length)
+  console.log(arr);
 }
 
 const showSelectedOptions2 = options => {

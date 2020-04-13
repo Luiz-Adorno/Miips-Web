@@ -256,6 +256,19 @@
                             <input type="text" class="form-control" id="name_prod" required>
                         </div>
                         <div class="form-group">
+                            <label>Categoria do produto a ser cadastrado:</label>
+                            <select class="selectpicker form-control" id="selectCat" required>
+                                <option value="" hidden>Selecione</option>
+                                <option value="Vestuário">Vestuário</option>
+                                <option value="Calçado">Calçado</option>
+                                <option value="Acessórios">Acessórios</option>
+                                <option value="Óculos de sol">Óculos de sol</option>
+                                <option value="Joalheria">Joias</option>
+                                <option value="Semijoia">Semijoia</option>
+                                <option value="Bijuteria">Bijuteria</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Gênero direcionado ao público:</label>
                             <select class="selectpicker form-control" id="selectpicker" required>
                                 <option value="" hidden>Selecione</option>
@@ -449,8 +462,9 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                 signupFormStore.addEventListener('submit', (e) => {
                     e.preventDefault();
 
-                    var selectedGender = $('.selectpicker').val();
-                   // console.log(selectedGender);
+                    var selectedGender = $('#selectpicker').val();
+                    var selectCate = $('#selectCat').val();
+                    //console.log(selectedGender);
 
                     let cateP = new Array();
                     //saving company info
@@ -508,6 +522,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                                                             db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
                                                                 .doc(barcode).set({
                                                                     gender: selectedGender,
+                                                                    product_category: selectCate,
                                                                     url_product: url,
                                                                     nome_produto: nameP,
                                                                     state: true,
@@ -517,45 +532,38 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                                                                     data_cadastro: date,
                                                                     descri: descrip
                                                                 }).then(function () {
-                                                                    db.collection("companies").doc(user.uid).get().then(function (doc) {
-                                                                        cateP = doc.data().product_category;
-                                                                    }).then(function () {
-                                                                        db.collection("commercialPlaces").doc(doc_id).set(
-                                                                            { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                                                db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
-                                                                                    gender: selectedGender,
-                                                                                    product_category: cateP,
-                                                                                    cnpj_owner: cnpj,
-                                                                                    url_product: url,
-                                                                                    nome_produto: nameP,
-                                                                                    state: true,
-                                                                                    quantidade: qnt_new,
-                                                                                    valor: price,
-                                                                                    cod_barras: barcode,
-                                                                                    data_cadastro: date,
-                                                                                    descri: descrip
+                                                                    db.collection("commercialPlaces").doc(doc_id).set(
+                                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                            db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
+                                                                                gender: selectedGender,
+                                                                                product_category: selectCate,
+                                                                                cnpj_owner: cnpj,
+                                                                                url_product: url,
+                                                                                nome_produto: nameP,
+                                                                                state: true,
+                                                                                quantidade: qnt_new,
+                                                                                valor: price,
+                                                                                cod_barras: barcode,
+                                                                                data_cadastro: date,
+                                                                                descri: descrip
+                                                                            })
+                                                                                .then(function (docRef) {
+                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                    //after add the  go to responsible
+                                                                                    window.location.href = 'products.html';
                                                                                 })
-                                                                                    .then(function (docRef) {
-                                                                                        document.getElementById("preloader").style.display = "none";
-                                                                                        //after add the  go to responsible
-                                                                                        window.location.href = 'products.html';
-                                                                                    })
-                                                                                    .catch(function (error) {
-                                                                                        console.error("Error adding document: ", error);
-                                                                                    });
-                                                                            }).catch(function (error) {
-                                                                                console.log("Error getting document:", error);
-                                                                                document.getElementById("preloader").style.display = "none";
-                                                                            });
-
-                                                                    }).catch(function (error) {
-                                                                        console.log("Error getting document:", error);
-                                                                    });
+                                                                                .catch(function (error) {
+                                                                                    console.error("Error adding document: ", error);
+                                                                                });
+                                                                        }).catch(function (error) {
+                                                                            console.log("Error getting document:", error);
+                                                                            document.getElementById("preloader").style.display = "none";
+                                                                        });
 
                                                                 }).catch(function (error) {
                                                                     console.log("Error getting document:", error);
-                                                                    document.getElementById("preloader").style.display = "none";
                                                                 });
+
                                                         }).catch(function (error) {
                                                             console.log("Error getting document:", error);
                                                             document.getElementById("preloader").style.display = "none";
