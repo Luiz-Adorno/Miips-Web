@@ -17,6 +17,10 @@
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
 
+    <script
+        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
     <!-- Filepond stylesheet -->
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
@@ -249,7 +253,7 @@
                                 imagem do produto que deseja cadastrar</p>
                             <!-- We'll transform this input into a pond -->
 
-                            <input class="form-content" type="file" accept="image/*" required>
+                            <input class="form-content" type="file" accept="image/*" data-type='image' required>
                         </div>
                         <div class="form-group">
                             <label>Nome do Produto</label>
@@ -261,7 +265,8 @@
                                 <option value="" hidden>Selecione</option>
                                 <option value="Vestuário">Vestuário</option>
                                 <option value="Calçado">Calçado</option>
-                                <option value="Acessórios">Acessórios (ex: Tocas, bonés, relógios, carteiras, bolsas, etc)</option>
+                                <option value="Acessórios">Acessórios (ex: Tocas, bonés, relógios, carteiras, bolsas,
+                                    etc)</option>
                                 <option value="Óculos de sol">Óculos de sol</option>
                                 <option value="Joalheria">Joias</option>
                                 <option value="Semijoia">Semijoia</option>
@@ -437,6 +442,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         //initialize the plugins
 
         FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
             FilePondPluginImagePreview,
             FilePondPluginImageResize,
             FilePondPluginImageExifOrientation,
@@ -444,6 +450,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
         const inputElement = document.querySelector('input[type="file"]');
         const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['image/*',],
             imageResizeTargetWidth: 256,
 
             //callback when te image is added

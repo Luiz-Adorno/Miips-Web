@@ -22,6 +22,9 @@
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet">
 
+    <script
+        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
     <link rel="apple-touch-icon" href="apple-icon.png">
 
@@ -409,6 +412,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         //initialize the plugins
 
         FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
             FilePondPluginImagePreview,
             FilePondPluginImageResize,
             FilePondPluginImageExifOrientation,
@@ -416,6 +420,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
         const inputElement = document.querySelector('input[type="file"]');
         const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['image/*',],
             imageResizeTargetWidth: 256,
 
             //callback when te image is added
