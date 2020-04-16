@@ -468,6 +468,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
                 signupFormStore.addEventListener('submit', (e) => {
                     e.preventDefault();
+                    document.getElementById("preloader").style.display = "block";
 
                     var selectedGender = $('#selectpicker').val();
                     var selectCate = $('#selectCat').val();
@@ -488,9 +489,11 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                     //console.log(qnt_new)
 
                     if (price == "0,00") {
+                        document.getElementById("preloader").style.display = "none";
                         alert("\nDigite o valor do produto")
                         return false;
                     } else if (qnt_new == 0) {
+                        document.getElementById("preloader").style.display = "none";
                         alert("\nDigite a quantidade do produto em estoque")
                     }
                     else {
@@ -508,7 +511,6 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                                                 //console.log(doc)
                                             });
                                         } else {
-                                            document.getElementById("preloader").style.display = "block";
                                             //barcode valid
                                             //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
                                             var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
