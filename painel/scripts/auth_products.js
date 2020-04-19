@@ -18,7 +18,7 @@ auth.onAuthStateChanged(function (user) {
       .doc(cnpj_new).collection("Products").get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.id);
+          //console.log(doc.id);
           var name_prod = doc.data().nome_produto;
           var codebar = doc.data().cod_barras;
           var status = doc.data().state;

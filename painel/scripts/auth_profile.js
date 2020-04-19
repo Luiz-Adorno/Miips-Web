@@ -44,32 +44,6 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById("cnpj").innerHTML = cnpj;
         document.getElementById("telefone").innerHTML = telefone;
 
-        let category = new Array();
-        let categoryP = new Array();
-        let categoryS = new Array();
-
-        category = doc.data().category;
-        document.getElementById("category").innerHTML = category;
-        if(category.length == 2){
-          categoryP = doc.data().product_category;
-          categoryS = doc.data().service_category;
-          document.getElementById("disP").style.display = "block";
-          document.getElementById("disS").style.display = "block";
-
-          document.getElementById("category-product").innerHTML = categoryP;
-          document.getElementById("category-service").innerHTML = categoryS;
-        }else{
-          if(category[0] == "Produto"){
-            categoryP = doc.data().product_category;
-            document.getElementById("disP").style.display = "block";
-            document.getElementById("category-product").innerHTML = categoryP;
-          }else{
-            categoryS = doc.data().service_category;
-            document.getElementById("disS").style.display = "block";
-            document.getElementById("category-service").innerHTML = categoryS;
-          }
-        }
-
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");

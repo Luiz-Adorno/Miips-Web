@@ -33,7 +33,9 @@ auth.onAuthStateChanged(function (user) {
         var status = doc.data().state;
         var nro_pro = doc.data().product_count;
         console.log(nro_pro)
-        var nro_serv = doc.data().service_count;
+        if(nro_pro == null){
+          nro_pro = 0
+        }
 
         console.log(nome_estabelecimento)
         document.getElementById("title_name").innerHTML = nome_estabelecimento;
@@ -46,6 +48,8 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById('cnpj').innerHTML = cnpj;
         document.getElementById("preloader").style.display = "none";
 
+        document.getElementById('number_pro').innerHTML = nro_pro;
+
         if (status) {
           document.getElementById('state').innerHTML = "Ativado";
           document.getElementById("state").className = "tags-on";
@@ -53,50 +57,6 @@ auth.onAuthStateChanged(function (user) {
           document.getElementById('state').innerHTML = "Desativado";
           document.getElementById("state").className = "tags-off";
         }
-
-
-
-        db.collection("companies").doc(user.uid).get().then(function (doc) {
-          if (doc.exists) {
-            let cate = new Array();
-            cate = doc.data().category;
-            //console.log(cate.length)
-            if (cate.length == 2) {
-              if(nro_pro == null){
-                nro_pro = 0
-              }
-              if(nro_serv == null){
-                nro_serv = 0
-              }
-              document.getElementById("prod").style.display = "block";
-              document.getElementById("serv").style.display = "block";
-              document.getElementById('number_pro').innerHTML = nro_pro;
-              document.getElementById('number_serv').innerHTML = nro_serv;
-
-            } else {
-              if (cate[0] == "Produto") {
-                if(nro_pro == null){
-                  nro_pro = 0
-                }
-                document.getElementById("prod").style.display = "block";
-                document.getElementById('number_pro').innerHTML = nro_pro;
-              } else {
-                if(nro_serv == null){
-                  nro_serv = 0
-                }
-                document.getElementById("serv").style.display = "block";
-                document.getElementById('number_serv').innerHTML = nro_serv;
-              }
-            }
-
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        }).catch(function (error) {
-          console.log("Error getting document:", error);
-        });
-
 
       } else {
         // doc.data() will be undefined in this case
