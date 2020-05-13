@@ -268,7 +268,7 @@
                                 <option value="Acessórios">Acessórios (ex: Tocas, bonés, relógios, carteiras, bolsas,
                                     etc)</option>
                                 <option value="Óculos de Grau">Óculos de Grau</option>
-                                <option value="Óculos de sol">Óculos de sol</option>
+                                <option value="Óculos de sol">Óculos de Sol</option>
                                 <option value="Joalheria">Joias</option>
                                 <option value="Semijoia">Semijoia</option>
                                 <option value="Bijuteria">Bijuteria</option>
@@ -453,7 +453,6 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         const inputElement = document.querySelector('input[type="file"]');
         const pond = FilePond.create(inputElement, {
             acceptedFileTypes: ['image/*',],
-            imageResizeTargetWidth: 256,
 
             //callback when te image is added
             onaddfile: (err, fileItem) => {
@@ -559,9 +558,12 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                                                                                 descri: descrip
                                                                             })
                                                                                 .then(function (docRef) {
-                                                                                    document.getElementById("preloader").style.display = "none";
-                                                                                    //after add the  go to responsible
-                                                                                    window.location.href = 'products.html';
+                                                                                    db.collection("commercialPlaces").doc(doc_id).collection("Local").doc(cnpj_new).set(
+                                                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                            document.getElementById("preloader").style.display = "none";
+                                                                                            //after add the go to product page
+                                                                                            window.location.href = 'products.html';
+                                                                                        })
                                                                                 })
                                                                                 .catch(function (error) {
                                                                                     console.error("Error adding document: ", error);
