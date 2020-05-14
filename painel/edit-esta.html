@@ -279,8 +279,8 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png" alt="User Avatar"
-                                id="avatar_small">
+                            <img class="user-avatar rounded-circle" height="35px" src="images/admin.png"
+                                alt="User Avatar" id="avatar_small">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -302,8 +302,7 @@
                         <div class="row" style="justify-content: center;">
                             <div class="col-md-4">
                                 <div class="profile-img">
-                                    <img style="height: 200px; width: 200px;"
-                                        alt="User Avatar" id="avatar_big">
+                                    <img style="height: 200px; width: 200px;" alt="User Avatar" id="avatar_big">
                                     <div class="file btn btn-lg btn-primary">
                                         Alterar foto
                                         <input type="file" name="picField" id="picField" accept="image/*" />
@@ -319,11 +318,11 @@
                             <input type="text" class="form-control" id="nome_esta" required>
                         </div>
                         <div class="form-group">
-                        <label>Status do funcionamento do estabelecimento</label>
-                        <select class="form-control" id= "status-id">
-                            <option value="true">Ativado</option>
-                            <option value="false">Desativado</option>
-                          </select>
+                            <label>Status do funcionamento do estabelecimento</label>
+                            <select class="form-control" id="status-id">
+                                <option value="true">Ativado</option>
+                                <option value="false">Desativado</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="ddd" class="required">(DDD) Telefone</label>
@@ -332,7 +331,8 @@
                         </div>
                         <div class="form-group">
                             <label for="cnpj" class="required">CNPJ</label>
-                            <input type="text" class="form-control" name="cnpj" id="cnpj" required minlength="18" disabled="disabled" />
+                            <input type="text" class="form-control" name="cnpj" id="cnpj" required minlength="18"
+                                disabled="disabled" />
                         </div>
 
                         <!-- Inicio do ZIP -->
@@ -364,7 +364,7 @@
                         </div>
                         <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Salvar</button>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@
                 fileButton.addEventListener('change', function (e) {
                     document.getElementById("uploader").style.display = "block";
                     var file = e.target.files[0];
-                    var storageRef = firebase.storage().ref("companies/" + user.uid +  "/images/commercialPlace/profilePhoto/" + cnpj_new + "/" + "photo");
+                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/profilePhoto/" + cnpj_new + "/" + "photo");
                     var task = storageRef.put(file);
                     task.on('state_changed', function progress(snapshot) {
                         var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -467,6 +467,12 @@
                                 profilePhoto: url
                             }, { merge: true }).then(function () {
                                 //reload
+                                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                                    profilePhoto: url
+                                }, { merge: true }).then(function () {
+                                    
+                                location.reload();
+                                });
                             });
 
                         }).catch(function (error) {
