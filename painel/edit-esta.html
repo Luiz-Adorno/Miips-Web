@@ -465,6 +465,7 @@
                             const signupFormStore = document.querySelector('#register-form-store');
                             const cidade = signupFormStore['cidade'].value;
                             const uf = signupFormStore['uf'].value;
+                            const cep = signupFormStore['cep'].value;
 
                             db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).get().then(function (doc) {
                                 var estadoF = doc.data().estado;
@@ -481,11 +482,12 @@
                                         db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
                                             profilePhoto: url
                                         }, { merge: true }).then(function () {
-                                            //location.reload();
+                                            location.reload();
                                         });
                                     });
                                 } else{
                                     alert("\nPor favor salve as informações antes de alterar a imagem")
+                                    location.reload();
                                 }
                             })
 
