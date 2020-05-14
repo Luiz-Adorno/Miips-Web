@@ -471,7 +471,7 @@
                                 var cidadeF = doc.data().cidade;
                                 var cepF = doc.data().cep;
 
-                                console.log(cepF + cep + cidade + cidadeF + estadoF + estado)
+                                console.log(cepF + cep + cidade + cidadeF + estadoF + uf)
 
                                 if (cepF == cep && cidadeF == cidade && estadoF == uf) {
                                     db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set({
@@ -481,7 +481,7 @@
                                         db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
                                             profilePhoto: url
                                         }, { merge: true }).then(function () {
-                                            location.reload();
+                                            //location.reload();
                                         });
                                     });
                                 } else{
