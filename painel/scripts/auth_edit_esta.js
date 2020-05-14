@@ -23,12 +23,12 @@ auth.onAuthStateChanged(function (user) {
         var nome_estabelecimentoF = doc.data().nome_estabelecimento;
         var estadoF = doc.data().estado;
         var cidadeF = doc.data().cidade;
+        var cepF = doc.data().cep;
         var ruaF = doc.data().rua;
         var url_photo = doc.data().profilePhoto;
         var nroF = doc.data().numero;
         var telF = doc.data().telefone;
         var cnpjF = doc.data().cnpj;
-        var cepF = doc.data().cep;
         var bairroF = doc.data().bairro;
         var statusF = doc.data().state;
         var complementoF = doc.data().complemento;

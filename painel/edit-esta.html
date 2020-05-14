@@ -462,18 +462,30 @@
                         storageRef.getDownloadURL().then(function (url) {
 
                             console.log(url)
+                            const signupFormStore = document.querySelector('#register-form-store');
+                            const cidade = signupFormStore['cidade'].value;
+                            const uf = signupFormStore['uf'].value;
 
-                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set({
-                                profilePhoto: url
-                            }, { merge: true }).then(function () {
-                                //reload
-                                db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
-                                    profilePhoto: url
-                                }, { merge: true }).then(function () {
-                                    
-                                location.reload();
-                                });
-                            });
+                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).get().then(function (doc) {
+                                var estadoF = doc.data().estado;
+                                var cidadeF = doc.data().cidade;
+                                var cepF = doc.data().cep;
+
+                                if (cepF == cep && cidadeF == cidade && estadoF == uf) {
+                                    db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set({
+                                        profilePhoto: url
+                                    }, { merge: true }).then(function () {
+                                        //reload
+                                        db.collection('commercialPlaces').doc(cidade + "-" + uf).collection("Local").doc(cnpj_new).set({
+                                            profilePhoto: url
+                                        }, { merge: true }).then(function () {
+                                            location.reload();
+                                        });
+                                    });
+                                } else{
+                                    alert("\nPor favor salve as informações antes de alterar a imagem")
+                                }
+                            })
 
                         }).catch(function (error) {
                             // Handle any errors
