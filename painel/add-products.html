@@ -260,6 +260,13 @@
                             <input type="text" class="form-control" id="name_prod" required>
                         </div>
                         <div class="form-group">
+                            <label class="required">Preço Venda</label>
+                            <span class="textbox">
+                                R$
+                            </span>
+                            <input class="form-control" inputmode="numeric" id="myInput" required><br>
+                        </div>
+                        <div class="form-group">
                             <label>Categoria do produto a ser cadastrado:</label>
                             <select class="selectpicker form-control" id="selectCat" required>
                                 <option value="" hidden>Selecione</option>
@@ -283,12 +290,29 @@
                                 <option value="Feminino">Feminino</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="required">Preço Venda</label>
-                            <span class="textbox">
-                                R$
-                            </span>
-                            <input class="form-control" inputmode="numeric" id="myInput" required><br>
+                        <div class="form-group" style="display: none;" id="selectTamDiv">
+                            <label>Disponível nos tamanhos:</label>
+                            <select class="selectpicker" id="selectTam" multiple>
+                                <option value="PP">PP</option>
+                                <option value="P">P</option>
+                                <option value="M">M</option>
+                                <option value="G">G</option>
+                                <option value="GG">GG</option>
+                                <option value="XGG">XGG</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: none;" id="selectTamNume">
+                            <label>Numeração disponíveis do modelo do calçado:</label>
+                            <select class="selectpicker" id="selectNume" multiple>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Código de Barras</label>
@@ -427,6 +451,24 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
 
 
+
+    <script>
+        $("#selectCat").change(function () {
+            if (this.value === "Vestuário") {
+                document.getElementById('selectTamDiv').style.display = 'block';  // to display
+                document.getElementById('selectTamNume').style.display = 'none';
+            }
+            else if (this.value === "Calçado") {
+                document.getElementById('selectTamNume').style.display = 'block';  // to display
+                document.getElementById('selectTamDiv').style.display = 'none';
+            } else {
+                document.getElementById('selectTamNume').style.display = 'none';
+                document.getElementById('selectTamDiv').style.display = 'none';
+            }
+        });
+    </script>
+
+
     <script>
 
         // ...
@@ -475,7 +517,6 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                     var selectCate = $('#selectCat').val();
                     //console.log(selectedGender);
 
-                    let cateP = new Array();
                     //saving company info
                     const nameP = signupFormStore['name_prod'].value;
                     const qnt = signupFormStore['myInput2'].value
@@ -498,107 +539,334 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                         alert("\nDigite a quantidade do produto em estoque")
                     }
                     else {
+                        if (selectCate === "Vestuário") {
+                            //To check whether selected value is empty:
+                            if (!$('#selectTam').val()) {
+                                document.getElementById("preloader").style.display = "none";
+                                alert("\nSelecione os tamanhos disponíveis pra esse vestuário ")
+                            } else {
+                                var selectSize= $('#selectTam').val();
 
-                        firebase.auth().onAuthStateChanged(function (user) {
-                            if (user) {
-                                const usersRef = db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
-                                    .doc(cnpj_new).collection("Products").doc(barcode);
-                                usersRef.get()
-                                    .then((docSnapshot) => {
-                                        if (docSnapshot.exists) {
-                                            usersRef.onSnapshot((doc) => {
-                                                //barcode already exist
-                                                alert("\nCódigo de barras já cadastrado na loja")
-                                                //console.log(doc)
-                                            });
-                                        } else {
-                                            //barcode valid
-                                            //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
-                                            var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
-                                            var task = storageRef.put(output);
-                                            task.on('state_changed', function progress(snapshot) {
-                                                console.log("onprogress")
 
-                                            }, function error(err) {
-                                                console.log("err: " + err)
-                                                document.getElementById("preloader").style.display = "none";
+                                firebase.auth().onAuthStateChanged(function (user) {
+                                    if (user) {
+                                        const usersRef = db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
+                                            .doc(cnpj_new).collection("Products").doc(barcode);
+                                        usersRef.get()
+                                            .then((docSnapshot) => {
+                                                if (docSnapshot.exists) {
+                                                    usersRef.onSnapshot((doc) => {
+                                                        //barcode already exist
+                                                        alert("\nCódigo de barras já cadastrado na loja")
+                                                        //console.log(doc)
+                                                    });
+                                                } else {
+                                                    //barcode valid
+                                                    //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
+                                                    var task = storageRef.put(output);
+                                                    task.on('state_changed', function progress(snapshot) {
+                                                        console.log("onprogress")
 
-                                            }, function complete() {
-                                                console.log("complete")
-                                                storageRef.getDownloadURL().then(function (url) {
+                                                    }, function error(err) {
+                                                        console.log("err: " + err)
+                                                        document.getElementById("preloader").style.display = "none";
 
-                                                    db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
-                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
-                                                                .doc(barcode).set({
-                                                                    gender: selectedGender,
-                                                                    product_category: selectCate,
-                                                                    url_product: url,
-                                                                    nome_produto: nameP,
-                                                                    state: true,
-                                                                    quantidade: qnt_new,
-                                                                    valor: price,
-                                                                    cod_barras: barcode,
-                                                                    data_cadastro: date,
-                                                                    descri: descrip
-                                                                }).then(function () {
-                                                                    db.collection("commercialPlaces").doc(doc_id).set(
-                                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                                            db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
-                                                                                gender: selectedGender,
-                                                                                product_category: selectCate,
-                                                                                cnpj_owner: cnpj,
-                                                                                url_product: url,
-                                                                                nome_produto: nameP,
-                                                                                state: true,
-                                                                                quantidade: qnt_new,
-                                                                                valor: price,
-                                                                                cod_barras: barcode,
-                                                                                data_cadastro: date,
-                                                                                descri: descrip
-                                                                            })
-                                                                                .then(function (docRef) {
-                                                                                    db.collection("commercialPlaces").doc(doc_id).collection("Local").doc(cnpj_new).set(
-                                                                                        { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
-                                                                                            document.getElementById("preloader").style.display = "none";
-                                                                                            //after add the go to product page
-                                                                                            window.location.href = 'products.html';
+                                                    }, function complete() {
+                                                        console.log("complete")
+                                                        storageRef.getDownloadURL().then(function (url) {
+
+                                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
+                                                                { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                    db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+                                                                        .doc(barcode).set({
+                                                                            gender: selectedGender,
+                                                                            size: selectSize,
+                                                                            product_category: selectCate,
+                                                                            url_product: url,
+                                                                            nome_produto: nameP,
+                                                                            state: true,
+                                                                            quantidade: qnt_new,
+                                                                            valor: price,
+                                                                            cod_barras: barcode,
+                                                                            data_cadastro: date,
+                                                                            descri: descrip
+                                                                        }).then(function () {
+                                                                            db.collection("commercialPlaces").doc(doc_id).set(
+                                                                                { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                    db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
+                                                                                        gender: selectedGender,
+                                                                                        product_category: selectCate,
+                                                                                        size: selectSize,
+                                                                                        cnpj_owner: cnpj,
+                                                                                        url_product: url,
+                                                                                        nome_produto: nameP,
+                                                                                        state: true,
+                                                                                        quantidade: qnt_new,
+                                                                                        valor: price,
+                                                                                        cod_barras: barcode,
+                                                                                        data_cadastro: date,
+                                                                                        descri: descrip
+                                                                                    })
+                                                                                        .then(function (docRef) {
+                                                                                            db.collection("commercialPlaces").doc(doc_id).collection("Local").doc(cnpj_new).set(
+                                                                                                { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                                    //after add the go to product page
+                                                                                                    window.location.href = 'products.html';
+                                                                                                })
                                                                                         })
-                                                                                })
-                                                                                .catch(function (error) {
-                                                                                    console.error("Error adding document: ", error);
+                                                                                        .catch(function (error) {
+                                                                                            console.error("Error adding document: ", error);
+                                                                                        });
+                                                                                }).catch(function (error) {
+                                                                                    console.log("Error getting document:", error);
+                                                                                    document.getElementById("preloader").style.display = "none";
                                                                                 });
+
                                                                         }).catch(function (error) {
                                                                             console.log("Error getting document:", error);
-                                                                            document.getElementById("preloader").style.display = "none";
                                                                         });
 
                                                                 }).catch(function (error) {
                                                                     console.log("Error getting document:", error);
+                                                                    document.getElementById("preloader").style.display = "none";
                                                                 });
 
                                                         }).catch(function (error) {
-                                                            console.log("Error getting document:", error);
                                                             document.getElementById("preloader").style.display = "none";
+                                                            console.log(error)
+                                                            // Handle any errors
+
                                                         });
+                                                    });
 
-                                                }).catch(function (error) {
-                                                    document.getElementById("preloader").style.display = "none";
-                                                    console.log(error)
-                                                    // Handle any errors
 
-                                                });
+                                                }
                                             });
 
 
-                                        }
-                                    });
-
-
-                            } else {
-                                // No user is signed in.
+                                    } else {
+                                        // No user is signed in.
+                                    }
+                                });
                             }
-                        });
+
+                        } else if (selectCate === "Calçado") {
+                            //To check whether selected value is empty:
+                            if (!$('#selectNume').val()) {
+                                document.getElementById("preloader").style.display = "none";
+                                alert("\nSelecione os tamanhos disponíveis pra esse calçado ")
+                            } else {
+                                var selectSize= $('#selectNume').val();
+
+
+                                firebase.auth().onAuthStateChanged(function (user) {
+                                    if (user) {
+                                        const usersRef = db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
+                                            .doc(cnpj_new).collection("Products").doc(barcode);
+                                        usersRef.get()
+                                            .then((docSnapshot) => {
+                                                if (docSnapshot.exists) {
+                                                    usersRef.onSnapshot((doc) => {
+                                                        //barcode already exist
+                                                        alert("\nCódigo de barras já cadastrado na loja")
+                                                        //console.log(doc)
+                                                    });
+                                                } else {
+                                                    //barcode valid
+                                                    //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                                    var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
+                                                    var task = storageRef.put(output);
+                                                    task.on('state_changed', function progress(snapshot) {
+                                                        console.log("onprogress")
+
+                                                    }, function error(err) {
+                                                        console.log("err: " + err)
+                                                        document.getElementById("preloader").style.display = "none";
+
+                                                    }, function complete() {
+                                                        console.log("complete")
+                                                        storageRef.getDownloadURL().then(function (url) {
+
+                                                            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
+                                                                { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                    db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+                                                                        .doc(barcode).set({
+                                                                            gender: selectedGender,
+                                                                            product_category: selectCate,
+                                                                            url_product: url,
+                                                                            size: selectSize,
+                                                                            nome_produto: nameP,
+                                                                            state: true,
+                                                                            quantidade: qnt_new,
+                                                                            valor: price,
+                                                                            cod_barras: barcode,
+                                                                            data_cadastro: date,
+                                                                            descri: descrip
+                                                                        }).then(function () {
+                                                                            db.collection("commercialPlaces").doc(doc_id).set(
+                                                                                { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                    db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
+                                                                                        gender: selectedGender,
+                                                                                        product_category: selectCate,
+                                                                                        cnpj_owner: cnpj,
+                                                                                        size: selectSize,
+                                                                                        url_product: url,
+                                                                                        nome_produto: nameP,
+                                                                                        state: true,
+                                                                                        quantidade: qnt_new,
+                                                                                        valor: price,
+                                                                                        cod_barras: barcode,
+                                                                                        data_cadastro: date,
+                                                                                        descri: descrip
+                                                                                    })
+                                                                                        .then(function (docRef) {
+                                                                                            db.collection("commercialPlaces").doc(doc_id).collection("Local").doc(cnpj_new).set(
+                                                                                                { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                                    //after add the go to product page
+                                                                                                    window.location.href = 'products.html';
+                                                                                                })
+                                                                                        })
+                                                                                        .catch(function (error) {
+                                                                                            console.error("Error adding document: ", error);
+                                                                                        });
+                                                                                }).catch(function (error) {
+                                                                                    console.log("Error getting document:", error);
+                                                                                    document.getElementById("preloader").style.display = "none";
+                                                                                });
+
+                                                                        }).catch(function (error) {
+                                                                            console.log("Error getting document:", error);
+                                                                        });
+
+                                                                }).catch(function (error) {
+                                                                    console.log("Error getting document:", error);
+                                                                    document.getElementById("preloader").style.display = "none";
+                                                                });
+
+                                                        }).catch(function (error) {
+                                                            document.getElementById("preloader").style.display = "none";
+                                                            console.log(error)
+                                                            // Handle any errors
+
+                                                        });
+                                                    });
+
+
+                                                }
+                                            });
+
+
+                                    } else {
+                                        // No user is signed in.
+                                    }
+                                });
+                            }
+
+                        } else {
+                            firebase.auth().onAuthStateChanged(function (user) {
+                                if (user) {
+                                    const usersRef = db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local")
+                                        .doc(cnpj_new).collection("Products").doc(barcode);
+                                    usersRef.get()
+                                        .then((docSnapshot) => {
+                                            if (docSnapshot.exists) {
+                                                usersRef.onSnapshot((doc) => {
+                                                    //barcode already exist
+                                                    alert("\nCódigo de barras já cadastrado na loja")
+                                                    //console.log(doc)
+                                                });
+                                            } else {
+                                                //barcode valid
+                                                //script to get the img selected on input and send to firebase storage and get de url from there and send to firestore
+                                                var storageRef = firebase.storage().ref("companies/" + user.uid + "/images/commercialPlace/productPhoto/" + barcode + "/img");
+                                                var task = storageRef.put(output);
+                                                task.on('state_changed', function progress(snapshot) {
+                                                    console.log("onprogress")
+
+                                                }, function error(err) {
+                                                    console.log("err: " + err)
+                                                    document.getElementById("preloader").style.display = "none";
+
+                                                }, function complete() {
+                                                    console.log("complete")
+                                                    storageRef.getDownloadURL().then(function (url) {
+
+                                                        db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).set(
+                                                            { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+                                                                    .doc(barcode).set({
+                                                                        gender: selectedGender,
+                                                                        product_category: selectCate,
+                                                                        url_product: url,
+                                                                        nome_produto: nameP,
+                                                                        state: true,
+                                                                        quantidade: qnt_new,
+                                                                        valor: price,
+                                                                        cod_barras: barcode,
+                                                                        data_cadastro: date,
+                                                                        descri: descrip
+                                                                    }).then(function () {
+                                                                        db.collection("commercialPlaces").doc(doc_id).set(
+                                                                            { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                db.collection("commercialPlaces").doc(doc_id).collection("Product").add({
+                                                                                    gender: selectedGender,
+                                                                                    product_category: selectCate,
+                                                                                    cnpj_owner: cnpj,
+                                                                                    url_product: url,
+                                                                                    nome_produto: nameP,
+                                                                                    state: true,
+                                                                                    quantidade: qnt_new,
+                                                                                    valor: price,
+                                                                                    cod_barras: barcode,
+                                                                                    data_cadastro: date,
+                                                                                    descri: descrip
+                                                                                })
+                                                                                    .then(function (docRef) {
+                                                                                        db.collection("commercialPlaces").doc(doc_id).collection("Local").doc(cnpj_new).set(
+                                                                                            { product_count: firebase.firestore.FieldValue.increment(1) }, { merge: true }).then(function () {
+                                                                                                document.getElementById("preloader").style.display = "none";
+                                                                                                //after add the go to product page
+                                                                                                window.location.href = 'products.html';
+                                                                                            })
+                                                                                    })
+                                                                                    .catch(function (error) {
+                                                                                        console.error("Error adding document: ", error);
+                                                                                    });
+                                                                            }).catch(function (error) {
+                                                                                console.log("Error getting document:", error);
+                                                                                document.getElementById("preloader").style.display = "none";
+                                                                            });
+
+                                                                    }).catch(function (error) {
+                                                                        console.log("Error getting document:", error);
+                                                                    });
+
+                                                            }).catch(function (error) {
+                                                                console.log("Error getting document:", error);
+                                                                document.getElementById("preloader").style.display = "none";
+                                                            });
+
+                                                    }).catch(function (error) {
+                                                        document.getElementById("preloader").style.display = "none";
+                                                        console.log(error)
+                                                        // Handle any errors
+
+                                                    });
+                                                });
+
+
+                                            }
+                                        });
+
+
+                                } else {
+                                    // No user is signed in.
+                                }
+                            });
+                        }
 
                     }
 

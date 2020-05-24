@@ -29,6 +29,7 @@ auth.onAuthStateChanged(function (user) {
           var descri = doc.data().descri;
           var gender = doc.data().gender;
           var cate = doc.data().product_category;
+          var size = doc.data().size;
 
           document.getElementById("selectCat").value = cate;
           document.getElementById("selectpicker").value = gender;
@@ -42,6 +43,21 @@ auth.onAuthStateChanged(function (user) {
           document.getElementById("descri").value = descri;
 
           document.getElementById("preloader").style.display = "none";
+
+          if (cate === "Vestuário") {
+            $('#selectTam').val(size);
+            document.getElementById('selectTamDiv').style.display = 'block';  // to display
+            document.getElementById('selectTamNume').style.display = 'none';
+          }
+          else if (cate === "Calçado") {
+            $('#selectNume').val(size);
+            document.getElementById('selectTamNume').style.display = 'block';  // to display
+            document.getElementById('selectTamDiv').style.display = 'none';
+          } else {
+            document.getElementById('selectTamNume').style.display = 'none';
+            document.getElementById('selectTamDiv').style.display = 'none';
+          }
+
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -50,6 +66,19 @@ auth.onAuthStateChanged(function (user) {
         console.log("Error getting document:", error);
       });
 
+    $("#selectCat").change(function () {
+      if (this.value === "Vestuário") {
+        document.getElementById('selectTamDiv').style.display = 'block';  // to display
+        document.getElementById('selectTamNume').style.display = 'none';
+      }
+      else if (this.value === "Calçado") {
+        document.getElementById('selectTamNume').style.display = 'block';  // to display
+        document.getElementById('selectTamDiv').style.display = 'none';
+      } else {
+        document.getElementById('selectTamNume').style.display = 'none';
+        document.getElementById('selectTamDiv').style.display = 'none';
+      }
+    });
 
     const signupFormStore = document.querySelector('#register-form-store');
 
@@ -63,6 +92,7 @@ auth.onAuthStateChanged(function (user) {
       const qntF = signupFormStore['myInput2'].value;
       const genderF = signupFormStore['selectpicker'].value;
       const cateF = signupFormStore['selectCat'].value;
+
       //transform 01 in 1, 001 in 1, etc... 
       qnt_new = qntF.replace(/^0+/, "");
 
@@ -82,51 +112,161 @@ auth.onAuthStateChanged(function (user) {
         alert("\nDigite a quantidade do produto em estoque")
       }
       else {
-        document.getElementById("preloader").style.display = "block";
-
-        db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
-          .doc(barcode).set({
-            product_category: cateF,
-            gender: genderF,
-            nome_produto: name_prodF,
-            state: stated,
-            quantidade: qnt_new,
-            valor: priceF,
-            descri: descriF
-          }, { merge: true }).then(function () {
-            db.collection("commercialPlaces").doc(doc_id).collection("Product").where("cod_barras", "==", barcode)
-              .get()
-              .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                  // doc.data() is never undefined for query doc snapshots
-                  if (doc.data().cnpj_owner == cnpj) {
-                    //console.log(doc.id, " => ", doc.data());
-                    db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
-                      product_category: cateF,
-                      gender: genderF,
-                      nome_produto: name_prodF,
-                      state: stated,
-                      quantidade: qnt_new,
-                      valor: priceF,
-                      descri: descriF
-                    }, { merge: true }).then(function () {
-                      document.getElementById("preloader").style.display = "none";
-                      //after add the  go to responsible
-                      window.location.href = 'products.html';
-                    }).catch(function (error) {
-                      console.log("Error getting document:", error);
-                      document.getElementById("preloader").style.display = "none";
-                    });
-                  }
-                });
-              })
-              .catch(function (error) {
-                console.log("Error getting documents: ", error);
-              });
-          }).catch(function (error) {
-            console.log("Error getting document:", error);
+        if (cateF === "Vestuário") {
+          if (!$('#selectTam').val()) {
             document.getElementById("preloader").style.display = "none";
-          });
+            alert("\nSelecione os tamanhos disponíveis pra esse vestuário ")
+          } else {
+            document.getElementById("preloader").style.display = "block";
+            var selectSize = $('#selectTam').val();
+
+            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+              .doc(barcode).set({
+                product_category: cateF,
+                size: selectSize,
+                gender: genderF,
+                nome_produto: name_prodF,
+                state: stated,
+                quantidade: qnt_new,
+                valor: priceF,
+                descri: descriF
+              }, { merge: true }).then(function () {
+                db.collection("commercialPlaces").doc(doc_id).collection("Product").where("cod_barras", "==", barcode)
+                  .get()
+                  .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                      // doc.data() is never undefined for query doc snapshots
+                      if (doc.data().cnpj_owner == cnpj) {
+                        //console.log(doc.id, " => ", doc.data());
+                        db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
+                          product_category: cateF,
+                          gender: genderF,
+                          size: selectSize,
+                          nome_produto: name_prodF,
+                          state: stated,
+                          quantidade: qnt_new,
+                          valor: priceF,
+                          descri: descriF
+                        }, { merge: true }).then(function () {
+                          document.getElementById("preloader").style.display = "none";
+                          //after add the  go to responsible
+                          window.location.href = 'products.html';
+                        }).catch(function (error) {
+                          console.log("Error getting document:", error);
+                          document.getElementById("preloader").style.display = "none";
+                        });
+                      }
+                    });
+                  })
+                  .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                  });
+              }).catch(function (error) {
+                console.log("Error getting document:", error);
+                document.getElementById("preloader").style.display = "none";
+              });
+          }
+
+        } else if (cateF === "Calçado") {
+          if (!$('#selectNume').val()) {
+            document.getElementById("preloader").style.display = "none";
+            alert("\nSelecione os tamanhos disponíveis pra esse calçado ")
+          } else {
+            var selectSize = $('#selectNume').val();
+            document.getElementById("preloader").style.display = "block";
+
+            db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+              .doc(barcode).set({
+                product_category: cateF,
+                gender: genderF,
+                size: selectSize,
+                nome_produto: name_prodF,
+                state: stated,
+                quantidade: qnt_new,
+                valor: priceF,
+                descri: descriF
+              }, { merge: true }).then(function () {
+                db.collection("commercialPlaces").doc(doc_id).collection("Product").where("cod_barras", "==", barcode)
+                  .get()
+                  .then(function (querySnapshot) {
+                    querySnapshot.forEach(function (doc) {
+                      // doc.data() is never undefined for query doc snapshots
+                      if (doc.data().cnpj_owner == cnpj) {
+                        //console.log(doc.id, " => ", doc.data());
+                        db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
+                          product_category: cateF,
+                          gender: genderF,
+                          size: selectSize,
+                          nome_produto: name_prodF,
+                          state: stated,
+                          quantidade: qnt_new,
+                          valor: priceF,
+                          descri: descriF
+                        }, { merge: true }).then(function () {
+                          document.getElementById("preloader").style.display = "none";
+                          //after add the  go to responsible
+                          window.location.href = 'products.html';
+                        }).catch(function (error) {
+                          console.log("Error getting document:", error);
+                          document.getElementById("preloader").style.display = "none";
+                        });
+                      }
+                    });
+                  })
+                  .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                  });
+              }).catch(function (error) {
+                console.log("Error getting document:", error);
+                document.getElementById("preloader").style.display = "none";
+              });
+          }
+        } else {
+          document.getElementById("preloader").style.display = "block";
+          db.collection("companies").doc(user.uid).collection("commercialPlace").doc(doc_id).collection("local").doc(cnpj_new).collection("Products")
+            .doc(barcode).set({
+              product_category: cateF,
+              gender: genderF,
+              nome_produto: name_prodF,
+              state: stated,
+              quantidade: qnt_new,
+              valor: priceF,
+              descri: descriF
+            }, { merge: true }).then(function () {
+              db.collection("commercialPlaces").doc(doc_id).collection("Product").where("cod_barras", "==", barcode)
+                .get()
+                .then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    if (doc.data().cnpj_owner == cnpj) {
+                      //console.log(doc.id, " => ", doc.data());
+                      db.collection("commercialPlaces").doc(doc_id).collection("Product").doc(doc.id).set({
+                        product_category: cateF,
+                        gender: genderF,
+                        nome_produto: name_prodF,
+                        state: stated,
+                        quantidade: qnt_new,
+                        valor: priceF,
+                        descri: descriF
+                      }, { merge: true }).then(function () {
+                        document.getElementById("preloader").style.display = "none";
+                        //after add the  go to responsible
+                        window.location.href = 'products.html';
+                      }).catch(function (error) {
+                        console.log("Error getting document:", error);
+                        document.getElementById("preloader").style.display = "none";
+                      });
+                    }
+                  });
+                })
+                .catch(function (error) {
+                  console.log("Error getting documents: ", error);
+                });
+            }).catch(function (error) {
+              console.log("Error getting document:", error);
+              document.getElementById("preloader").style.display = "none";
+            });
+        }
       }
     });
 

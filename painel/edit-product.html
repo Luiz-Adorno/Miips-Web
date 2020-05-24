@@ -22,15 +22,14 @@
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet">
 
-
-    <link rel="apple-touch-icon" href="apple-icon.png">
-
     <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="vendors/themify-icons/css/themify-icons.css">
 
 
     <script src="assets/js/simple-mask-money.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.17/dist/css/bootstrap-select.min.css">
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
@@ -290,6 +289,30 @@
                                 <option value="Feminino">Feminino</option>
                             </select>
                         </div>
+                        <div class="form-group" style="display: none;" id="selectTamDiv">
+                            <label>Disponível nos tamanhos:</label>
+                            <select class="selectpicker form-control" id="selectTam" multiple>
+                                <option value="PP">PP</option>
+                                <option value="P">P</option>
+                                <option value="M">M</option>
+                                <option value="G">G</option>
+                                <option value="GG">GG</option>
+                                <option value="XGG">XGG</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: none;" id="selectTamNume">
+                            <label>Numeração disponíveis do modelo do calçado: (Clique e arraste o mouse nos tamanhos)</label>
+                            <select class="selectpicker form-control" id="selectNume" multiple>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label class="required">Preço Venda</label>
                             <span class="textbox">
@@ -415,6 +438,7 @@
     <script
         src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
 
+
     <script>
         //script for get the img selected on input and send to firebase storage and get de url from there and send to firestore
         firebase.auth().onAuthStateChanged(function (user) {
@@ -492,7 +516,9 @@
         });
 
     </script>
-
+    <!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.17/dist/js/bootstrap-select.min.js"></script>
+    
     <script src="scripts/auth_edit_produ.js"></script>
 
 </body>
