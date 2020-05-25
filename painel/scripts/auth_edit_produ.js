@@ -96,7 +96,7 @@ auth.onAuthStateChanged(function (user) {
       //transform 01 in 1, 001 in 1, etc... 
       qnt_new = qntF.replace(/^0+/, "");
       if (qnt_new == 0) {
-        qnt_new = 0
+        qnt_new = "0"
       }
 
       var stated;
