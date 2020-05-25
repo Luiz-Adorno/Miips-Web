@@ -95,6 +95,9 @@ auth.onAuthStateChanged(function (user) {
 
       //transform 01 in 1, 001 in 1, etc... 
       qnt_new = qntF.replace(/^0+/, "");
+      if (qnt_new == 0) {
+        qnt_new = 0
+      }
 
       var stated;
 
@@ -108,8 +111,6 @@ auth.onAuthStateChanged(function (user) {
       if (priceF == "0,00") {
         alert("\nDigite o valor do produto")
         return false;
-      } else if (qnt_new == 0) {
-        alert("\nDigite a quantidade do produto em estoque")
       }
       else {
         if (cateF === "Vestuário") {
