@@ -33,7 +33,8 @@ auth.onAuthStateChanged(function (user) {
         var statusF = doc.data().state;
         var complementoF = doc.data().complemento;
         var statusF = doc.data().state;
-
+        var order = doc.data().order;
+        var product_counter = doc.data().product_count;
         document.getElementById("avatar_big").src = url_photo;
 
         document.getElementById("nome_esta").value = nome_estabelecimentoF;
@@ -49,6 +50,7 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById("complemento").value = complementoF;
         document.getElementById("status-id").value = statusF;
         document.getElementById("preloader").style.display = "none";
+        $('#selectpicker').val(order);
 
         const signupFormStore = document.querySelector('#register-form-store');
 
@@ -68,6 +70,7 @@ auth.onAuthStateChanged(function (user) {
           const nro = signupFormStore['nro'].value;
           const complemento = signupFormStore['complemento'].value;
           const status = signupFormStore['status-id'].value;
+          const order = signupFormStore['selectpicker'].value;
 
           var stated;
 
@@ -93,6 +96,8 @@ auth.onAuthStateChanged(function (user) {
                 state: stated,
                 nome_estabelecimento: nome_esta,
                 cnpj: cnpj,
+                order: order,
+                product_count: product_counter,
                 telefone: telefone,
                 cep: cep,
                 cidade: cidade,
@@ -107,6 +112,8 @@ auth.onAuthStateChanged(function (user) {
                   state: stated,
                   nome_estabelecimento: nome_esta,
                   cnpj: cnpj,
+                  product_count: product_counter,
+                  order: order,
                   telefone: telefone,
                   cep: cep,
                   cidade: cidade,
@@ -143,7 +150,9 @@ auth.onAuthStateChanged(function (user) {
                     nome_estabelecimento: nome_esta,
                     cnpj: cnpj,
                     telefone: telefone,
+                    product_count: product_counter,
                     cep: cep,
+                    order: order,
                     cidade: cidade,
                     estado: uf,
                     rua: rua,
@@ -164,6 +173,8 @@ auth.onAuthStateChanged(function (user) {
                           state: stated,
                           nome_estabelecimento: nome_esta,
                           cnpj: cnpj,
+                          product_count: product_counter,
+                          order: order,
                           telefone: telefone,
                           cep: cep,
                           cidade: cidade,

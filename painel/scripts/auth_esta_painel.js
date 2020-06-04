@@ -32,6 +32,13 @@ auth.onAuthStateChanged(function (user) {
         var bairro = doc.data().bairro;
         var status = doc.data().state;
         var nro_pro = doc.data().product_count;
+        var order = doc.data().order;
+        var orderString;
+        if(order == "both"){
+          orderString = "Entrega a domicílio e Retirar na loja";
+        }else{
+          orderString = "Somente Retirar na loja"
+        }
         console.log(nro_pro)
         if(nro_pro == null){
           nro_pro = 0
@@ -46,8 +53,8 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById('cep').innerHTML = cep;
         document.getElementById('bairro').innerHTML = bairro;
         document.getElementById('cnpj').innerHTML = cnpj;
+        document.getElementById('order').innerHTML = orderString;
         document.getElementById("preloader").style.display = "none";
-
         document.getElementById('number_pro').innerHTML = nro_pro;
 
         if (status) {

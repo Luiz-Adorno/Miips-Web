@@ -319,7 +319,13 @@
                             <label for="cnpj" class="required">CNPJ da Filial</label>
                             <input type="text" class="form-control" name="cnpj" id="cnpj" required minlength="18" />
                         </div>
-
+                        <div class="form-group">
+                            <label>Tipo de encomendas aceitas pela loja:</label>
+                            <select class="selectpicker form-control" id="selectpicker" required>
+                                <option value="both">Entrega a domicílio e Retirar na loja</option>
+                                <option value="withdraw">Somente Retirar na loja</option>
+                            </select>
+                        </div>
                         <!-- Inicio do ZIP -->
                         <label>Cep:
                             <input name="cep" type="text" id="cep" value="" size="10" class="form-control" maxlength="9"
@@ -460,6 +466,7 @@
                     const bairro = signupFormStore['bairro'].value;
                     const nro = signupFormStore['nro'].value;
                     const complemento = signupFormStore['complemento'].value;
+                    const order = signupFormStore['selectpicker'].value;
 
                     //firebasefirestore doens't accept "/"
                     cnpj_new = cnpj.replace("/", "-");
@@ -508,6 +515,7 @@
                                                                 db.collection('companies').doc(user.uid).collection('commercialPlace').doc(cidade + "-" + uf).collection("local").doc(cnpj_new).set({
                                                                     state: true,
                                                                     nome_estabelecimento: nome_esta,
+                                                                    order: order,
                                                                     cnpj: cnpj,
                                                                     telefone: telefone,
                                                                     cep: cep,
@@ -530,6 +538,7 @@
                                                                                 state: true,
                                                                                 nome_estabelecimento: nome_esta,
                                                                                 cnpj: cnpj,
+                                                                                order: order,
                                                                                 telefone: telefone,
                                                                                 cep: cep,
                                                                                 company_id: user.uid,

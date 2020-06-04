@@ -33,7 +33,7 @@ auth.onAuthStateChanged(function (user) {
         var descri = doc.data().descri;
         var gender = doc.data().gender;
         var cate = doc.data().product_category;
-
+        var size = doc.data().size;
         document.getElementById("cate").innerHTML = cate;
         document.getElementById("gender").innerHTML = gender;
         document.getElementById("title_name").innerHTML = name_prod;
@@ -43,6 +43,7 @@ auth.onAuthStateChanged(function (user) {
         document.getElementById('avatar').src = url_photo;
         document.getElementById('descri').innerHTML = descri;
         document.getElementById('date').innerHTML = date;
+        document.getElementById('size').innerHTML = size;
         document.getElementById("preloader").style.display = "none";
 
         if (status) {
