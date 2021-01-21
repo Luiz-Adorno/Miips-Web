@@ -15,11 +15,12 @@
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
 
+
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet'
@@ -72,35 +73,21 @@
   <section class="page-section bg-light">
     <section class="hero-section " style="text-align: center;">
       <div class="hero-top">
-        <div class="wave">
-
-          <svg width="100%" height="355px" viewBox="0 0 1920 355" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Apple-TV" transform="translate(0.000000, -402.000000)" fill="#FFFFFF">
-                <path
-                  d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,757 L1017.15166,757 L0,757 L0,439.134243 Z"
-                  id="Path"></path>
-              </g>
-            </g>
-          </svg>
-
-        </div>
-
         <div class="container">
           <div class="row align-items-center">
             <div class="col-12 hero-text-image">
               <div class="row">
                 <div class="col-lg-7 text-center text-lg-left">
                   <h1 data-aos="fade-right">Quem não é visto, não é lembrado</h1>
-                  <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Acesse agora o painel de controle de sua
-                    empresa e comece a cadastrar e gerenciar os produtos ou serviços para anunciar em sua cidade</p>
+                  <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Acesse agora o painel de controle da sua
+                    loja e comece a cadastrar e gerenciar os produtos para anunciar em sua cidade</p>
                   <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a id="btn_painel"
                       class="btn btn-outline-white">Painel de controle</a></p>
                 </div>
                 <div class="col-lg-5 iphone-wrap">
                   <img src="img/phone_x.png" alt="Image" class="phone-1" data-aos="fade-right">
-                  <img src="img/phone_xz.png" alt="Image" class="phone-2" id="phone-2" data-aos="fade-right" data-aos-delay="200">
+                  <img src="img/phone_xz.png" alt="Image" class="phone-2" id="phone-2" data-aos="fade-right"
+                    data-aos-delay="200">
                 </div>
               </div>
             </div>
@@ -113,107 +100,109 @@
       </div>
 
       <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-      
-      
+
+
       <div class="site-section">
-
-        <div class="justify-content-center text-center mb-5">
-          <div data-aos="fade-up">
-            <h2 class="section-heading" id="services">As melhores ofertas e lançamentos na palma da sua mão</h2>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-4 my-auto">
-              <div class="device-container">
-                <div class="device-mockup iphone_x portrait white">
-                  <div class="device">
-                    <div class="screen">
-                      <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                      <img class="img-fluid" src="img/head.png" alt="">
-                    </div>
-                    <div class="button">
-                      <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8 my-auto">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="feature-item">
-                      <span class="fa-stack fa-4x">
-                        <i class="fa fa-instagram" aria-hidden="true"></i>
-                      </span>
-                      <h3>Mídias Sociais</h3>
-                      <p class="text-muted">Promovemos e impulsionamos a rede social da Sua Empresa. Com foco no melhor
-                        retorno do seu investimento em anúncios patrocinados. </p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="feature-item">
-                      <span class="fa-stack fa-4x">
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                      </span>
-                      <h3>
-                        Impressões
-                      </h3>
-                      <p class="text-muted">Encontramos pessoas interessadas em seu
-                        produto ou serviço. Cada impressão que é gerada indica o número de vezes
-                        que seu anúncio apareceu na tela de uma pessoa.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="feature-item">
-                      <span class="fa-stack fa-4x">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                      </span>
-                      <h3>Posicionamento</h3>
-                      <p class="text-muted">Colocamos a sua empresa no mapa com
-                        objetivos que levam as pessoas
-                        a pensar e buscar mais informações sobre o seu negócio.</p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="feature-item">
-                      <span class="fa-stack fa-4x">
-                        <i class="fa fa-line-chart" aria-hidden="true"></i>
-                      </span>
-                      <h3>Análise de Dados</h3>
-                      <p class="text-muted">Utilizamos algoritmos e processamento de dados para extrair o melhor de
-                        nossas Campanhas.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div style="background-color: white;">
           <div>
             <img class="img-fluid logo-app" src="img/mp-icon.png" alt="">
           </div>
           <div>
-            <a class="header-text">Baixe nosso app e comece a procurar produtos com descontos e serviços de qualidade na
-              sua cidade</a>
+            <div>
+              <a href="#">
+                <img class="img-fluid logo-app-store-play" src="img/gp.png" alt="" style="margin-bottom: 50px;">
+              </a>
+              <a href="#">
+                <img class="img-fluid logo-app-store-play" src="img/appstore.png" alt="" style="margin-bottom: 50px;">
+              </a>
+
+            </div>
           </div>
 
-          <div>
-            <a href="#">
-              <img class="img-fluid logo-app-store-play" src="img/gp.png" alt="" style="margin-bottom: 50px;">
-            </a>
-            <a href="#">
-              <img class="img-fluid logo-app-store-play" src="img/gp.png" alt="" style="margin-bottom: 50px;">
-            </a>
+          <div class="justify-content-center text-center mb-5">
+            <div data-aos="fade-up">
+              <h2 class="section-heading" id="services">As melhores ofertas e lançamentos da sua loja na palma da mão da
+                população</h2>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-4 my-auto">
+                <div class="device-container">
+                  <div class="device-mockup iphone_x portrait white">
+                    <div class="device">
+                      <div class="screen">
+                        <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                        <img class="img-fluid" src="img/head.png" alt="">
+                      </div>
+                      <div class="button">
+                        <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8 my-auto">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="feature-item">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-trophy" aria-hidden="true"></i>
+                        </span>
+                        <h3>Classifique seus clientes</h3>
+                        <p class="text-muted">Os usuários são classificados em 3 categorias, em ordem crescente de
+                          nível:
+                          curioso, cliente e fiel.
+                          Nosso sistema automaticamente elege os usuários em cada categoria, por meio de parâmetros como
+                          quantidade de compras, recomendações e interações com a loja.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="feature-item">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-users" aria-hidden="true"></i>
+                        </span>
+                        <h3>
+                          Programa de Fidelização
+                        </h3>
+                        <p class="text-muted">Com o nosso sistema de bonificação, cada categoria(curioso, cliente e fiel) tem um benefício com o
+                          propósito de fidelizar os usuários do aplicativo com sua loja. Conforme maior for o nível maior será a recompensa.
+
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="feature-item">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </span>
+                        <h3>Posicionamento</h3>
+                        <p class="text-muted">Colocamos sua empresa no mapa, venda na sua região ou no Brasil inteiro. Bata de frente com as gigantes do mercado, como a Amazon e Walmart.</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="feature-item">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-line-chart" aria-hidden="true"></i>
+                        </span>
+                        <h3>Marketing Automatizado</h3>
+                        <p class="text-muted">Utilizamos algoritmos e processamento de dados para extrair o melhor de suas campanhas pagas dentro do nosso app.
+                           Você não precisa se preocupar em aprender a realizar tráfego pago ou contratar uma pessoa,
+                           nosso sistema de marketing automatizado cuida de tudo para a conversão de vendas e tornar sua loja conhecida.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     </section>
     <!-- Hero Section end -->
 
@@ -273,265 +262,102 @@
       </div>
     </section>
 
+      <!-- Contact -->
+  <section class="page-section" id="contact" style="padding-bottom: 50px;">
 
-    <!-- About -->
-    <section class="page-section" id="about" style="margin-top: 50px; background-color: white;">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <span class="fa-stack fa-4x">
-              <i class="fas fa-brain fa-stack-1x fa-inverse" style="color: black;"></i>
-            </span>
-            <h2 class="section-heading text-uppercase">Sobre nós</h2>
-            <h3 class="section-subheading text-muted">Estamos localizados na cidade de São Carlos, interior de São
-              Paulo,
-              que é conhecida como Vale do Silício brasileiro.</h3>
-            <h3 class="section-subheading text-muted">Nossos profissionais são da área de computação e engenharia da
-              Universidade de São Paulo.</h3>
-            <h3 class="section-subheading text-muted">Confira a linha temporal dos nossos objetivos:</h3>
-          </div>
-        </div>
-        <div class="row" style="margin-top: 50px;">
-          <div class="col-lg-12">
-            <ul class="timeline">
-              <li>
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/heart.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Primeiro passo</h4>
-                    <h5 class="subheading">Cadastro da loja</h5>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Cadastre sua empresa, contando-nos um pouco de sua história.</p>
-                    <p class="text-muted"></p>
-                  </div>
-                </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/list.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Segundo Passo</h4>
-                    <h5>Contrato Online</h5>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Assine seu contrato online, validando nossa parceria
-                      e tenha autorização para utilizar nossos serviços gratuitos
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/store.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Terceiro Passo</h4>
-                    <h4 class="subheading">Registro</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Registre os produtos ou serviços que sua empresa tem a oferecer na sua região
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/suit.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Quarto Passo</h4>
-                    <h5>Econtre seu público alvo</h5>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Atinja usuários que buscam o que sua empresa tem a
-                      oferecer na sua cidade, impulsionando seus anuncios e aumentando suas vendas com o melhor custo
-                      benefício
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-image">
-                  <h4>Miips
-                  </h4>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 text-center" style="margin-top: 50px">
+          <h3 class="section-heading2 text-uppercase">Mande uma mensagem</h>
+
+            <h3 class="section-subheading" style="color: white;">Contratar? Informações? Fala com a gente :)</h3>
         </div>
       </div>
-    </section>
+
+      <div class="row">
 
 
-    <!-- Contact -->
-    <section class="page-section" id="contact">
-      <div class="container">
-
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 style="margin-top: 50px" class="section-heading2 text-uppercase">WhatsApp:</h2>
-            <a href="https://api.whatsapp.com/send?phone=5511944952511&text=Olá, tenho interesse em contratar um serviço de marketing e preciso de mais informações."
-              class="float js-scroll-trigger" target="_blank">
-              <i class="fa fa-whatsapp my-float"></i>
+        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+          <a href="https://api.whatsapp.com/send?phone=5511941102511&text=Olá, tenho interesse em contratar um serviço de marketing e preciso de mais informações."
+            target="_blank">
+            <i class="fa fa-whatsapp fa-3x mb-3 text-white"></i>
+          </a>
+          <div>
+            <a href="https://api.whatsapp.com/send?phone=5511941102511&text=Olá, tenho interesse em contratar um serviço de marketing e preciso de mais informações."
+              target="_blank" style="color: white;">
+              Whatsapp
             </a>
           </div>
         </div>
 
-        <div class="row" style="margin-top: 50px">
-          <div class="col-lg-12 text-center">
-            <h3 class="section-heading2 text-uppercase">Mande uma mensagem</h>
-
-              <h3 class="section-subheading" style="color: white;">Dúvida? Informações? Pergunta pra gente :)</h3>
+        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+          <a href="tel:+5511941102511">
+            <i class="fa fa-phone fa-3x mb-3 text-white"></i>
+          </a>
+          <div>
+            <a style="color: white;" href="tel:+5511941102511">
+              (11)94110-2511
+            </a>
           </div>
         </div>
 
-        <div class="row">
-
-          <body>
-            <div class="container">
-              <div class="row">
-                <div class="col-xl-8 offset-xl-2 py-5">
-                  <form id="contact-form" method="post" onsubmit="myFunction()" role="form" netlify>
-                    <script>
-                      function myFunction() {
-                        alert("Em breve retornaremos o seu contato via telefone, obrigado por entrar em contato!");
-                      }
-                    </script>
-                    <div class="messages"></div>
-                    <div class="controls">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="form_name" style="color: white;">Nome *</label>
-                            <input id="form_name" type="text" name="name" class="form-control" placeholder="Nome *"
-                              required="required" data-error="Por favor digite seu nome ">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="form_lastname" style="color: white;">Empresa *</label>
-                            <input id="form_lastname" type="text" name="surname" class="form-control"
-                              placeholder="Empresa*" required="required" data-error="Por favor digite sua empresa">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="form_email" style="color: white;">Email *</label>
-                            <input id="form_email" type="email" name="email" class="form-control" placeholder="Email *"
-                              required="required" data-error="Por favor digite seu email.">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="form_need" style="color: white;">Especifique sua necessidade *</label>
-                            <select id="form_need" name="need" class="form-control" required="required"
-                              data-error="Específique sua necessidade.">
-                              <option value=""></option>
-                              <option value="Request service">Contratar um serviço</option>
-                              <option value="Request info">Informações</option>
-                              <option value="Request doubts">Dúvidas</option>
-                              <option value="Other">Outro</option>
-                            </select>
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="form_phone" style="color: white;">Telefone *</label>
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                            <script
-                              src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-                            <input type="text" class="form-control" minlength="15" placeholder="Telefone"
-                              required="required" id="telefone" name="telefone"
-                              data-error="Por favor digite seu telefone." maxlength="15">
-                            <script type="text/javascript">
-                              $("#telefone, #celular").mask("(00) 00000-0000");
-                            </script>
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label for="form_message" style="color: white;">Mensagem *</label>
-                            <textarea id="form_message" name="message" class="form-control"
-                              placeholder="Digite uma mensagem *" rows="4" required="required"
-                              data-error="Por favor digite sua mensagem."></textarea>
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <input type="submit" class="btn btn-success btn-send" value="Enviar mensagem">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <p class="text-muted">
-                            <strong>*</strong> Esses campos são obrigatórios.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </body>
+        <div class="col-lg-4 mr-auto text-center">
+          <a href="mailto:contato@marktins.com">
+            <i class="fa fa-envelope fa-3x mb-3 text-white"></i>
+          </a>
+          <!-- Make sure to change the email address in BOTH the anchor text and the link target below!-->
+          <a class="d-block" style="color: white;" href="mailto:contato@marktins.com">contato@marktins.com.br</a>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-4">
-            <span class="copyright">Copyright &copy; Miips 2020</span>
-          </div>
-          <div class="col-md-4">
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="https://www.facebook.com/marktinsdigital">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-              <li class="list-inline-item">
-                <a href="https://www.instagram.com/marktinsdigital/">
-                  <i class="fab fa-instagram"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="https://www.linkedin.com/company/marktins/">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <ul class="list-inline quicklinks">
-              <li class="list-inline-item">
-                <a href="">Política de privacidade</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="">Termos de uso</a>
-              </li>
-            </ul>
-          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container"> 
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <span class="copyright">Copyright &copy; Marktins Marketing Digital 2020 | CNPJ: 39.859.283/0001-67</span>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline social-buttons">
+            <li class="list-inline-item">
+              <a href="https://api.whatsapp.com/send?phone=5511941102511&text=Olá, preciso de mais informações."
+                target="_blank">
+                <i class="fa fa-whatsapp"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/marktins.com.br" target="_blank">
+                <i class="fa fa-facebook-f"></i>
+              </a>
+            <li class="list-inline-item">
+              <a href="https://www.instagram.com/marktins.com.br/" target="_blank">
+                <i class="fa fa-instagram"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://www.linkedin.com/company/marktins/" target="_blank">
+                <i class="fa fa-linkedin"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline quicklinks">
+            <li class="list-inline-item">
+              <a href="">Política de privacidade</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="">Termos de uso</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
+
 
 
     <!-- Bootstrap core JavaScript -->
