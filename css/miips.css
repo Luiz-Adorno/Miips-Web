@@ -258,7 +258,7 @@ Hero section
     top: -50%;
   left: 0;
   box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 30px;
+  border-radius: 35px;
 }
 
 .hero-top .iphone-wrap .phone-2,
@@ -278,6 +278,26 @@ Hero section
 }
 
 @media screen and (max-width: 992px) {
+  .hero-top .iphone-wrap .phone-2,
+  .hero-top .iphone-wrap .phone-1 {
+    position: absolute;
+    overflow: hidden;
+      top: -50%;
+    left: 0;
+    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+  }
+  
+  .hero-top .iphone-wrap .phone-2,
+  .hero-top .iphone-wrap .phone-1 {
+    width: 200px;
+  }
+  
+  #phone-2 {
+    width: 200px;
+  }
+  
+  
   .page-section h2.section-heading {
     font-size: 20px;
   }
