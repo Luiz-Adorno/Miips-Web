@@ -4,6 +4,27 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE)
  */
 
+ .features-icons {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.features-icons .features-icons-item {
+  max-width: 20rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon {
+  height: 7rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon i {
+  font-size: 4.5rem;
+}
+
+.features-icons .features-icons-item:hover .features-icons-icon i {
+  font-size: 5rem;
+}
+
 .float {
   width: 60px;
   padding-left: 8px;
@@ -255,7 +276,6 @@ Hero section
 .hero-top .iphone-wrap .phone-1 {
   position: absolute;
   overflow: hidden;
-    top: -50%;
   left: 0;
   box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
   border-radius: 35px;
@@ -282,7 +302,6 @@ Hero section
   .hero-top .iphone-wrap .phone-1 {
     position: absolute;
     overflow: hidden;
-      top: -50%;
     left: 0;
     box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.3);
     border-radius: 25px;
@@ -1168,6 +1187,10 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 }
 
 @media only screen and (max-width: 479px) {
+  .site-section {
+    padding-top: 10rem;
+    background-color: white;
+  }
   .header-section {
     padding: 0 15px;
   }
