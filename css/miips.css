@@ -9,6 +9,42 @@
   padding-bottom: 7rem;
 }
 
+.iconcheck{
+  height: 40px;
+  margin-right: 10px;
+}
+
+.well{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.textprice{
+  text-align: left;
+  font-style: oblique;
+  font-size: 30px;
+}
+.textprice2{
+  text-align: left;
+  font-style: oblique;
+}
+
+.textprice4{
+  text-align: left;
+  font-style: oblique;
+  text-transform: uppercase;
+}
+
+.textprice3{
+  text-align: center;
+  font-style: oblique;
+  font-size: 100px;
+  background-color: #000;
+  color: white;
+}
+
 .features-icons .features-icons-item {
   max-width: 20rem;
 }
